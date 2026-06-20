@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/vedas
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+vedas:
+  cors:
+    allowed-origins: "*"
+  media:
+    base-url: http://localhost:8080/api/media
+  seed:
+    force: false

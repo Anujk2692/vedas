@@ -1,0 +1,33 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Java / Maven
+vedas-backend/target/
+*.class
+*.jar
+*.war
+*.log
+
+# Node / React Native
+VedasApp/node_modules/
+VedasApp/.metro-health-check*
+VedasApp/coverage/
+VedasApp/**/Pods/
+VedasApp/**/build/
+VedasApp/**/.gradle/
+VedasApp/**/local.properties
+VedasApp/**/.idea/
+VedasApp/**/xcuserdata/
+VedasApp/**/.xcode.env.local
+VedasApp/**/*.jsbundle
+
+# IDE
+.idea/
+*.iml
+.vscode/
