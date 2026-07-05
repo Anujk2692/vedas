@@ -15,6 +15,7 @@ import {DEV_MACHINE_IP, getApiHost, getDefaultApiHost, setApiHost, testApiConnec
 import {clearAllApiCache} from '../api/cache';
 import {LanguagePicker} from '../components/LanguagePicker';
 import {SanskritText} from '../components/SanskritText';
+import {AppLogo} from '../components/ui/AppLogo';
 import {useLanguage} from '../context/LanguageContext';
 import {
   useUserPreferences,
@@ -250,14 +251,16 @@ export function SettingsScreen() {
       </SettingsSection>
 
       <View style={styles.aboutCard}>
-        <Text style={styles.aboutIcon}>🕉</Text>
-        <Text style={styles.label}>About Vedas App</Text>
+        <View style={styles.aboutLogoWrap}>
+          <AppLogo size={72} showRing={false} />
+        </View>
+        <Text style={styles.label}>Sanatan Gyan</Text>
+        <SanskritText text="सनातन ज्ञान" style={styles.aboutSanskrit} size={18} />
         <Text style={styles.about}>
-          Explore all four Vedas with deep knowledge, authentic chanting audio from traditional
-          patha recordings, and video recitations. Save favorite mantras, continue reading where
-          you left off, and learn pronunciation at your own pace.
+          Explore Vedas, Gita, Ramayana, Upanishads and more — with study paths, AI Guru,
+          aartis, audio patha, and daily shlok. Save favorites and continue reading where you left off.
         </Text>
-        <Text style={styles.version}>Version 1.1.0</Text>
+        <Text style={styles.version}>Version 1.2.0</Text>
       </View>
 
       <LanguagePicker visible={showPicker} onClose={() => setShowPicker(false)} />
@@ -440,9 +443,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.borderLight,
   },
-  aboutIcon: {
-    fontSize: 28,
+  aboutLogoWrap: {
+    alignSelf: 'center',
     marginBottom: spacing.sm,
+  },
+  aboutSanskrit: {
+    color: colors.primaryDark,
+    marginTop: 4,
+    textAlign: 'center',
   },
   about: {
     fontSize: 14,

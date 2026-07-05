@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {AppLogo} from './AppLogo';
 import {borderRadius, colors, shadows, spacing, typography} from '../../theme/colors';
 
 interface Props {
@@ -18,9 +19,7 @@ export function HomeHero({languageLabel, onLanguagePress}: Props) {
       <View style={[styles.content, {paddingTop: insets.top + spacing.md}]}>
         <View style={styles.topRow}>
           <View style={styles.brandWrap}>
-            <View style={styles.omBadge}>
-              <Text style={styles.om}>🕉</Text>
-            </View>
+            <AppLogo size={44} />
             <View>
               <Text style={styles.brandLabel}>सनातन ज्ञान</Text>
               <Text style={styles.brandTag}>Vedas · Gita · Itihasa · Upanishads</Text>
@@ -84,19 +83,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
     flex: 1,
-  },
-  omBadge: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: 'rgba(255,255,255,0.12)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.2)',
-  },
-  om: {
-    fontSize: 24,
   },
   brandLabel: {
     fontSize: 13,
