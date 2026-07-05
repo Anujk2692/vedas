@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, View, type ImageStyle, type StyleProp, type ViewStyle} from 'react-native';
 import {borderRadius, colors, shadows} from '../../theme/colors';
 
-const LOGO = require('../../assets/images/app-logo-sm.png');
+const LOGO = require('../../../assets/images/app-logo-sm.png');
 
 interface Props {
   size?: number;
