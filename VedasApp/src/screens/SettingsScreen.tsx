@@ -12,7 +12,12 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {isDailyReminderEnabled, setDailyReminderEnabled} from '../services/dailyReminder';
+import {
+  isDailyReminderEnabled,
+  sendTestNotification,
+  setDailyReminderEnabled,
+  showNotificationHelp,
+} from '../services/dailyReminder';
 import {DEV_MACHINE_IP, getApiHost, getDefaultApiHost, getProductionApiHost, setApiHost, testApiConnection} from '../api/config';
 import {clearAllApiCache} from '../api/cache';
 import {LanguagePicker} from '../components/LanguagePicker';
@@ -66,6 +71,8 @@ export function SettingsScreen() {
     syncBookmarksFromCloud,
   } = useUserPreferences();
   const [dailyReminder, setDailyReminder] = useState(false);
+  const [notificationStatus, setNotificationStatus] = useState<string | null>(null);
+  const [testingNotification, setTestingNotification] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
   const [apiHost, setApiHostState] = useState(getDefaultApiHost());
   const [saved, setSaved] = useState(false);
@@ -167,13 +174,49 @@ export function SettingsScreen() {
             <Switch
               value={dailyReminder}
               onValueChange={async v => {
+                const previous = dailyReminder;
                 setDailyReminder(v);
-                await setDailyReminderEnabled(v);
+                const result = await setDailyReminderEnabled(v);
+                setNotificationStatus(result.message);
+                if (!result.ok) {
+                  setDailyReminder(previous);
+                }
               }}
               trackColor={{false: colors.borderLight, true: colors.primaryLight}}
               thumbColor={dailyReminder ? colors.primary : colors.textMuted}
             />
           </View>
+          <Pressable
+            style={({pressed}) => [styles.secondaryBtn, pressed && styles.pressed]}
+            disabled={testingNotification}
+            onPress={async () => {
+              setTestingNotification(true);
+              setNotificationStatus(null);
+              const result = await sendTestNotification();
+              setNotificationStatus(result.message);
+              setTestingNotification(false);
+            }}>
+            <Text style={styles.secondaryBtnText}>
+              {testingNotification ? 'Sending…' : 'Send Test Notification'}
+            </Text>
+          </Pressable>
+          <Pressable
+            style={({pressed}) => [styles.secondaryBtn, pressed && styles.pressed]}
+            onPress={showNotificationHelp}>
+            <Text style={styles.secondaryBtnText}>How to test on device</Text>
+          </Pressable>
+          {notificationStatus ? (
+            <Text
+              style={[
+                styles.connectionStatus,
+                notificationStatus.startsWith('Permission') ||
+                notificationStatus.startsWith('Allow')
+                  ? styles.connectionFail
+                  : styles.connectionOk,
+              ]}>
+              {notificationStatus}
+            </Text>
+          ) : null}
         </View>
         <Pressable
           style={({pressed}) => [styles.card, pressed && styles.pressed]}
