@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://vedas-oax2.onrender.com/api',
+  apiBaseUrl: '/api',
   appName: 'Sanatan Gyan',
 };

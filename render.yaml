@@ -21,15 +21,3 @@ services:
         value: https://vedas-oax2.onrender.com/api/media
       - key: VEDAS_CORS_ALLOWED_ORIGINS
         value: "*"
-
-  - type: web
-    name: vedas-web
-    runtime: docker
-    region: singapore
-    plan: free
-    rootDir: vedas-web
-    dockerfilePath: ./Dockerfile
-    healthCheckPath: /
-    envVars:
-      - key: NODE_VERSION
-        value: "20"

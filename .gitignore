@@ -9,6 +9,8 @@ Thumbs.db
 
 # Java / Maven
 vedas-backend/target/
+vedas-backend/src/main/resources/static/*
+!vedas-backend/src/main/resources/static/.gitkeep
 *.class
 *.jar
 *.war
