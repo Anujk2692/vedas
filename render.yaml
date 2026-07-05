@@ -18,6 +18,6 @@ services:
       - key: SPRING_DATA_MONGODB_URI
         sync: false
       - key: VEDAS_MEDIA_BASE_URL
-        value: https://vedas-api.onrender.com/api/media
+        value: https://vedas-oax2.onrender.com/api/media
       - key: VEDAS_CORS_ALLOWED_ORIGINS
         value: "*"

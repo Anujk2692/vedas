@@ -11,7 +11,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {DEV_MACHINE_IP, getApiHost, getDefaultApiHost, setApiHost, testApiConnection} from '../api/config';
+import {DEV_MACHINE_IP, getApiHost, getDefaultApiHost, getProductionApiHost, setApiHost, testApiConnection} from '../api/config';
 import {clearAllApiCache} from '../api/cache';
 import {LanguagePicker} from '../components/LanguagePicker';
 import {SanskritText} from '../components/SanskritText';
@@ -203,17 +203,22 @@ export function SettingsScreen() {
         <View style={styles.card}>
           <Text style={styles.label}>Backend Server</Text>
           <Text style={styles.hint}>
-            Simulator: use localhost. Physical iPhone: use your Mac's LAN IP (e.g. {DEV_MACHINE_IP})
+            Production: {getProductionApiHost()} · Local dev: localhost or Mac IP ({DEV_MACHINE_IP})
           </Text>
           <TextInput
             style={styles.input}
             value={apiHost}
             onChangeText={setApiHostState}
-            placeholder={getDefaultApiHost()}
+            placeholder={getProductionApiHost()}
             placeholderTextColor={colors.textMuted}
             autoCapitalize="none"
             autoCorrect={false}
           />
+          <Pressable
+            style={({pressed}) => [styles.secondaryBtn, pressed && styles.pressed]}
+            onPress={() => setApiHostState(getProductionApiHost())}>
+            <Text style={styles.secondaryBtnText}>Use Production Server</Text>
+          </Pressable>
           <Pressable
             style={({pressed}) => [styles.saveBtn, pressed && styles.pressed]}
             onPress={saveApiHost}>

@@ -4,18 +4,44 @@ import {clearAllApiCache} from './cache';
 
 const API_HOST_KEY = '@vedas_api_host';
 
-// Your Mac's LAN IP — iPhone must use this instead of localhost
+/** Live Render backend — https://vedas-oax2.onrender.com/api */
+export const PRODUCTION_API_HOST = 'vedas-oax2.onrender.com';
+
+// Your Mac's LAN IP — physical iPhone local dev
 export const DEV_MACHINE_IP = '192.168.0.111';
 
 function defaultDevHost(): string {
+  if (!__DEV__) {
+    return PRODUCTION_API_HOST;
+  }
   if (Platform.OS === 'android') {
     return '10.0.2.2';
   }
-  // iOS Simulator reaches the Mac backend at localhost; physical iPhone needs LAN IP in Settings
   return 'localhost';
 }
 
 let cachedHost: string | null = null;
+
+/** Strip protocol, path, and trailing slashes — store host only. */
+export function normalizeApiHost(input: string): string {
+  let host = input.trim();
+  if (!host) {
+    return defaultDevHost();
+  }
+  host = host.replace(/^https?:\/\//i, '');
+  host = host.replace(/\/api\/?$/i, '');
+  host = host.replace(/\/+$/, '');
+  return host.split('/')[0];
+}
+
+export function buildApiBaseUrl(host: string): string {
+  const normalized = normalizeApiHost(host);
+  if (normalized.includes('onrender.com')) {
+    return `https://${normalized}/api`;
+  }
+  const withPort = normalized.includes(':') ? normalized : `${normalized}:8080`;
+  return `http://${withPort}/api`;
+}
 
 export async function getApiHost(): Promise<string> {
   if (cachedHost) {
@@ -23,7 +49,7 @@ export async function getApiHost(): Promise<string> {
   }
   try {
     const saved = await AsyncStorage.getItem(API_HOST_KEY);
-    cachedHost = saved?.trim() || defaultDevHost();
+    cachedHost = saved?.trim() ? normalizeApiHost(saved) : defaultDevHost();
   } catch {
     cachedHost = defaultDevHost();
   }
@@ -31,17 +57,16 @@ export async function getApiHost(): Promise<string> {
 }
 
 export async function setApiHost(host: string): Promise<void> {
-  const trimmed = host.trim();
-  cachedHost = trimmed || defaultDevHost();
+  cachedHost = normalizeApiHost(host) || defaultDevHost();
   await AsyncStorage.setItem(API_HOST_KEY, cachedHost);
   await clearAllApiCache();
 }
 
 export async function testApiConnection(host?: string): Promise<{ok: boolean; message: string}> {
-  const targetHost = host?.trim() || (await getApiHost());
-  const url = `http://${targetHost}:8080/api/languages`;
+  const targetHost = host?.trim() ? normalizeApiHost(host) : await getApiHost();
+  const url = `${buildApiBaseUrl(targetHost)}/languages`;
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 8000);
+  const timeout = setTimeout(() => controller.abort(), 12000);
   try {
     const response = await fetch(url, {signal: controller.signal});
     if (!response.ok) {
@@ -52,7 +77,7 @@ export async function testApiConnection(host?: string): Promise<{ok: boolean; me
     return {ok: true, message: `Connected — ${count} languages loaded`};
   } catch (e) {
     if (e instanceof Error && e.name === 'AbortError') {
-      return {ok: false, message: 'Timed out — is the backend running on port 8080?'};
+      return {ok: false, message: 'Timed out — check server address and try again'};
     }
     return {
       ok: false,
@@ -65,9 +90,13 @@ export async function testApiConnection(host?: string): Promise<{ok: boolean; me
 
 export async function getApiBaseUrl(): Promise<string> {
   const host = await getApiHost();
-  return `http://${host}:8080/api`;
+  return buildApiBaseUrl(host);
 }
 
 export function getDefaultApiHost(): string {
   return defaultDevHost();
+}
+
+export function getProductionApiHost(): string {
+  return PRODUCTION_API_HOST;
 }
