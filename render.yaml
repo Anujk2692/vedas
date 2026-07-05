@@ -24,15 +24,12 @@ services:
 
   - type: web
     name: vedas-web
-    runtime: static
+    runtime: docker
     region: singapore
     plan: free
-    buildCommand: cd vedas-web && npm ci && npm run build
-    staticPublishPath: vedas-web/dist/vedas-web/browser
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+    rootDir: vedas-web
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
     envVars:
       - key: NODE_VERSION
         value: "20"
