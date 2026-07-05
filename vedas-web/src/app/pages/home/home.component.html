@@ -1,0 +1,64 @@
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <p class="eyebrow">Namaste</p>
+      <h1>Sacred Scriptures &amp; Sanatan Knowledge</h1>
+      <p class="lead">Read · Listen · Study — Vedas, Gita, Ramayana, Upanishads and more in Hindi &amp; English.</p>
+      <div class="hero-actions">
+        <a routerLink="/scriptures" class="btn btn-primary">Explore Scriptures</a>
+        <a routerLink="/gyan" class="btn btn-outline">Study Paths</a>
+        <a routerLink="/ai-guru" class="btn btn-outline">Ask AI Guru</a>
+      </div>
+    </div>
+    <img src="/logo.png" alt="" class="hero-logo" />
+  </div>
+</section>
+
+<div class="container">
+  @if (loading) {
+    <p class="loading">Loading…</p>
+  }
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  @if (shlok) {
+    <article class="card shlok-card">
+      <div class="card-head">
+        <span>आज का श्लोक</span>
+        <span class="pill">{{ shlok.theme }}</span>
+      </div>
+      <p class="sanskrit">{{ shlok.sanskrit }}</p>
+      <p class="translit">{{ shlok.transliteration }}</p>
+      <p>{{ shlok.translation }}</p>
+      <small>{{ shlok.source }}</small>
+    </article>
+  }
+
+  @if (panchang) {
+    <article class="card panchang-card">
+      <h3>आज का पंचांग · {{ panchang.dateLabel }}</h3>
+      <p><strong>{{ panchang.weekday }}</strong> · {{ panchang.tithi }}</p>
+      @if (panchang.festival) {
+        <p class="festival">🪔 {{ panchang.festival }}</p>
+      }
+      <small>{{ panchang.note }}</small>
+    </article>
+  }
+
+  @for (group of grouped; track group.type) {
+    <section class="section">
+      <h2>{{ group.label }}</h2>
+      <div class="grid">
+        @for (v of group.items; track v.id) {
+          <a [routerLink]="['/scriptures', v.slug]" class="card scripture-card">
+            <h3>{{ v.title }}</h3>
+            <p class="sanskrit-sm">{{ v.sanskritName }}</p>
+            <p>{{ v.description }}</p>
+            <span class="meta">{{ v.chapterCount }} chapters · {{ v.verseCount }} verses</span>
+          </a>
+        }
+      </div>
+    </section>
+  }
+</div>

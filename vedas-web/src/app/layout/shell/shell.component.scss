@@ -1,0 +1,127 @@
+.site-header {
+  background: linear-gradient(135deg, #7a3200, #c45c00);
+  color: #fff8f0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 24px rgba(122, 50, 0, 0.25);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 0;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  min-width: 180px;
+}
+
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.brand-title {
+  display: block;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.brand-sub {
+  display: block;
+  font-size: 0.72rem;
+  opacity: 0.75;
+}
+
+.nav {
+  display: flex;
+  gap: 0.35rem;
+  flex: 1;
+  flex-wrap: wrap;
+
+  a {
+    color: rgba(255, 248, 240, 0.85);
+    text-decoration: none;
+    padding: 0.45rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: background 0.15s;
+
+    &:hover,
+    &.active {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+    }
+  }
+}
+
+.lang-switch {
+  display: flex;
+  gap: 0.25rem;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.2rem;
+  border-radius: 999px;
+
+  button {
+    border: none;
+    background: transparent;
+    color: rgba(255, 248, 240, 0.8);
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.8rem;
+
+    &.on {
+      background: #fff;
+      color: #7a3200;
+    }
+  }
+}
+
+.site-main {
+  min-height: calc(100vh - 140px);
+  padding: 2rem 0 3rem;
+}
+
+.site-footer {
+  background: #2c1810;
+  color: #fff8f0;
+  padding: 1.5rem 0;
+  text-align: center;
+
+  p {
+    margin: 0.25rem 0;
+  }
+
+  .muted {
+    opacity: 0.55;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .nav {
+    justify-content: center;
+  }
+
+  .lang-switch {
+    align-self: center;
+  }
+}

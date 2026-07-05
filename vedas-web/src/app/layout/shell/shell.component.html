@@ -1,0 +1,34 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a routerLink="/" class="brand">
+      <img src="/logo.png" alt="Sanatan Gyan" class="brand-logo" />
+      <div>
+        <span class="brand-title">सनातन ज्ञान</span>
+        <span class="brand-sub">Sanatan Gyan</span>
+      </div>
+    </a>
+    <nav class="nav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+      <a routerLink="/scriptures" routerLinkActive="active">Scriptures</a>
+      <a routerLink="/gyan" routerLinkActive="active">Gyan</a>
+      <a routerLink="/aartis" routerLinkActive="active">Aarti</a>
+      <a routerLink="/search" routerLinkActive="active">Search</a>
+      <a routerLink="/ai-guru" routerLinkActive="active">AI Guru</a>
+    </nav>
+    <div class="lang-switch">
+      <button type="button" [class.on]="langService.lang() === 'hi'" (click)="setLang('hi')">हिं</button>
+      <button type="button" [class.on]="langService.lang() === 'en'" (click)="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<main class="site-main">
+  <router-outlet />
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>🕉 Sanatan Gyan — Vedas · Gita · Itihasa · Upanishads</p>
+    <p class="muted">API: vedas-oax2.onrender.com · © {{ year }}</p>
+  </div>
+</footer>

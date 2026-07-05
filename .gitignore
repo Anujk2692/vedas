@@ -16,6 +16,9 @@ vedas-backend/target/
 
 # Node / React Native
 VedasApp/node_modules/
+vedas-web/node_modules/
+vedas-web/dist/
+vedas-web/.angular/
 VedasApp/.metro-health-check*
 VedasApp/coverage/
 VedasApp/**/Pods/
