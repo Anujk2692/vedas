@@ -146,6 +146,8 @@ export interface Panchang {
 
 export interface AskResponse {
   answer: string;
+  relatedScriptures: Veda[];
+  relatedChapters: Chapter[];
   relatedVerses: Verse[];
   relatedTopics: Topic[];
 }

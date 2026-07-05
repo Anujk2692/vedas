@@ -60,6 +60,22 @@ export function ttsLanguageCode(appLanguage: string): string {
   return TTS_LANGUAGE[appLanguage] ?? 'en-US';
 }
 
+/** Strip emoji and normalize whitespace for TTS playback. */
+export function stripForSpeech(text: string): string {
+  return text
+    .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+export async function speakAnswerText(text: string, appLanguage: string): Promise<void> {
+  const speakable = stripForSpeech(text);
+  if (!speakable) {
+    return;
+  }
+  await speakTranslatedText(speakable, appLanguage);
+}
+
 export async function speakTranslatedText(text: string, appLanguage: string): Promise<void> {
   const trimmed = text.trim();
   if (!trimmed) {

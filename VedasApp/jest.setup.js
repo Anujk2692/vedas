@@ -83,7 +83,26 @@ jest.mock('react-native-tts', () => ({
   setIgnoreSilentSwitch: jest.fn(),
   requestInstallEngine: jest.fn(),
   setDefaultLanguage: jest.fn(() => Promise.resolve()),
+  setDefaultVoice: jest.fn(() => Promise.resolve()),
+  setDefaultRate: jest.fn(),
+  setDucking: jest.fn(),
+  voices: jest.fn(() => Promise.resolve([])),
   speak: jest.fn(),
   stop: jest.fn(() => Promise.resolve()),
   addEventListener: jest.fn(() => ({remove: jest.fn()})),
+}));
+
+jest.mock('@react-native-voice/voice', () => ({
+  __esModule: true,
+  default: {
+    start: jest.fn(() => Promise.resolve()),
+    stop: jest.fn(() => Promise.resolve()),
+    cancel: jest.fn(() => Promise.resolve()),
+    destroy: jest.fn(() => Promise.resolve()),
+    removeAllListeners: jest.fn(),
+    onSpeechResults: jest.fn(),
+    onSpeechPartialResults: jest.fn(),
+    onSpeechError: jest.fn(),
+    onSpeechEnd: jest.fn(),
+  },
 }));

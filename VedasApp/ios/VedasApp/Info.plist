@@ -35,6 +35,10 @@
 	</dict>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Vedas App needs local network access to load content from your development server.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Sanatan Gyan uses the microphone so you can ask AI Guru questions by voice.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Sanatan Gyan converts your spoken questions to text for scripture-based AI Guru answers.</string>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_react-native._tcp</string>
