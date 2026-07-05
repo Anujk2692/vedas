@@ -7,12 +7,10 @@
 services:
   - type: web
     name: vedas-api
-    runtime: java
+    runtime: docker
     region: singapore
     plan: free
-    rootDir: vedas-backend
-    buildCommand: mvn clean package -DskipTests
-    startCommand: java -Dserver.port=$PORT -jar target/vedas-backend-1.0.0.jar
+    dockerfilePath: ./Dockerfile
     healthCheckPath: /api/health
     envVars:
       - key: JAVA_VERSION
