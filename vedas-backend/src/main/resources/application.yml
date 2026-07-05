@@ -1,10 +1,10 @@
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/vedas
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:27017/vedas}
   servlet:
     multipart:
       max-file-size: 500MB
@@ -12,8 +12,8 @@ spring:
 
 vedas:
   cors:
-    allowed-origins: "*"
+    allowed-origins: ${VEDAS_CORS_ALLOWED_ORIGINS:*}
   media:
-    base-url: http://localhost:8080/api/media
+    base-url: ${VEDAS_MEDIA_BASE_URL:http://localhost:8080/api/media}
   seed:
     force: false
