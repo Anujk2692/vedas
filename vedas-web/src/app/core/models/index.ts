@@ -20,6 +20,8 @@ export interface Veda {
   chapterCount: number;
   verseCount: number;
   overview?: string;
+  philosophy?: string;
+  learningGuide?: string;
   pdfUrl?: string;
   pdfTitle?: string;
   pdfSourceName?: string;

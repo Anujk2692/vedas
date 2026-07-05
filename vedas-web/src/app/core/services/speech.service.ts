@@ -1,10 +1,30 @@
 import { Injectable } from '@angular/core';
 
-type SpeechRecognitionCtor = new () => SpeechRecognition;
+interface SpeechRecognitionResultEvent {
+  results: {
+    [index: number]: {
+      [index: number]: { transcript?: string };
+    };
+    length: number;
+  };
+}
+
+interface SpeechRecognitionInstance {
+  lang: string;
+  interimResults: boolean;
+  maxAlternatives: number;
+  onresult: ((event: SpeechRecognitionResultEvent) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+  start(): void;
+  stop(): void;
+}
+
+type SpeechRecognitionCtor = new () => SpeechRecognitionInstance;
 
 @Injectable({ providedIn: 'root' })
 export class SpeechService {
-  private recognition: SpeechRecognition | null = null;
+  private recognition: SpeechRecognitionInstance | null = null;
   private speaking = false;
 
   get voiceInputSupported(): boolean {
@@ -55,7 +75,7 @@ export class SpeechService {
     recognition.lang = lang === 'hi' ? 'hi-IN' : 'en-US';
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
+    recognition.onresult = (event: SpeechRecognitionResultEvent) => {
       const text = event.results[0]?.[0]?.transcript?.trim();
       if (text) {
         onResult(text);
@@ -76,7 +96,7 @@ export class SpeechService {
     this.recognition = null;
   }
 
-  isListening(recognitionRef: SpeechRecognition | null): boolean {
+  isListening(recognitionRef: SpeechRecognitionInstance | null): boolean {
     return recognitionRef != null;
   }
 
