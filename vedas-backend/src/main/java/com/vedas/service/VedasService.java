@@ -1,5 +1,6 @@
 package com.vedas.service;
 
+import com.vedas.config.ScripturePdfLibrary;
 import com.vedas.dto.*;
 import com.vedas.model.*;
 import com.vedas.repository.*;
@@ -254,6 +255,11 @@ public class VedasService {
         dto.setModernRelevance(LocalizationUtil.resolve(v.getModernRelevance(), lang));
         dto.setRelatedTexts(LocalizationUtil.resolve(v.getRelatedTexts(), lang));
         dto.setPronunciationGuide(LocalizationUtil.resolve(v.getPronunciationGuides(), lang));
+        dto.setPdfUrl(v.getPdfUrl());
+        dto.setPdfTitle(LocalizationUtil.resolve(v.getPdfTitles(), lang));
+        dto.setPdfSourceName(v.getPdfSourceName());
+        dto.setHasPdf(v.getPdfUrl() != null && !v.getPdfUrl().isBlank());
+        dto.setPdfEditions(ScripturePdfLibrary.allEditions(v.getSlug(), lang));
         return dto;
     }
 

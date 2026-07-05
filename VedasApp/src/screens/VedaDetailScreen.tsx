@@ -4,6 +4,7 @@ import type {RouteProp} from '@react-navigation/native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   FlatList,
+  Pressable,
   StyleSheet,
   Text,
   View,
@@ -127,9 +128,37 @@ export function VedaDetailScreen() {
               <Text style={styles.transliteration}>{veda.transliteration}</Text>
             </View>
           </View>
-          <View style={styles.header}>
-            <Text style={styles.description}>{veda.description}</Text>
-            {media.length > 0 && (
+            <View style={styles.header}>
+              <Text style={styles.description}>{veda.description}</Text>
+              {veda.hasPdf && veda.pdfUrl ? (
+                <Pressable
+                  style={({pressed}) => [styles.pdfBtn, pressed && styles.pressed]}
+                  onPress={() =>
+                    navigation.navigate('PdfViewer', {
+                      url: veda.pdfUrl!,
+                      title: veda.pdfTitle ?? `${veda.title} — PDF`,
+                    })
+                  }>
+                  <Text style={styles.pdfBtnText}>
+                    📄 पूर्ण ग्रंथ PDF — {veda.pdfSourceName ?? 'Gita Press'}
+                  </Text>
+                </Pressable>
+              ) : null}
+              {veda.pdfEditions && veda.pdfEditions.length > 1 ? (
+                <View style={styles.pdfList}>
+                  {veda.pdfEditions.slice(1).map(ed => (
+                    <Pressable
+                      key={ed.url}
+                      style={({pressed}) => [styles.pdfLink, pressed && styles.pressed]}
+                      onPress={() =>
+                        navigation.navigate('PdfViewer', {url: ed.url, title: ed.title})
+                      }>
+                      <Text style={styles.pdfLinkText}>📖 {ed.title}</Text>
+                    </Pressable>
+                  ))}
+                </View>
+              ) : null}
+              {media.length > 0 && (
               <View style={styles.mediaPills}>
                 <View style={styles.pill}>
                   <Text style={styles.pillText}>🎵 {media.length} audio</Text>
@@ -263,6 +292,38 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 22,
   },
+  pdfBtn: {
+    marginTop: spacing.md,
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing.md,
+    paddingVertical: 12,
+    borderRadius: borderRadius.lg,
+    ...shadows.sm,
+  },
+  pdfBtnText: {
+    color: colors.white,
+    fontWeight: '800',
+    fontSize: 13,
+    textAlign: 'center',
+  },
+  pdfList: {
+    marginTop: spacing.sm,
+    gap: 6,
+  },
+  pdfLink: {
+    backgroundColor: colors.tabActive,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: borderRadius.md,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
+  },
+  pdfLinkText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: colors.primaryDark,
+  },
+  pressed: {opacity: 0.88},
   mediaPills: {
     flexDirection: 'row',
     justifyContent: 'center',

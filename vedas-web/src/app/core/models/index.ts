@@ -20,6 +20,18 @@ export interface Veda {
   chapterCount: number;
   verseCount: number;
   overview?: string;
+  pdfUrl?: string;
+  pdfTitle?: string;
+  pdfSourceName?: string;
+  hasPdf?: boolean;
+  pdfEditions?: ScripturePdfEdition[];
+}
+
+export interface ScripturePdfEdition {
+  title: string;
+  url: string;
+  sourceName: string;
+  language: string;
 }
 
 export interface Chapter {

@@ -20,6 +20,7 @@ public class SanatanScriptureSync {
 
     public void syncAll() {
         for (Veda veda : buildScriptures()) {
+            VedaDeepContent.apply(veda);
             vedaRepository.findBySlug(veda.getSlug()).ifPresentOrElse(existing -> {
                 veda.setId(existing.getId());
                 vedaRepository.save(veda);

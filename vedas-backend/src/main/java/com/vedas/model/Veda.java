@@ -47,6 +47,10 @@ public class Veda {
     private List<LocalizedText> relatedTexts;
     private List<LocalizedText> pronunciationGuides;
 
+    private String pdfUrl;
+    private String pdfSourceName;
+    private List<LocalizedText> pdfTitles;
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     public String getSlug() { return slug; }
@@ -115,4 +119,10 @@ public class Veda {
     public void setRelatedTexts(List<LocalizedText> relatedTexts) { this.relatedTexts = relatedTexts; }
     public List<LocalizedText> getPronunciationGuides() { return pronunciationGuides; }
     public void setPronunciationGuides(List<LocalizedText> pronunciationGuides) { this.pronunciationGuides = pronunciationGuides; }
+    public String getPdfUrl() { return pdfUrl; }
+    public void setPdfUrl(String pdfUrl) { this.pdfUrl = pdfUrl; }
+    public String getPdfSourceName() { return pdfSourceName; }
+    public void setPdfSourceName(String pdfSourceName) { this.pdfSourceName = pdfSourceName; }
+    public List<LocalizedText> getPdfTitles() { return pdfTitles; }
+    public void setPdfTitles(List<LocalizedText> pdfTitles) { this.pdfTitles = pdfTitles; }
 }

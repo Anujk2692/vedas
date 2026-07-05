@@ -39,6 +39,12 @@ public class VedaDetailDto {
     private String relatedTexts;
     private String pronunciationGuide;
 
+    private String pdfUrl;
+    private String pdfTitle;
+    private String pdfSourceName;
+    private boolean hasPdf;
+    private List<ScripturePdfEditionDto> pdfEditions;
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     public String getSlug() { return slug; }
@@ -105,4 +111,14 @@ public class VedaDetailDto {
     public void setRelatedTexts(String relatedTexts) { this.relatedTexts = relatedTexts; }
     public String getPronunciationGuide() { return pronunciationGuide; }
     public void setPronunciationGuide(String pronunciationGuide) { this.pronunciationGuide = pronunciationGuide; }
+    public String getPdfUrl() { return pdfUrl; }
+    public void setPdfUrl(String pdfUrl) { this.pdfUrl = pdfUrl; }
+    public String getPdfTitle() { return pdfTitle; }
+    public void setPdfTitle(String pdfTitle) { this.pdfTitle = pdfTitle; }
+    public String getPdfSourceName() { return pdfSourceName; }
+    public void setPdfSourceName(String pdfSourceName) { this.pdfSourceName = pdfSourceName; }
+    public boolean isHasPdf() { return hasPdf; }
+    public void setHasPdf(boolean hasPdf) { this.hasPdf = hasPdf; }
+    public List<ScripturePdfEditionDto> getPdfEditions() { return pdfEditions; }
+    public void setPdfEditions(List<ScripturePdfEditionDto> pdfEditions) { this.pdfEditions = pdfEditions; }
 }

@@ -18,8 +18,9 @@ public final class VedaDeepContent {
             case "samaveda" -> applySamaveda(v);
             case "yajurveda" -> applyYajurveda(v);
             case "atharvaveda" -> applyAtharvaveda(v);
-            default -> { }
+            default -> ScriptureDeepContent.apply(v);
         }
+        ScripturePdfLibrary.applyPdf(v);
     }
 
     private static void applyRigveda(Veda v) {
