@@ -19,7 +19,8 @@ public class SpaForwardController {
             "/search",
             "/aartis",
             "/aartis/**",
-            "/ai-guru"
+            "/ai-guru",
+            "/meditation"
     })
     public String forwardToIndex() {
         return "forward:/index.html";

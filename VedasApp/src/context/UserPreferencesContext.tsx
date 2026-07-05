@@ -5,8 +5,11 @@ import React, {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
+import {api} from '../api/client';
+import {getDeviceId} from '../utils/deviceId';
 
 export type ReadingFontScale = 'normal' | 'large' | 'xlarge';
 export type PlaybackRate = 0.75 | 1 | 1.25;
@@ -51,6 +54,7 @@ interface UserPreferencesValue {
   getStudyPathProgress: (pathSlug: string) => StudyPathProgress | undefined;
   setReadingFontScale: (scale: ReadingFontScale) => Promise<void>;
   setPlaybackRate: (rate: PlaybackRate) => Promise<void>;
+  syncBookmarksFromCloud: () => Promise<void>;
   sanskritFontSize: number;
   translationFontSize: number;
 }
@@ -87,11 +91,14 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
   const [studyPathProgress, setStudyPathProgressState] = useState<StudyPathProgress[]>([]);
   const [readingFontScale, setReadingFontScaleState] = useState<ReadingFontScale>('normal');
   const [playbackRate, setPlaybackRateState] = useState<PlaybackRate>(1);
+  const [prefsLoaded, setPrefsLoaded] = useState(false);
+  const didInitialSync = useRef(false);
 
   useEffect(() => {
     AsyncStorage.getItem(STORAGE_KEY)
       .then(raw => {
         if (!raw) {
+          setPrefsLoaded(true);
           return;
         }
         const parsed = JSON.parse(raw) as StoredPrefs;
@@ -100,9 +107,9 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
         setStudyPathProgressState(parsed.studyPathProgress ?? []);
         setReadingFontScaleState(parsed.readingFontScale ?? 'normal');
         setPlaybackRateState(parsed.playbackRate ?? 1);
+        setPrefsLoaded(true);
       })
-      .catch(() => {})
-      .finally(() => {});
+      .catch(() => setPrefsLoaded(true));
   }, []);
 
   const persist = useCallback(
@@ -121,6 +128,60 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
 
   const isFavorite = useCallback((id: string) => favorites.some(f => f.id === id), [favorites]);
 
+  const syncBookmarksToCloud = useCallback(async (items: SavedMantra[]) => {
+    try {
+      const deviceId = await getDeviceId();
+      const payload = items.map(f => ({
+        itemId: f.id,
+        type: f.type,
+        title: f.title,
+        sanskrit: f.sanskrit,
+        subtitle: f.subtitle,
+        chapterId: f.chapterId,
+        vedaTitle: f.vedaTitle,
+        savedAt: f.savedAt,
+      }));
+      const merged = await api.syncBookmarks(deviceId, payload);
+      if (merged.length > 0) {
+        const mapped: SavedMantra[] = merged.map(b => ({
+          id: b.itemId,
+          type: (b.type as 'verse' | 'chapter') ?? 'verse',
+          title: b.title,
+          sanskrit: b.sanskrit,
+          subtitle: b.subtitle,
+          chapterId: b.chapterId,
+          vedaTitle: b.vedaTitle,
+          savedAt: b.savedAt,
+        }));
+        setFavorites(mapped);
+        await AsyncStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({
+            favorites: mapped,
+            readingProgress,
+            studyPathProgress,
+            readingFontScale,
+            playbackRate,
+          }),
+        );
+      }
+    } catch {
+      // offline — local favorites still work
+    }
+  }, [readingProgress, studyPathProgress, readingFontScale, playbackRate]);
+
+  const syncBookmarksFromCloud = useCallback(async () => {
+    await syncBookmarksToCloud(favorites);
+  }, [favorites, syncBookmarksToCloud]);
+
+  useEffect(() => {
+    if (!prefsLoaded || didInitialSync.current) {
+      return;
+    }
+    didInitialSync.current = true;
+    syncBookmarksToCloud(favorites).catch(() => undefined);
+  }, [prefsLoaded, favorites, syncBookmarksToCloud]);
+
   const toggleFavorite = useCallback(
     async (item: Omit<SavedMantra, 'savedAt'>) => {
       const exists = favorites.find(f => f.id === item.id);
@@ -129,8 +190,9 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
         : [{...item, savedAt: Date.now()}, ...favorites].slice(0, 50);
       setFavorites(next);
       await persist({favorites: next});
+      await syncBookmarksToCloud(next);
     },
-    [favorites, persist],
+    [favorites, persist, syncBookmarksToCloud],
   );
 
   const removeFavorite = useCallback(
@@ -138,8 +200,9 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
       const next = favorites.filter(f => f.id !== id);
       setFavorites(next);
       await persist({favorites: next});
+      await syncBookmarksToCloud(next);
     },
-    [favorites, persist],
+    [favorites, persist, syncBookmarksToCloud],
   );
 
   const setReadingProgress = useCallback(
@@ -227,6 +290,7 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
       getStudyPathProgress,
       setReadingFontScale,
       setPlaybackRate: setPlaybackRatePref,
+      syncBookmarksFromCloud,
       sanskritFontSize: fontSizes.sanskrit,
       translationFontSize: fontSizes.translation,
     }),
@@ -246,6 +310,7 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
       getStudyPathProgress,
       setReadingFontScale,
       setPlaybackRatePref,
+      syncBookmarksFromCloud,
       fontSizes.sanskrit,
       fontSizes.translation,
     ],

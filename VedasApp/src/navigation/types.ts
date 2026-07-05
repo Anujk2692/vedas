@@ -15,6 +15,7 @@ export type RootStackParamList = {
   StudyPathDetail: {slug: string; title: string};
   TopicDetail: {slug: string; title: string};
   AiGuru: undefined;
+  MeditationTimer: undefined;
 };
 
 export type TabParamList = {

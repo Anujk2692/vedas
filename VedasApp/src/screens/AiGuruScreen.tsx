@@ -238,7 +238,9 @@ export function AiGuruScreen() {
         {response ? (
           <View style={styles.answerCard}>
             <View style={styles.answerHeader}>
-              <Text style={styles.answerLabel}>उत्तर</Text>
+              <Text style={styles.answerLabel}>
+              उत्तर{response.aiPowered ? ' · ✨ Krishna AI' : ''}
+            </Text>
               <Pressable
                 style={({pressed}) => [styles.listenBtn, pressed && styles.pressed]}
                 onPress={() => playAnswer(response.answer)}>

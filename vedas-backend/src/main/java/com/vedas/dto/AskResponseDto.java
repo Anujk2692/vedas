@@ -4,6 +4,7 @@ import java.util.List;
 
 public class AskResponseDto {
     private String answer;
+    private boolean aiPowered;
     private List<VedaSummaryDto> relatedScriptures;
     private List<ChapterSummaryDto> relatedChapters;
     private List<VerseDto> relatedVerses;
@@ -11,6 +12,8 @@ public class AskResponseDto {
 
     public String getAnswer() { return answer; }
     public void setAnswer(String answer) { this.answer = answer; }
+    public boolean isAiPowered() { return aiPowered; }
+    public void setAiPowered(boolean aiPowered) { this.aiPowered = aiPowered; }
     public List<VedaSummaryDto> getRelatedScriptures() { return relatedScriptures; }
     public void setRelatedScriptures(List<VedaSummaryDto> relatedScriptures) { this.relatedScriptures = relatedScriptures; }
     public List<ChapterSummaryDto> getRelatedChapters() { return relatedChapters; }

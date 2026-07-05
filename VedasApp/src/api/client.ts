@@ -15,6 +15,7 @@ import type {
   ExternalResource,
   Panchang,
   AskResponse,
+  BookmarkSyncItem,
   Veda,
   Verse,
 } from './types';
@@ -141,4 +142,6 @@ export const api = {
   getPanchang: (lang: string) => request<Panchang>('/sanatan/panchang', lang),
   askGuru: (question: string, lang: string) =>
     postRequest<AskResponse>('/sanatan/ask', {question, lang}, 90000),
+  syncBookmarks: (deviceId: string, bookmarks: BookmarkSyncItem[]) =>
+    postRequest<BookmarkSyncItem[]>('/user/bookmarks/sync', {deviceId, bookmarks}),
 };

@@ -52,6 +52,9 @@ import { AskResponse } from '../../core/models';
       }
 
       @if (response) {
+        @if (response.aiPowered) {
+          <p class="ai-badge">✨ Krishna AI (LLM) — scripture-grounded</p>
+        }
         <article class="card answer">
           <div class="answer-head">
             <h3>Answer</h3>
@@ -107,6 +110,7 @@ import { AskResponse } from '../../core/models';
     .answer-head h3 { margin: 0; }
     .answer-text { white-space: pre-line; margin-bottom: 0; }
     .error { color: #b42318; background: #fef3f2; padding: 0.75rem 1rem; border-radius: 10px; }
+    .ai-badge { color: #7a3200; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.5rem; }
     .history { text-align: left; width: 100%; cursor: pointer; border: none; }
     .history p { margin: 0.35rem 0 0; color: #9a7b6a; font-size: 0.85rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   `,

@@ -20,6 +20,7 @@ import {AudioScreen} from '../screens/AudioScreen';
 import {ChapterReaderScreen} from '../screens/ChapterReaderScreen';
 import {GyanScreen} from '../screens/GyanScreen';
 import {HomeScreen} from '../screens/HomeScreen';
+import {MeditationTimerScreen} from '../screens/MeditationTimerScreen';
 import {PdfViewerScreen} from '../screens/PdfViewerScreen';
 import {SearchScreen} from '../screens/SearchScreen';
 import {SettingsScreen} from '../screens/SettingsScreen';
@@ -221,6 +222,15 @@ export function AppNavigator() {
             options={{
               header: () => (
                 <StackScreenHeader title="AI Guru" subtitle="शास्त्र-आधारित मार्गदर्शन" />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="MeditationTimer"
+            component={MeditationTimerScreen}
+            options={{
+              header: () => (
+                <StackScreenHeader title="Meditation Timer" subtitle="ध्यान · Daily practice" />
               ),
             }}
           />

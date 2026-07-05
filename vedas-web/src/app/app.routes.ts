@@ -11,6 +11,7 @@ import { SearchComponent } from './pages/search/search.component';
 import { AartisComponent } from './pages/aartis/aartis.component';
 import { AartiDetailComponent } from './pages/aarti-detail/aarti-detail.component';
 import { AiGuruComponent } from './pages/ai-guru/ai-guru.component';
+import { MeditationComponent } from './pages/meditation/meditation.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,7 @@ export const routes: Routes = [
       { path: 'aartis', component: AartisComponent },
       { path: 'aartis/:slug', component: AartiDetailComponent },
       { path: 'ai-guru', component: AiGuruComponent },
+      { path: 'meditation', component: MeditationComponent },
     ],
   },
   { path: '**', redirectTo: '' },

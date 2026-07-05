@@ -7,10 +7,12 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
   TextInput,
   View,
 } from 'react-native';
+import {isDailyReminderEnabled, setDailyReminderEnabled} from '../services/dailyReminder';
 import {DEV_MACHINE_IP, getApiHost, getDefaultApiHost, getProductionApiHost, setApiHost, testApiConnection} from '../api/config';
 import {clearAllApiCache} from '../api/cache';
 import {LanguagePicker} from '../components/LanguagePicker';
@@ -61,7 +63,9 @@ export function SettingsScreen() {
     setReadingFontScale,
     playbackRate,
     setPlaybackRate,
+    syncBookmarksFromCloud,
   } = useUserPreferences();
+  const [dailyReminder, setDailyReminder] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
   const [apiHost, setApiHostState] = useState(getDefaultApiHost());
   const [saved, setSaved] = useState(false);
@@ -72,6 +76,7 @@ export function SettingsScreen() {
 
   useEffect(() => {
     getApiHost().then(setApiHostState);
+    isDailyReminderEnabled().then(setDailyReminder);
   }, []);
 
   const saveApiHost = async () => {
@@ -144,6 +149,38 @@ export function SettingsScreen() {
             ))}
           </View>
         </View>
+      </SettingsSection>
+
+      <SettingsSection title="Sanatan Tools">
+        <Pressable
+          style={({pressed}) => [styles.card, pressed && styles.pressed]}
+          onPress={() => navigation.navigate('MeditationTimer')}>
+          <Text style={styles.label}>🧘 Meditation Timer</Text>
+          <Text style={styles.hint}>5–30 min dhyaan — like leading Gita apps</Text>
+        </Pressable>
+        <View style={styles.card}>
+          <View style={styles.reminderRow}>
+            <View style={{flex: 1}}>
+              <Text style={styles.label}>🕉 Daily Shlok Reminder</Text>
+              <Text style={styles.hint}>Local notification at 7:00 AM</Text>
+            </View>
+            <Switch
+              value={dailyReminder}
+              onValueChange={async v => {
+                setDailyReminder(v);
+                await setDailyReminderEnabled(v);
+              }}
+              trackColor={{false: colors.borderLight, true: colors.primaryLight}}
+              thumbColor={dailyReminder ? colors.primary : colors.textMuted}
+            />
+          </View>
+        </View>
+        <Pressable
+          style={({pressed}) => [styles.card, pressed && styles.pressed]}
+          onPress={() => syncBookmarksFromCloud()}>
+          <Text style={styles.label}>☁️ Sync Saved Verses</Text>
+          <Text style={styles.hint}>Merge bookmarks across devices via cloud</Text>
+        </Pressable>
       </SettingsSection>
 
       <SettingsSection title={`Saved Mantras (${favorites.length})`}>
@@ -470,4 +507,5 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   pressed: {opacity: 0.9},
+  reminderRow: {flexDirection: 'row', alignItems: 'center', gap: 12},
 });

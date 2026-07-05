@@ -21,11 +21,14 @@ public class AiGuruService {
 
     private final VedasService vedasService;
     private final SanatanKnowledgeService sanatanKnowledgeService;
+    private final LlmGuruClient llmGuruClient;
 
     public AiGuruService(VedasService vedasService,
-                         SanatanKnowledgeService sanatanKnowledgeService) {
+                         SanatanKnowledgeService sanatanKnowledgeService,
+                         LlmGuruClient llmGuruClient) {
         this.vedasService = vedasService;
         this.sanatanKnowledgeService = sanatanKnowledgeService;
+        this.llmGuruClient = llmGuruClient;
     }
 
     public AskResponseDto ask(String question, String lang) {
@@ -46,8 +49,29 @@ public class AiGuruService {
         response.setRelatedChapters(limit(search.getChapters(), 5));
         response.setRelatedVerses(limit(search.getVerses(), 8));
         response.setRelatedTopics(topics);
-        response.setAnswer(buildAnswer(q, language, search, topics));
+        String scriptureContext = buildScriptureContext(search, topics);
+        String answer = buildAnswer(q, language, search, topics);
+        if (llmGuruClient.isAvailable()) {
+            String llmAnswer = llmGuruClient.askKrishna(q, language, scriptureContext);
+            if (llmAnswer != null && !llmAnswer.isBlank()) {
+                answer = llmAnswer;
+                response.setAiPowered(true);
+            }
+        }
+        response.setAnswer(answer);
         return response;
+    }
+
+    private String buildScriptureContext(SearchResultDto search, List<TopicDto> topics) {
+        StringBuilder ctx = new StringBuilder();
+        if (!topics.isEmpty()) {
+            TopicDto t = topics.get(0);
+            ctx.append(t.getTitle()).append(": ").append(t.getDescription()).append("\n");
+        }
+        for (VerseDto v : limit(search.getVerses(), 3)) {
+            ctx.append(v.getSanskrit()).append(" — ").append(v.getTranslation()).append("\n");
+        }
+        return ctx.toString().trim();
     }
 
     private SearchResultDto searchForQuestion(String question, String lang) {

@@ -94,7 +94,17 @@ export function GyanScreen() {
               <Text style={styles.guruIcon}>🙏</Text>
               <View style={styles.guruBody}>
                 <Text style={styles.guruTitle}>AI Guru</Text>
-                <Text style={styles.guruDesc}>कर्म, धर्म, मोक्ष — शास्त्र से उत्तर पाएँ</Text>
+                <Text style={styles.guruDesc}>बोलकर पूछें — लिखित + आवाज़ में उत्तर</Text>
+              </View>
+              <Text style={styles.chevron}>›</Text>
+            </Pressable>
+            <Pressable
+              style={({pressed}) => [styles.guruBanner, pressed && styles.pressed]}
+              onPress={() => navigation.navigate('MeditationTimer')}>
+              <Text style={styles.guruIcon}>🧘</Text>
+              <View style={styles.guruBody}>
+                <Text style={styles.guruTitle}>Meditation Timer</Text>
+                <Text style={styles.guruDesc}>Daily dhyaan — 5 to 30 minutes</Text>
               </View>
               <Text style={styles.chevron}>›</Text>
             </Pressable>

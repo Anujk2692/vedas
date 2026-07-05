@@ -17,3 +17,7 @@ vedas:
     base-url: ${VEDAS_MEDIA_BASE_URL:http://localhost:8080/api/media}
   seed:
     force: false
+  ai:
+    enabled: ${VEDAS_AI_ENABLED:false}
+    openai-api-key: ${VEDAS_OPENAI_API_KEY:}
+    model: ${VEDAS_AI_MODEL:gpt-4o-mini}

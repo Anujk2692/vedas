@@ -246,6 +246,17 @@ export interface Panchang {
   note: string;
 }
 
+export interface BookmarkSyncItem {
+  itemId: string;
+  type: string;
+  title: string;
+  sanskrit?: string;
+  subtitle?: string;
+  chapterId: string;
+  vedaTitle?: string;
+  savedAt: number;
+}
+
 export interface AskRequest {
   question: string;
   lang?: string;
@@ -253,6 +264,7 @@ export interface AskRequest {
 
 export interface AskResponse {
   answer: string;
+  aiPowered?: boolean;
   relatedScriptures: Veda[];
   relatedChapters: Chapter[];
   relatedVerses: Verse[];
