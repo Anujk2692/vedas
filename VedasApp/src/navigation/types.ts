@@ -12,10 +12,14 @@ export type RootStackParamList = {
   };
   AartiDetail: {slug: string; title: string};
   PdfViewer: {url: string; title: string};
+  StudyPathDetail: {slug: string; title: string};
+  TopicDetail: {slug: string; title: string};
+  AiGuru: undefined;
 };
 
 export type TabParamList = {
   Home: undefined;
+  Gyan: undefined;
   Aarti: undefined;
   Audio: undefined;
   Video: undefined;

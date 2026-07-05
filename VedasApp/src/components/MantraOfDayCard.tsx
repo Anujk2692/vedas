@@ -1,40 +1,63 @@
 import {useNavigation} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useCallback} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {api} from '../api/client';
+import type {DailyShlok} from '../api/types';
 import {SelectableReadableText} from './SelectableReadableText';
 import {SanskritText} from './SanskritText';
+import {useCachedFetch} from '../hooks/useCachedFetch';
+import {useLanguage} from '../context/LanguageContext';
 import type {RootStackParamList} from '../navigation/types';
 import {borderRadius, colors, shadows, spacing, typography} from '../theme/colors';
 import {getMantraOfDay} from '../utils/mantraOfDay';
 
 export function MantraOfDayCard() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const mantra = getMantraOfDay();
+  const {language} = useLanguage();
+  const fetchShlok = useCallback(() => api.getDailyShlok(language), [language]);
+  const {data: remote} = useCachedFetch<DailyShlok>(
+    '/sanatan/daily-shlok',
+    language,
+    fetchShlok,
+    [language],
+  );
+  const fallback = getMantraOfDay();
+  const shlok = remote ?? {
+    sanskrit: fallback.sanskrit,
+    transliteration: fallback.transliteration,
+    translation: fallback.translation,
+    commentary: '',
+    source: fallback.source,
+    scriptureSlug: fallback.vedaSlug,
+    theme: fallback.theme,
+  };
 
   return (
     <View style={styles.card}>
       <View style={styles.decorCircle} />
       <View style={styles.header}>
-        <Text style={styles.label}>Mantra of the Day</Text>
+        <Text style={styles.label}>आज का श्लोक</Text>
         <View style={styles.themePill}>
-          <Text style={styles.theme}>{mantra.theme}</Text>
+          <Text style={styles.theme}>{shlok.theme}</Text>
         </View>
       </View>
-      <SanskritText text={mantra.sanskrit} style={styles.sanskrit} size={24} />
-      <SelectableReadableText text={mantra.transliteration} style={styles.transliteration} />
-      <SelectableReadableText text={mantra.translation} style={styles.translation} />
-      <Text style={styles.source}>{mantra.source}</Text>
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() =>
-          navigation.navigate('VedaDetail', {
-            vedaId: mantra.vedaSlug,
-            title: mantra.vedaTitle,
-          })
-        }>
-        <Text style={styles.btnText}>Explore this Veda →</Text>
-      </TouchableOpacity>
+      <SanskritText text={shlok.sanskrit} style={styles.sanskrit} size={24} />
+      <SelectableReadableText text={shlok.transliteration} style={styles.transliteration} />
+      <SelectableReadableText text={shlok.translation} style={styles.translation} />
+      <Text style={styles.source}>{shlok.source}</Text>
+      {shlok.scriptureSlug ? (
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() =>
+            navigation.navigate('VedaDetail', {
+              vedaId: shlok.scriptureSlug,
+              title: shlok.source,
+            })
+          }>
+          <Text style={styles.btnText}>ग्रंथ पढ़ें →</Text>
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 }

@@ -2,7 +2,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import type {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import type {CompositeNavigationProp} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {
   FlatList,
   RefreshControl,
@@ -16,6 +16,8 @@ import {ContinueReadingCard} from '../components/ContinueReadingCard';
 import {ErrorBanner} from '../components/ErrorBanner';
 import {LanguagePicker} from '../components/LanguagePicker';
 import {MantraOfDayCard} from '../components/MantraOfDayCard';
+import {PanchangCard} from '../components/PanchangCard';
+import {InfoBanner} from '../components/ui/InfoBanner';
 import {VedaCard} from '../components/VedaCard';
 import {EmptyState} from '../components/ui/EmptyState';
 import {HomeHero} from '../components/ui/HomeHero';
@@ -29,6 +31,18 @@ import type {RootStackParamList, TabParamList} from '../navigation/types';
 import {colors, spacing} from '../theme/colors';
 import {flatListPerfProps} from '../utils/listPerf';
 import {LIST_BOTTOM_INSET} from '../utils/layout';
+
+const SECTION_LABELS: Record<string, {title: string; subtitle: string}> = {
+  VEDA: {title: 'चार वेद', subtitle: 'Rig · Sama · Yajur · Atharva'},
+  ITIHASA: {title: 'इतिहास ग्रंथ', subtitle: 'Gita · Ramayana · Mahabharata · Ramcharitmanas'},
+  UPANISHAD: {title: 'उपनिषद', subtitle: 'Philosophical teachings of the Vedas'},
+  PURANA: {title: 'पुराण', subtitle: 'Bhagavata, Vishnu, Shiva and more'},
+  DARSHAN: {title: 'दर्शन', subtitle: 'Yoga Sutra and classical philosophy'},
+};
+
+type ListRow =
+  | {kind: 'header'; key: string; title: string; subtitle: string}
+  | {kind: 'veda'; key: string; veda: Veda};
 
 export function HomeScreen() {
   const navigation = useNavigation<
@@ -49,6 +63,21 @@ export function HomeScreen() {
   );
   const vedas = data ?? [];
 
+  const rows = useMemo(() => {
+    const order = ['VEDA', 'ITIHASA', 'UPANISHAD', 'PURANA', 'DARSHAN'];
+    const grouped: ListRow[] = [];
+    order.forEach(type => {
+      const items = vedas.filter(v => (v.scriptureType ?? 'VEDA') === type);
+      if (items.length === 0) {
+        return;
+      }
+      const meta = SECTION_LABELS[type] ?? {title: type, subtitle: ''};
+      grouped.push({kind: 'header', key: `h-${type}`, title: meta.title, subtitle: meta.subtitle});
+      items.forEach(v => grouped.push({kind: 'veda', key: v.id, veda: v}));
+    });
+    return grouped;
+  }, [vedas]);
+
   const currentLang = languages.find(l => l.code === language);
 
   useFocusEffect(
@@ -57,8 +86,6 @@ export function HomeScreen() {
       return () => StatusBar.setBarStyle('dark-content');
     }, []),
   );
-
-  const loadVedas = refresh;
 
   if (loading && vedas.length === 0) {
     return (
@@ -74,18 +101,24 @@ export function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      {error && <ErrorBanner message={error} onRetry={loadVedas} />}
+      {error && <ErrorBanner message={error} onRetry={refresh} />}
 
       <FlatList
-        data={vedas}
-        keyExtractor={item => item.id}
+        data={rows}
+        keyExtractor={item => item.key}
         {...flatListPerfProps}
-        renderItem={({item}) => (
-          <VedaCard
-            veda={item}
-            onPress={() => navigation.navigate('VedaDetail', {vedaId: item.id, title: item.title})}
-          />
-        )}
+        renderItem={({item}) =>
+          item.kind === 'header' ? (
+            <SectionHeader title={item.title} subtitle={item.subtitle} />
+          ) : (
+            <VedaCard
+              veda={item.veda}
+              onPress={() =>
+                navigation.navigate('VedaDetail', {vedaId: item.veda.id, title: item.veda.title})
+              }
+            />
+          )
+        }
         contentContainerStyle={styles.list}
         ListHeaderComponent={
           <View>
@@ -94,20 +127,18 @@ export function HomeScreen() {
               onLanguagePress={() => setShowLanguagePicker(true)}
             />
             <MantraOfDayCard />
+            <PanchangCard />
             <ContinueReadingCard />
             <View style={styles.quickRow}>
+              <QuickActionChip icon="🙏" label="AI Guru" accent onPress={() => navigation.navigate('AiGuru')} />
+              <QuickActionChip icon="📚" label="Gyan" onPress={() => navigation.navigate('Gyan')} />
               <QuickActionChip icon="🪔" label="Aarti" onPress={() => navigation.navigate('Aarti')} />
               <QuickActionChip icon="🔍" label="Search" onPress={() => navigation.navigate('Search')} />
-              <QuickActionChip icon="🎵" label="Listen" accent onPress={() => navigation.navigate('Audio')} />
-              <QuickActionChip
-                icon="❤️"
-                label={`${favorites.length} Saved`}
-                onPress={() => navigation.navigate('Settings')}
-              />
+              <QuickActionChip icon="🎵" label="Listen" onPress={() => navigation.navigate('Audio')} />
             </View>
-            <SectionHeader
-              title="Four Sacred Vedas"
-              subtitle="Rig · Sama · Yajur · Atharva"
+            <InfoBanner
+              icon="📥"
+              text="ऑफ़लाइन: एक बार खोलने पर सामग्री कैश हो जाती है। Settings → Clear App Cache से रीफ़्रेश करें।"
             />
           </View>
         }
@@ -118,8 +149,8 @@ export function HomeScreen() {
           !error ? (
             <EmptyState
               icon="📿"
-              title="Unable to load Vedas"
-              message="Check that the backend is running, then open Settings to test your connection."
+              title="Unable to load scriptures"
+              message="Check backend is running, then Settings → Test Connection."
               actionLabel="Open Settings"
               onAction={() => navigation.navigate('Settings')}
             />
@@ -137,18 +168,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  center: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.background,
-  },
   list: {
     paddingHorizontal: spacing.md,
     paddingBottom: LIST_BOTTOM_INSET,
   },
   quickRow: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 10,
     marginBottom: spacing.lg,
   },

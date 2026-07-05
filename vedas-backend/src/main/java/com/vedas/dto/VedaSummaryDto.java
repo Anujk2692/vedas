@@ -4,6 +4,7 @@ public class VedaSummaryDto {
     private String id;
     private String slug;
     private int order;
+    private String scriptureType;
     private String sanskritName;
     private String transliteration;
     private String title;
@@ -18,6 +19,8 @@ public class VedaSummaryDto {
     public void setSlug(String slug) { this.slug = slug; }
     public int getOrder() { return order; }
     public void setOrder(int order) { this.order = order; }
+    public String getScriptureType() { return scriptureType; }
+    public void setScriptureType(String scriptureType) { this.scriptureType = scriptureType; }
     public String getSanskritName() { return sanskritName; }
     public void setSanskritName(String sanskritName) { this.sanskritName = sanskritName; }
     public String getTransliteration() { return transliteration; }

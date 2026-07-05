@@ -12,15 +12,19 @@ import {TextTranslateBar} from '../components/TextTranslateBar';
 import {ScreenHeader, StackScreenHeader, TAB_HEADER_META} from '../components/ui/ScreenHeader';
 import {VedasTabBar} from '../components/ui/VedasTabBar';
 import {useAudioPlayer} from '../context/AudioPlayerContext';
-import {AartiListScreen} from '../screens/AartiListScreen';
+import {AiGuruScreen} from '../screens/AiGuruScreen';
 import {AartiDetailScreen} from '../screens/AartiDetailScreen';
+import {AartiListScreen} from '../screens/AartiListScreen';
 import {AudioPlayerScreen} from '../screens/AudioPlayerScreen';
 import {AudioScreen} from '../screens/AudioScreen';
 import {ChapterReaderScreen} from '../screens/ChapterReaderScreen';
+import {GyanScreen} from '../screens/GyanScreen';
 import {HomeScreen} from '../screens/HomeScreen';
 import {PdfViewerScreen} from '../screens/PdfViewerScreen';
 import {SearchScreen} from '../screens/SearchScreen';
 import {SettingsScreen} from '../screens/SettingsScreen';
+import {StudyPathDetailScreen} from '../screens/StudyPathDetailScreen';
+import {TopicDetailScreen} from '../screens/TopicDetailScreen';
 import {VedaDetailScreen} from '../screens/VedaDetailScreen';
 import {VideoPlayerScreen} from '../screens/VideoPlayerScreen';
 import {VideoScreen} from '../screens/VideoScreen';
@@ -103,6 +107,7 @@ function MainTabs() {
         tabBarShowLabel: false,
       }}>
       <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
+      <Tab.Screen name="Gyan" component={GyanScreen} options={{header: tabHeader('Gyan')}} />
       <Tab.Screen
         name="Aarti"
         component={AartiListScreen}
@@ -191,6 +196,33 @@ export function AppNavigator() {
                 />
               ),
             })}
+          />
+          <Stack.Screen
+            name="TopicDetail"
+            component={TopicDetailScreen}
+            options={({route}) => ({
+              header: () => (
+                <StackScreenHeader title={route.params.title} subtitle="ज्ञान विषय · Knowledge topic" />
+              ),
+            })}
+          />
+          <Stack.Screen
+            name="StudyPathDetail"
+            component={StudyPathDetailScreen}
+            options={({route}) => ({
+              header: () => (
+                <StackScreenHeader title={route.params.title} subtitle="अध्ययन योजना · Study path" />
+              ),
+            })}
+          />
+          <Stack.Screen
+            name="AiGuru"
+            component={AiGuruScreen}
+            options={{
+              header: () => (
+                <StackScreenHeader title="AI Guru" subtitle="शास्त्र-आधारित मार्गदर्शन" />
+              ),
+            }}
           />
           <Stack.Screen
             name="PdfViewer"

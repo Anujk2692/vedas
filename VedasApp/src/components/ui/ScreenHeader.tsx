@@ -115,6 +115,16 @@ export const TAB_HEADER_META: Record<
   string,
   {title: string; subtitle: string; icon: string}
 > = {
+  Home: {
+    title: 'Sacred Home',
+    subtitle: 'Vedas · Gita · study & devotion',
+    icon: '🏠',
+  },
+  Gyan: {
+    title: 'सनातन ज्ञान',
+    subtitle: 'Study paths · topics · free resources',
+    icon: '📚',
+  },
   Audio: {
     title: 'Sacred Audio',
     subtitle: 'Traditional patha · clear pronunciation',

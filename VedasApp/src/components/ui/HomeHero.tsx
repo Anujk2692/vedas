@@ -22,8 +22,8 @@ export function HomeHero({languageLabel, onLanguagePress}: Props) {
               <Text style={styles.om}>🕉</Text>
             </View>
             <View>
-              <Text style={styles.brandLabel}>Vedas App</Text>
-              <Text style={styles.brandTag}>Four sacred scriptures</Text>
+              <Text style={styles.brandLabel}>सनातन ज्ञान</Text>
+              <Text style={styles.brandTag}>Vedas · Gita · Itihasa · Upanishads</Text>
             </View>
           </View>
           <TouchableOpacity style={styles.langBtn} onPress={onLanguagePress} activeOpacity={0.85}>
@@ -32,9 +32,9 @@ export function HomeHero({languageLabel, onLanguagePress}: Props) {
           </TouchableOpacity>
         </View>
         <Text style={styles.greeting}>Namaste</Text>
-        <Text style={styles.title}>Sacred Vedas</Text>
+        <Text style={styles.title}>Sacred Scriptures</Text>
         <Text style={styles.subtitle}>
-          Read ancient wisdom · Listen to patha · Watch traditional chanting
+          Read · Listen · Watch · Study — Vedas, Gita, Ramayana and more in Hindi
         </Text>
       </View>
     </View>

@@ -23,7 +23,9 @@ public class DataSeeder {
             VerseRepository verseRepository,
             MediaRepository mediaRepository,
             ChapterCatalogSync chapterCatalogSync,
-            AartiCatalogSync aartiCatalogSync) {
+            AartiCatalogSync aartiCatalogSync,
+            SanatanScriptureSync sanatanScriptureSync,
+            SanatanKnowledgeSync sanatanKnowledgeSync) {
         return args -> {
             if (languageRepository.count() == 0) {
                 seedLanguages(languageRepository);
@@ -31,8 +33,10 @@ public class DataSeeder {
 
             if (vedaRepository.count() > 0 && !forceSeed) {
                 upsertVedaDetails(vedaRepository, chapterRepository, verseRepository);
+                sanatanScriptureSync.syncAll();
                 chapterCatalogSync.syncAll();
                 aartiCatalogSync.syncAll();
+                sanatanKnowledgeSync.syncAll();
                 updateAllVedaCounts(vedaRepository, chapterRepository, verseRepository);
                 seedMissingContent(vedaRepository, chapterRepository, verseRepository, mediaRepository);
                 return;
@@ -71,6 +75,8 @@ public class DataSeeder {
 
             chapterCatalogSync.syncAll();
             aartiCatalogSync.syncAll();
+            sanatanScriptureSync.syncAll();
+            sanatanKnowledgeSync.syncAll();
             updateAllVedaCounts(vedaRepository, chapterRepository, verseRepository);
         };
     }
@@ -86,6 +92,10 @@ public class DataSeeder {
         saveOrUpdate(repo, buildSamaveda());
         saveOrUpdate(repo, buildYajurveda());
         saveOrUpdate(repo, buildAtharvaveda());
+        repo.findBySlug("rigveda").ifPresent(v -> { v.setScriptureType("VEDA"); repo.save(v); });
+        repo.findBySlug("samaveda").ifPresent(v -> { v.setScriptureType("VEDA"); repo.save(v); });
+        repo.findBySlug("yajurveda").ifPresent(v -> { v.setScriptureType("VEDA"); repo.save(v); });
+        repo.findBySlug("atharvaveda").ifPresent(v -> { v.setScriptureType("VEDA"); repo.save(v); });
         repo.findAll().forEach(v -> updateVedaCounts(v, chapterRepo, verseRepo, repo));
     }
 

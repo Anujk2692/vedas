@@ -8,6 +8,13 @@ import type {
   MediaItem,
   SearchResult,
   TranslateResult,
+  SanatanHub,
+  StudyPath,
+  Topic,
+  DailyShlok,
+  ExternalResource,
+  Panchang,
+  AskResponse,
   Veda,
   Verse,
 } from './types';
@@ -117,4 +124,21 @@ export const api = {
     request<AartiDetail>(`/aartis/${slug}`, lang, {skipCache: fresh}),
   translate: (text: string, lang: string) =>
     postRequest<TranslateResult>('/translate', {text, lang}),
+  getSanatanHub: (lang: string, fresh = false) =>
+    request<SanatanHub>('/sanatan/hub', lang, {skipCache: fresh}),
+  getStudyPath: (slug: string, lang: string) =>
+    request<StudyPath>(`/sanatan/study-paths/${slug}`, lang),
+  getTopic: (slug: string, lang: string) =>
+    request<Topic>(`/sanatan/topics/${slug}`, lang),
+  getResources: (lang: string, scriptureSlug?: string, topicSlug?: string) => {
+    const params = new URLSearchParams();
+    if (scriptureSlug) params.set('scriptureSlug', scriptureSlug);
+    if (topicSlug) params.set('topicSlug', topicSlug);
+    const qs = params.toString();
+    return request<ExternalResource[]>(`/sanatan/resources${qs ? `?${qs}` : ''}`, lang);
+  },
+  getDailyShlok: (lang: string) => request<DailyShlok>('/sanatan/daily-shlok', lang),
+  getPanchang: (lang: string) => request<Panchang>('/sanatan/panchang', lang),
+  askGuru: (question: string, lang: string) =>
+    postRequest<AskResponse>('/sanatan/ask', {question, lang}),
 };

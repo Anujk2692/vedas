@@ -235,6 +235,10 @@ export function SettingsScreen() {
               {connectionStatus}
             </Text>
           ) : null}
+          <Text style={styles.hint}>
+            Cached scriptures, aartis, and hub data work offline after first load. Clear cache to
+            refresh from the server.
+          </Text>
           <Pressable
             style={({pressed}) => [styles.secondaryBtn, pressed && styles.pressed]}
             onPress={clearCache}>

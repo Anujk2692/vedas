@@ -208,6 +208,7 @@ public class VedasService {
         dto.setId(v.getId());
         dto.setSlug(v.getSlug());
         dto.setOrder(v.getOrder());
+        dto.setScriptureType(v.getScriptureType() != null ? v.getScriptureType() : "VEDA");
         dto.setSanskritName(v.getSanskritName());
         dto.setTransliteration(v.getTransliteration());
         dto.setTitle(LocalizationUtil.resolve(v.getTitles(), lang));
@@ -223,6 +224,7 @@ public class VedasService {
         dto.setId(v.getId());
         dto.setSlug(v.getSlug());
         dto.setOrder(v.getOrder());
+        dto.setScriptureType(v.getScriptureType() != null ? v.getScriptureType() : "VEDA");
         dto.setSanskritName(v.getSanskritName());
         dto.setTransliteration(v.getTransliteration());
         dto.setTitle(LocalizationUtil.resolve(v.getTitles(), lang));

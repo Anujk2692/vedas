@@ -17,6 +17,8 @@ public final class VedaChapterCatalog {
             case "samaveda" -> samavedaArchikas();
             case "yajurveda" -> yajurvedaAdhyayas();
             case "atharvaveda" -> atharvavedaKandas();
+            case "gita" -> GitaChapterCatalog.chapters();
+            case "ramcharitmanas" -> RamcharitmanasChapterCatalog.chapters();
             default -> List.of();
         };
     }

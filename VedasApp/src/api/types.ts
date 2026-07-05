@@ -11,6 +11,7 @@ export interface Veda {
   id: string;
   slug: string;
   order: number;
+  scriptureType?: string;
   sanskritName: string;
   transliteration: string;
   title: string;
@@ -159,4 +160,89 @@ export interface AudioTrack {
   url: string;
   artwork?: string;
   duration: number;
+}
+
+export interface Topic {
+  id: string;
+  slug: string;
+  order: number;
+  icon: string;
+  title: string;
+  description: string;
+  summary: string;
+  relatedScriptureSlugs?: string[];
+}
+
+export interface StudyPathStep {
+  order: number;
+  title: string;
+  description: string;
+  durationHint?: string;
+  scriptureSlug?: string;
+  actionType?: string;
+}
+
+export interface StudyPath {
+  id: string;
+  slug: string;
+  order: number;
+  level: string;
+  durationLabel: string;
+  icon: string;
+  title: string;
+  description: string;
+  steps: StudyPathStep[];
+}
+
+export interface ExternalResource {
+  id: string;
+  slug: string;
+  order: number;
+  type: string;
+  url: string;
+  sourceName: string;
+  title: string;
+  description: string;
+  scriptureSlug?: string;
+  topicSlug?: string;
+}
+
+export interface SanatanHub {
+  topics: Topic[];
+  studyPaths: StudyPath[];
+  resources: ExternalResource[];
+  scripturesByType: Veda[];
+}
+
+export interface DailyShlok {
+  sanskrit: string;
+  transliteration: string;
+  translation: string;
+  commentary: string;
+  source: string;
+  scriptureSlug: string;
+  theme: string;
+}
+
+export interface Panchang {
+  dateLabel: string;
+  weekday: string;
+  tithi: string;
+  nakshatra: string;
+  yoga: string;
+  festival: string;
+  note: string;
+}
+
+export interface AskRequest {
+  question: string;
+  lang?: string;
+}
+
+export interface AskResponse {
+  answer: string;
+  relatedScriptures: Veda[];
+  relatedChapters: Chapter[];
+  relatedVerses: Verse[];
+  relatedTopics: Topic[];
 }

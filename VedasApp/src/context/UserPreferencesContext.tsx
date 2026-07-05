@@ -29,9 +29,16 @@ export interface ReadingProgress {
   updatedAt: number;
 }
 
+export interface StudyPathProgress {
+  pathSlug: string;
+  completedSteps: number[];
+  updatedAt: number;
+}
+
 interface UserPreferencesValue {
   favorites: SavedMantra[];
   readingProgress: ReadingProgress | null;
+  studyPathProgress: StudyPathProgress[];
   readingFontScale: ReadingFontScale;
   playbackRate: PlaybackRate;
   isFavorite: (id: string) => boolean;
@@ -39,6 +46,9 @@ interface UserPreferencesValue {
   removeFavorite: (id: string) => Promise<void>;
   setReadingProgress: (progress: Omit<ReadingProgress, 'updatedAt'>) => Promise<void>;
   clearReadingProgress: () => Promise<void>;
+  isStudyStepComplete: (pathSlug: string, stepOrder: number) => boolean;
+  toggleStudyStep: (pathSlug: string, stepOrder: number) => Promise<void>;
+  getStudyPathProgress: (pathSlug: string) => StudyPathProgress | undefined;
   setReadingFontScale: (scale: ReadingFontScale) => Promise<void>;
   setPlaybackRate: (rate: PlaybackRate) => Promise<void>;
   sanskritFontSize: number;
@@ -58,6 +68,7 @@ const UserPreferencesContext = createContext<UserPreferencesValue | null>(null);
 interface StoredPrefs {
   favorites: SavedMantra[];
   readingProgress: ReadingProgress | null;
+  studyPathProgress: StudyPathProgress[];
   readingFontScale: ReadingFontScale;
   playbackRate: PlaybackRate;
 }
@@ -65,6 +76,7 @@ interface StoredPrefs {
 const DEFAULTS: StoredPrefs = {
   favorites: [],
   readingProgress: null,
+  studyPathProgress: [],
   readingFontScale: 'normal',
   playbackRate: 1,
 };
@@ -72,6 +84,7 @@ const DEFAULTS: StoredPrefs = {
 export function UserPreferencesProvider({children}: {children: React.ReactNode}) {
   const [favorites, setFavorites] = useState<SavedMantra[]>([]);
   const [readingProgress, setReadingProgressState] = useState<ReadingProgress | null>(null);
+  const [studyPathProgress, setStudyPathProgressState] = useState<StudyPathProgress[]>([]);
   const [readingFontScale, setReadingFontScaleState] = useState<ReadingFontScale>('normal');
   const [playbackRate, setPlaybackRateState] = useState<PlaybackRate>(1);
 
@@ -84,6 +97,7 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
         const parsed = JSON.parse(raw) as StoredPrefs;
         setFavorites(parsed.favorites ?? []);
         setReadingProgressState(parsed.readingProgress ?? null);
+        setStudyPathProgressState(parsed.studyPathProgress ?? []);
         setReadingFontScaleState(parsed.readingFontScale ?? 'normal');
         setPlaybackRateState(parsed.playbackRate ?? 1);
       })
@@ -96,12 +110,13 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
       const merged: StoredPrefs = {
         favorites: next.favorites ?? favorites,
         readingProgress: next.readingProgress !== undefined ? next.readingProgress : readingProgress,
+        studyPathProgress: next.studyPathProgress ?? studyPathProgress,
         readingFontScale: next.readingFontScale ?? readingFontScale,
         playbackRate: next.playbackRate ?? playbackRate,
       };
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
     },
-    [favorites, readingProgress, readingFontScale, playbackRate],
+    [favorites, readingProgress, studyPathProgress, readingFontScale, playbackRate],
   );
 
   const isFavorite = useCallback((id: string) => favorites.some(f => f.id === id), [favorites]);
@@ -141,6 +156,42 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
     await persist({readingProgress: null});
   }, [persist]);
 
+  const getStudyPathProgress = useCallback(
+    (pathSlug: string) => studyPathProgress.find(p => p.pathSlug === pathSlug),
+    [studyPathProgress],
+  );
+
+  const isStudyStepComplete = useCallback(
+    (pathSlug: string, stepOrder: number) => {
+      const entry = studyPathProgress.find(p => p.pathSlug === pathSlug);
+      return entry?.completedSteps.includes(stepOrder) ?? false;
+    },
+    [studyPathProgress],
+  );
+
+  const toggleStudyStep = useCallback(
+    async (pathSlug: string, stepOrder: number) => {
+      const existing = studyPathProgress.find(p => p.pathSlug === pathSlug);
+      let next: StudyPathProgress[];
+      if (existing) {
+        const completed = existing.completedSteps.includes(stepOrder)
+          ? existing.completedSteps.filter(o => o !== stepOrder)
+          : [...existing.completedSteps, stepOrder].sort((a, b) => a - b);
+        next = studyPathProgress.map(p =>
+          p.pathSlug === pathSlug ? {...p, completedSteps: completed, updatedAt: Date.now()} : p,
+        );
+      } else {
+        next = [
+          ...studyPathProgress,
+          {pathSlug, completedSteps: [stepOrder], updatedAt: Date.now()},
+        ];
+      }
+      setStudyPathProgressState(next);
+      await persist({studyPathProgress: next});
+    },
+    [studyPathProgress, persist],
+  );
+
   const setReadingFontScale = useCallback(
     async (scale: ReadingFontScale) => {
       setReadingFontScaleState(scale);
@@ -163,6 +214,7 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
     () => ({
       favorites,
       readingProgress,
+      studyPathProgress,
       readingFontScale,
       playbackRate,
       isFavorite,
@@ -170,6 +222,9 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
       removeFavorite,
       setReadingProgress,
       clearReadingProgress,
+      isStudyStepComplete,
+      toggleStudyStep,
+      getStudyPathProgress,
       setReadingFontScale,
       setPlaybackRate: setPlaybackRatePref,
       sanskritFontSize: fontSizes.sanskrit,
@@ -178,6 +233,7 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
     [
       favorites,
       readingProgress,
+      studyPathProgress,
       readingFontScale,
       playbackRate,
       isFavorite,
@@ -185,6 +241,9 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
       removeFavorite,
       setReadingProgress,
       clearReadingProgress,
+      isStudyStepComplete,
+      toggleStudyStep,
+      getStudyPathProgress,
       setReadingFontScale,
       setPlaybackRatePref,
       fontSizes.sanskrit,

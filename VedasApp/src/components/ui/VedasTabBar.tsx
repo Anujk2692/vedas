@@ -5,10 +5,11 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TAB_BAR_HEIGHT} from '../../utils/layout';
 import {borderRadius, colors, shadows, spacing} from '../../theme/colors';
 
-type TabKey = 'Home' | 'Aarti' | 'Audio' | 'Video' | 'Search' | 'Settings';
+type TabKey = 'Home' | 'Gyan' | 'Aarti' | 'Audio' | 'Video' | 'Search' | 'Settings';
 
-const TAB_META: Record<TabKey, {label: string; icon: string; activeIcon: string}> = {
+const TAB_META: Record<string, {label: string; icon: string; activeIcon: string}> = {
   Home: {label: 'Home', icon: '⌂', activeIcon: '⌂'},
+  Gyan: {label: 'Gyan', icon: '📖', activeIcon: '📚'},
   Aarti: {label: 'Aarti', icon: '🪔', activeIcon: '🪔'},
   Audio: {label: 'Audio', icon: '♪', activeIcon: '♫'},
   Video: {label: 'Video', icon: '▷', activeIcon: '▶'},

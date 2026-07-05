@@ -21,15 +21,18 @@ public class ChapterCatalogSync {
     private final ChapterRepository chapterRepository;
     private final VerseRepository verseRepository;
     private final MediaRepository mediaRepository;
+    private final GitaVerseLoader gitaVerseLoader;
 
     public ChapterCatalogSync(VedaRepository vedaRepository,
                               ChapterRepository chapterRepository,
                               VerseRepository verseRepository,
-                              MediaRepository mediaRepository) {
+                              MediaRepository mediaRepository,
+                              GitaVerseLoader gitaVerseLoader) {
         this.vedaRepository = vedaRepository;
         this.chapterRepository = chapterRepository;
         this.verseRepository = verseRepository;
         this.mediaRepository = mediaRepository;
+        this.gitaVerseLoader = gitaVerseLoader;
     }
 
     public void syncAll() {
@@ -46,6 +49,12 @@ public class ChapterCatalogSync {
         String vedaId = veda.getId();
         String slug = veda.getSlug();
         for (VedaChapterCatalog.ChapterDef def : defs) {
+            if ("gita".equals(slug)) {
+                List<VedaChapterCatalog.VerseDef> loaded = gitaVerseLoader.versesForChapter(def.number);
+                if (!loaded.isEmpty()) {
+                    def.verses = loaded;
+                }
+            }
             Chapter chapter = chapterRepository.findByVedaIdAndNumber(vedaId, def.number)
                     .orElseGet(Chapter::new);
             applyChapterDef(chapter, vedaId, slug, def);

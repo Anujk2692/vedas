@@ -37,6 +37,11 @@ export function VedaCard({veda, onPress}: Props) {
           {veda.description}
         </Text>
         <View style={styles.metaRow}>
+          {veda.scriptureType && veda.scriptureType !== 'VEDA' && (
+            <View style={styles.typePill}>
+              <Text style={styles.typeText}>{veda.scriptureType}</Text>
+            </View>
+          )}
           <View style={styles.metaPill}>
             <Text style={styles.metaText}>{veda.chapterCount} chapters</Text>
           </View>
@@ -116,6 +121,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 6,
+  },
+  typePill: {
+    backgroundColor: colors.tabActive,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: borderRadius.full,
+    borderWidth: 1,
+    borderColor: colors.primaryLight,
+  },
+  typeText: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: colors.primaryDark,
+    textTransform: 'uppercase',
   },
   metaPill: {
     backgroundColor: colors.surfaceElevated,
