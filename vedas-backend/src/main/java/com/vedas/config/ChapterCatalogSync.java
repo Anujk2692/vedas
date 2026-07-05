@@ -189,9 +189,16 @@ public class ChapterCatalogSync {
     }
 
     private List<LocalizedText> pipe(String en, String hi) {
+        if ((en == null || en.isBlank()) && (hi == null || hi.isBlank())) {
+            return null;
+        }
         List<LocalizedText> list = new ArrayList<>();
-        list.add(new LocalizedText("en", en));
-        list.add(new LocalizedText("hi", hi));
-        return list;
+        if (en != null && !en.isBlank()) {
+            list.add(new LocalizedText("en", en));
+        }
+        if (hi != null && !hi.isBlank()) {
+            list.add(new LocalizedText("hi", hi));
+        }
+        return list.isEmpty() ? null : list;
     }
 }

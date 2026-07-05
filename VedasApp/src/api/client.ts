@@ -63,12 +63,12 @@ async function request<T>(
   }
 }
 
-async function postRequest<T>(path: string, body: unknown): Promise<T> {
+async function postRequest<T>(path: string, body: unknown, timeoutMs = 20000): Promise<T> {
   const baseUrl = await getApiBaseUrl();
   const url = `${baseUrl}${path}`;
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 20000);
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
     const response = await fetch(url, {
@@ -140,5 +140,5 @@ export const api = {
   getDailyShlok: (lang: string) => request<DailyShlok>('/sanatan/daily-shlok', lang),
   getPanchang: (lang: string) => request<Panchang>('/sanatan/panchang', lang),
   askGuru: (question: string, lang: string) =>
-    postRequest<AskResponse>('/sanatan/ask', {question, lang}),
+    postRequest<AskResponse>('/sanatan/ask', {question, lang}, 90000),
 };

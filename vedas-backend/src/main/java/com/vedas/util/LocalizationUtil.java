@@ -16,6 +16,7 @@ public final class LocalizationUtil {
         Optional<String> exact = texts.stream()
                 .filter(t -> languageCode.equalsIgnoreCase(t.getLanguageCode()))
                 .map(LocalizedText::getText)
+                .filter(text -> text != null && !text.isBlank())
                 .findFirst();
         if (exact.isPresent()) {
             return exact.get();
@@ -23,8 +24,16 @@ public final class LocalizationUtil {
         Optional<String> english = texts.stream()
                 .filter(t -> "en".equalsIgnoreCase(t.getLanguageCode()))
                 .map(LocalizedText::getText)
+                .filter(text -> text != null && !text.isBlank())
                 .findFirst();
-        return english.orElse(texts.get(0).getText());
+        if (english.isPresent()) {
+            return english.get();
+        }
+        return texts.stream()
+                .map(LocalizedText::getText)
+                .filter(text -> text != null && !text.isBlank())
+                .findFirst()
+                .orElse("");
     }
 
     public static boolean anyContains(List<LocalizedText> texts, String q) {

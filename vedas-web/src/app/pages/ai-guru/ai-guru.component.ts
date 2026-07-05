@@ -22,6 +22,9 @@ import { AskResponse } from '../../core/models';
           <button type="button" class="chip" (click)="question = s; ask()">{{ s }}</button>
         }
       </div>
+      @if (error) {
+        <p class="error">{{ error }}</p>
+      }
       @if (response) {
         <article class="card answer">
           <h3>Answer</h3>
@@ -46,6 +49,7 @@ import { AskResponse } from '../../core/models';
     .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
     .chip { border: 1px solid rgba(196,92,0,0.2); background: #fff3e6; border-radius: 999px; padding: 0.4rem 0.85rem; cursor: pointer; font-size: 0.85rem; }
     .answer { border-left: 4px solid #c45c00; }
+    .error { color: #b42318; background: #fef3f2; padding: 0.75rem 1rem; border-radius: 10px; }
   `,
 })
 export class AiGuruComponent {
@@ -54,18 +58,23 @@ export class AiGuruComponent {
   question = '';
   response: AskResponse | null = null;
   loading = false;
+  error: string | null = null;
   suggestions = ['कर्म योग क्या है?', 'What is dharma?', 'मोक्ष का मार्ग', 'Bhagavad Gita summary'];
 
   ask(): void {
     const q = this.question.trim();
     if (q.length < 2) return;
     this.loading = true;
+    this.error = null;
     this.api.askGuru(q, this.langService.lang()).subscribe({
       next: r => {
         this.response = r;
         this.loading = false;
       },
-      error: () => (this.loading = false),
+      error: () => {
+        this.loading = false;
+        this.error = 'Could not get an answer. The server may be waking up — please try again in a moment.';
+      },
     });
   }
 }

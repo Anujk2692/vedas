@@ -319,7 +319,7 @@ public class VedasService {
         MediaDto dto = new MediaDto();
         dto.setId(m.getId());
         dto.setTitle(m.getTitle());
-        dto.setType(m.getType().name());
+        dto.setType(m.getType() != null ? m.getType().name() : "AUDIO");
         dto.setVedaId(m.getVedaId());
         dto.setChapterId(m.getChapterId());
         dto.setVerseId(m.getVerseId());
