@@ -30,7 +30,7 @@ export function ChapterReaderScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'ChapterReader'>>();
   const {language} = useLanguage();
-  const {setReadingProgress, sanskritFontSize, translationFontSize} = useUserPreferences();
+  const {setReadingProgress, addRecentItem, sanskritFontSize, translationFontSize} = useUserPreferences();
   const {playQueue} = useAudioPlayer();
   const [chapter, setChapter] = useState<Chapter | null>(null);
   const [verses, setVerses] = useState<Verse[]>([]);
@@ -56,6 +56,13 @@ export function ChapterReaderScreen() {
         title: chapterData.title || route.params.title,
         vedaTitle: route.params.vedaTitle,
       });
+      await addRecentItem({
+        id: route.params.chapterId,
+        kind: 'chapter',
+        title: chapterData.title || route.params.title,
+        subtitle: route.params.vedaTitle,
+        targetId: route.params.chapterId,
+      });
     } catch (e) {
       if (!chapterLoaded) {
         setChapter(null);
@@ -66,7 +73,7 @@ export function ChapterReaderScreen() {
       setLoadingChapter(false);
       setLoadingVerses(false);
     }
-  }, [route.params.chapterId, route.params.title, route.params.vedaTitle, language, setReadingProgress]);
+  }, [route.params.chapterId, route.params.title, route.params.vedaTitle, language, setReadingProgress, addRecentItem]);
 
   useEffect(() => {
     loadContent();

@@ -1,10 +1,12 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {useUserPreferences} from '../context/UserPreferencesContext';
 import {borderRadius, colors, shadows, spacing} from '../theme/colors';
 
 const PRESETS = [5, 10, 15, 20, 30];
 
 export function MeditationTimerScreen() {
+  const {recordSadhanaPractice} = useUserPreferences();
   const [minutes, setMinutes] = useState(10);
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [running, setRunning] = useState(false);
@@ -32,6 +34,7 @@ export function MeditationTimerScreen() {
           clearTimer();
           setRunning(false);
           setCompleted(true);
+          recordSadhanaPractice().catch(() => undefined);
           return 0;
         }
         return prev - 1;

@@ -25,10 +25,11 @@ export function PanchangCard() {
       <View style={styles.row}>
         <Text style={styles.chip}>🌙 {data.tithi}</Text>
         <Text style={styles.chip}>⭐ {data.nakshatra}</Text>
+        {data.yoga ? <Text style={styles.chip}>🧘 {data.yoga}</Text> : null}
       </View>
-      {data.festival ? (
-        <Text style={styles.festival}>🪔 {data.festival}</Text>
-      ) : null}
+      {data.festival ? <Text style={styles.festival}>🪔 {data.festival}</Text> : null}
+      {data.festivalWhy ? <Text style={styles.why}>{data.festivalWhy}</Text> : null}
+      {data.festivalRitual ? <Text style={styles.ritual}>Ritual: {data.festivalRitual}</Text> : null}
       <Text style={styles.note}>{data.note}</Text>
     </View>
   );
@@ -55,6 +56,8 @@ const styles = StyleSheet.create({
   weekday: {fontSize: 16, fontWeight: '800', color: colors.text, marginBottom: spacing.sm},
   row: {flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: spacing.sm},
   chip: {fontSize: 12, color: colors.textSecondary, fontWeight: '600'},
-  festival: {fontSize: 14, fontWeight: '700', color: colors.primaryDark, marginBottom: 6},
+  festival: {fontSize: 14, fontWeight: '700', color: colors.primaryDark, marginBottom: 4},
+  why: {fontSize: 13, color: colors.textSecondary, lineHeight: 19, marginBottom: 4},
+  ritual: {fontSize: 12, color: colors.text, fontWeight: '600', marginBottom: 6},
   note: {fontSize: 11, color: colors.textMuted, lineHeight: 16},
 });

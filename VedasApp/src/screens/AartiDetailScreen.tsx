@@ -1,7 +1,7 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import type {RouteProp} from '@react-navigation/native';
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {
   FlatList,
   Pressable,
@@ -61,7 +61,7 @@ export function AartiDetailScreen() {
   const route = useRoute<RouteProp<RootStackParamList, 'AartiDetail'>>();
   const {language} = useLanguage();
   const {playTrack} = useAudioPlayer();
-  const {sanskritFontSize, translationFontSize} = useUserPreferences();
+  const {sanskritFontSize, translationFontSize, recordSadhanaPractice} = useUserPreferences();
   const fetchAarti = useCallback(async () => {
     const data = await api.getAarti(route.params.slug, language, true);
     return normalizeAartiDetail(data);
@@ -72,6 +72,12 @@ export function AartiDetailScreen() {
     fetchAarti,
     [route.params.slug, language],
   );
+
+  useEffect(() => {
+    if (aarti) {
+      recordSadhanaPractice().catch(() => undefined);
+    }
+  }, [aarti, recordSadhanaPractice]);
 
   const shareAarti = async () => {
     if (!aarti) {

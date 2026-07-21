@@ -7,6 +7,8 @@ public class PanchangDto {
     private String nakshatra;
     private String yoga;
     private String festival;
+    private String festivalWhy;
+    private String festivalRitual;
     private String note;
 
     public String getDateLabel() { return dateLabel; }
@@ -21,6 +23,10 @@ public class PanchangDto {
     public void setYoga(String yoga) { this.yoga = yoga; }
     public String getFestival() { return festival; }
     public void setFestival(String festival) { this.festival = festival; }
+    public String getFestivalWhy() { return festivalWhy; }
+    public void setFestivalWhy(String festivalWhy) { this.festivalWhy = festivalWhy; }
+    public String getFestivalRitual() { return festivalRitual; }
+    public void setFestivalRitual(String festivalRitual) { this.festivalRitual = festivalRitual; }
     public String getNote() { return note; }
     public void setNote(String note) { this.note = note; }
 }

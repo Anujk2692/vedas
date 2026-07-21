@@ -84,10 +84,36 @@ export class VedaDetailComponent implements OnInit {
     this.api.getVeda(slug, lang).subscribe({
       next: v => {
         this.veda = v;
+        this.loading = false;
+        this.pushRecent({
+          kind: 'scripture',
+          id: v.slug || slug,
+          title: v.title,
+          subtitle: v.sanskritName,
+          viewedAt: Date.now(),
+        });
         this.api.getChapters(v.id, lang).subscribe(c => (this.chapters = c));
+      },
+      error: () => {
         this.loading = false;
       },
-      error: () => (this.loading = false),
     });
+  }
+
+  private pushRecent(item: {
+    kind: 'scripture' | 'topic';
+    id: string;
+    title: string;
+    subtitle?: string;
+    viewedAt: number;
+  }): void {
+    try {
+      const raw = localStorage.getItem('sanatan_recent_v1');
+      const list = raw ? (JSON.parse(raw) as typeof item[]) : [];
+      const next = [item, ...list.filter(r => !(r.kind === item.kind && r.id === item.id))].slice(0, 5);
+      localStorage.setItem('sanatan_recent_v1', JSON.stringify(next));
+    } catch {
+      // ignore
+    }
   }
 }

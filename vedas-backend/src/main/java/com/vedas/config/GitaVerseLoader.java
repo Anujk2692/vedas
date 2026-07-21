@@ -6,6 +6,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +17,27 @@ import java.util.stream.Collectors;
 public class GitaVerseLoader {
 
     private final Map<Integer, List<VedaChapterCatalog.VerseDef>> versesByChapter;
+    private final List<VedaChapterCatalog.VerseDef> allVerses;
 
     public GitaVerseLoader(ObjectMapper objectMapper) {
         this.versesByChapter = load(objectMapper);
+        List<VedaChapterCatalog.VerseDef> flat = new ArrayList<>();
+        for (int chapter = 1; chapter <= 18; chapter++) {
+            flat.addAll(versesForChapter(chapter));
+        }
+        this.allVerses = List.copyOf(flat);
     }
 
     public List<VedaChapterCatalog.VerseDef> versesForChapter(int chapterNumber) {
         return versesByChapter.getOrDefault(chapterNumber, List.of());
     }
 
+    public List<VedaChapterCatalog.VerseDef> allVersesInOrder() {
+        return allVerses;
+    }
+
     public int totalVerseCount() {
-        return versesByChapter.values().stream().mapToInt(List::size).sum();
+        return allVerses.size();
     }
 
     private static Map<Integer, List<VedaChapterCatalog.VerseDef>> load(ObjectMapper mapper) {

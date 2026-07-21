@@ -10,6 +10,8 @@ public class TopicDto {
     private String title;
     private String description;
     private String summary;
+    private String simpleExplanation;
+    private String detailedExplanation;
     private List<String> relatedScriptureSlugs;
 
     public String getId() { return id; }
@@ -26,6 +28,10 @@ public class TopicDto {
     public void setDescription(String description) { this.description = description; }
     public String getSummary() { return summary; }
     public void setSummary(String summary) { this.summary = summary; }
+    public String getSimpleExplanation() { return simpleExplanation; }
+    public void setSimpleExplanation(String simpleExplanation) { this.simpleExplanation = simpleExplanation; }
+    public String getDetailedExplanation() { return detailedExplanation; }
+    public void setDetailedExplanation(String detailedExplanation) { this.detailedExplanation = detailedExplanation; }
     public List<String> getRelatedScriptureSlugs() { return relatedScriptureSlugs; }
     public void setRelatedScriptureSlugs(List<String> relatedScriptureSlugs) { this.relatedScriptureSlugs = relatedScriptureSlugs; }
 }

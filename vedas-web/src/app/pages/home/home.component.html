@@ -7,6 +7,8 @@
       <div class="hero-actions">
         <a routerLink="/scriptures" class="btn btn-primary">Explore Scriptures</a>
         <a routerLink="/gyan" class="btn btn-outline">Study Paths</a>
+        <a routerLink="/quiz" class="btn btn-outline">Daily Quiz</a>
+        <a routerLink="/culture" class="btn btn-outline">Culture</a>
         <a routerLink="/ai-guru" class="btn btn-outline">Ask AI Guru</a>
       </div>
     </div>
@@ -35,14 +37,66 @@
     </article>
   }
 
+  @if (gitaOfDay) {
+    <article class="card shlok-card">
+      <div class="card-head">
+        <span>गीता ऑफ़ द डे</span>
+        <span class="pill">{{ gitaOfDay.theme }}</span>
+      </div>
+      <p class="sanskrit">{{ gitaOfDay.sanskrit }}</p>
+      <p class="translit">{{ gitaOfDay.transliteration }}</p>
+      <p>{{ gitaOfDay.translation }}</p>
+      <small>{{ gitaOfDay.source }}</small>
+      <div class="hero-actions" style="margin-top: 0.75rem">
+        <a routerLink="/scriptures/gita" class="btn btn-outline">Open Gita</a>
+      </div>
+    </article>
+  }
+
   @if (panchang) {
     <article class="card panchang-card">
       <h3>आज का पंचांग · {{ panchang.dateLabel }}</h3>
       <p><strong>{{ panchang.weekday }}</strong> · {{ panchang.tithi }}</p>
+      @if (panchang.nakshatra) {
+        <p>⭐ {{ panchang.nakshatra }}@if (panchang.yoga) { · 🧘 {{ panchang.yoga }}}</p>
+      }
       @if (panchang.festival) {
         <p class="festival">🪔 {{ panchang.festival }}</p>
       }
+      @if (panchang.festivalWhy) {
+        <p>{{ panchang.festivalWhy }}</p>
+      }
+      @if (panchang.festivalRitual) {
+        <p><strong>Ritual:</strong> {{ panchang.festivalRitual }}</p>
+      }
       <small>{{ panchang.note }}</small>
+    </article>
+  }
+
+  @if (studyPath) {
+    <article class="card">
+      <h3>Continue Learning</h3>
+      <p>{{ studyPath.icon }} {{ studyPath.title }}</p>
+      <p>{{ studyPath.description }}</p>
+      <a [routerLink]="['/gyan/path', studyPath.slug]" class="btn btn-primary">Open study path</a>
+    </article>
+  }
+
+  @if (recent.length) {
+    <article class="card">
+      <h3>Recently Viewed</h3>
+      <div class="recent-list">
+        @for (item of recent; track item.id) {
+          <a
+            [routerLink]="item.kind === 'topic' ? ['/gyan/topic', item.id] : ['/scriptures', item.id]"
+            class="recent-item">
+            {{ item.title }}
+            @if (item.subtitle) {
+              <small> · {{ item.subtitle }}</small>
+            }
+          </a>
+        }
+      </div>
     </article>
   }
 

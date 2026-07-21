@@ -88,6 +88,19 @@ public final class ScripturePdfLibrary {
                 ed("अथर्ववेद — हिंदी (Dr. Raj Bahadur Pandey)", "Atharvaveda — Hindi",
                         "atharvaveda-by-dr-raj-bahadur-pandey-hindi-vedas-n_202605",
                         "Atharvaveda by Dr Raj Bahadur Pandey Hindi Vedas New Delhi 2016 Diamond Pocket Books Pvt Ltd.pdf"));
+
+        editions("manusmriti",
+                ed("मनुस्मृति — आर्काइव संस्करण", "Manusmriti — Archive edition",
+                        "Manusmriti",
+                        "Manusmriti.pdf"));
+        editions("arthashastra",
+                ed("अर्थशास्त्र — कौटिल्य (आर्काइव)", "Arthashastra — Kautilya (Archive)",
+                        "KautilyasArthasastra",
+                        "KautilyasArthasastra.pdf"));
+        editions("chanakya-niti",
+                ed("चाणक्य नीति — आर्काइव", "Chanakya Niti — Archive",
+                        "ChanakyaNiti",
+                        "ChanakyaNiti.pdf"));
     }
 
     public static void applyPdf(Veda v) {

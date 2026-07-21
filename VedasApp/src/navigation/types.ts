@@ -16,6 +16,12 @@ export type RootStackParamList = {
   TopicDetail: {slug: string; title: string};
   AiGuru: undefined;
   MeditationTimer: undefined;
+  QuizList: undefined;
+  QuizPlay: {quizId: string; title: string};
+  CultureHub: undefined;
+  DeityDetail: {slug: string; title: string};
+  TempleDetail: {slug: string; title: string};
+  FestivalDetail: {slug: string; title: string};
 };
 
 export type TabParamList = {

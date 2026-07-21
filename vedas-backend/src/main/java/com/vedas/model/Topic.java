@@ -16,6 +16,8 @@ public class Topic {
     private List<LocalizedText> titles;
     private List<LocalizedText> descriptions;
     private List<LocalizedText> summaries;
+    private List<LocalizedText> simpleExplanations;
+    private List<LocalizedText> detailedExplanations;
     private List<String> relatedScriptureSlugs;
     private boolean active;
 
@@ -33,6 +35,10 @@ public class Topic {
     public void setDescriptions(List<LocalizedText> descriptions) { this.descriptions = descriptions; }
     public List<LocalizedText> getSummaries() { return summaries; }
     public void setSummaries(List<LocalizedText> summaries) { this.summaries = summaries; }
+    public List<LocalizedText> getSimpleExplanations() { return simpleExplanations; }
+    public void setSimpleExplanations(List<LocalizedText> simpleExplanations) { this.simpleExplanations = simpleExplanations; }
+    public List<LocalizedText> getDetailedExplanations() { return detailedExplanations; }
+    public void setDetailedExplanations(List<LocalizedText> detailedExplanations) { this.detailedExplanations = detailedExplanations; }
     public List<String> getRelatedScriptureSlugs() { return relatedScriptureSlugs; }
     public void setRelatedScriptureSlugs(List<String> relatedScriptureSlugs) { this.relatedScriptureSlugs = relatedScriptureSlugs; }
     public boolean isActive() { return active; }

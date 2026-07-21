@@ -13,10 +13,14 @@ import {
 import {api} from '../api/client';
 import type {Veda} from '../api/types';
 import {ContinueReadingCard} from '../components/ContinueReadingCard';
+import {ContinueLearningCard} from '../components/ContinueLearningCard';
 import {ErrorBanner} from '../components/ErrorBanner';
+import {GitaOfDayCard} from '../components/GitaOfDayCard';
 import {LanguagePicker} from '../components/LanguagePicker';
 import {MantraOfDayCard} from '../components/MantraOfDayCard';
 import {PanchangCard} from '../components/PanchangCard';
+import {RecentlyViewedCard} from '../components/RecentlyViewedCard';
+import {SadhanaStreakCard} from '../components/SadhanaStreakCard';
 import {InfoBanner} from '../components/ui/InfoBanner';
 import {VedaCard} from '../components/VedaCard';
 import {EmptyState} from '../components/ui/EmptyState';
@@ -38,6 +42,7 @@ const SECTION_LABELS: Record<string, {title: string; subtitle: string}> = {
   UPANISHAD: {title: 'उपनिषद', subtitle: 'Philosophical teachings of the Vedas'},
   PURANA: {title: 'पुराण', subtitle: 'Bhagavata, Vishnu, Shiva and more'},
   DARSHAN: {title: 'दर्शन', subtitle: 'Yoga Sutra and classical philosophy'},
+  NITI: {title: 'नीति ग्रंथ', subtitle: 'Manusmriti · Arthashastra · Chanakya Niti'},
 };
 
 type ListRow =
@@ -64,7 +69,7 @@ export function HomeScreen() {
   const vedas = data ?? [];
 
   const rows = useMemo(() => {
-    const order = ['VEDA', 'ITIHASA', 'UPANISHAD', 'PURANA', 'DARSHAN'];
+    const order = ['VEDA', 'ITIHASA', 'UPANISHAD', 'PURANA', 'DARSHAN', 'NITI'];
     const grouped: ListRow[] = [];
     order.forEach(type => {
       const items = vedas.filter(v => (v.scriptureType ?? 'VEDA') === type);
@@ -127,11 +132,21 @@ export function HomeScreen() {
               onLanguagePress={() => setShowLanguagePicker(true)}
             />
             <MantraOfDayCard />
+            <GitaOfDayCard />
             <PanchangCard />
+            <SadhanaStreakCard />
+            <ContinueLearningCard />
             <ContinueReadingCard />
+            <RecentlyViewedCard />
             <View style={styles.quickRow}>
               <QuickActionChip icon="🙏" label="AI Guru" accent onPress={() => navigation.navigate('AiGuru')} />
               <QuickActionChip icon="📚" label="Gyan" onPress={() => navigation.navigate('Gyan')} />
+              <QuickActionChip icon="🧠" label="Quiz" onPress={() => navigation.navigate('QuizList')} />
+              <QuickActionChip
+                icon="🛕"
+                label="Culture"
+                onPress={() => navigation.navigate('CultureHub')}
+              />
               <QuickActionChip icon="🪔" label="Aarti" onPress={() => navigation.navigate('Aarti')} />
               <QuickActionChip icon="🔍" label="Search" onPress={() => navigation.navigate('Search')} />
               <QuickActionChip icon="🎵" label="Listen" onPress={() => navigation.navigate('Audio')} />

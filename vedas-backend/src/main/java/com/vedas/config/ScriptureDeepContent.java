@@ -19,6 +19,9 @@ public final class ScriptureDeepContent {
             case "upnishads" -> applyUpanishads(v);
             case "puranas" -> applyPuranas(v);
             case "yoga-sutra" -> applyYogaSutra(v);
+            case "manusmriti" -> applyManusmriti(v);
+            case "arthashastra" -> applyArthashastra(v);
+            case "chanakya-niti" -> applyChanakyaNiti(v);
             default -> { }
         }
     }
@@ -135,6 +138,54 @@ public final class ScriptureDeepContent {
         v.setCoreConcepts(lt(
                 "Ashtanga|Samadhi|Chitta|Vritti|Kaivalya|Dhyana",
                 "अष्टांग|समाधि|चित्त|वृत्ति|कैवल्य|ध्यान"));
+    }
+
+    private static void applyManusmriti(Veda v) {
+        v.setOverviews(lt(
+                "Manusmriti is a classical dharma-shastra on social and ritual norms. Study it historically — many verses reflect their era and must be read with context, not as uncritical modern law.",
+                "मनुस्मृति शास्त्रीय धर्मशास्त्र है। ऐतिहासिक संदर्भ में पढ़ें — कई श्लोक अपने काल के हैं; आधुनिक विधि के रूप में नहीं।"));
+        v.setSignificances(lt(
+                "Influential in classical discourse on dharma, yet debated and reinterpreted across centuries. Pair with Gita ethics and Upanishadic equality of Atman.",
+                "धर्म चर्चा में प्रभावशाली; सदियों से विवादित और पुनर्व्याख्या। गीता नीति और उपनिषद आत्मा-समानता के साथ पढ़ें।"));
+        v.setLearningGuides(lt(
+                "Read with a teacher or annotated translation. Cross-check ethical questions with Gita 2–3 and Vidura Niti. Prefer PDF editions that include commentary.",
+                "गुरु या सटीक अनुवाद सहित पढ़ें। गीता २–३ और विदुर नीति से तुलना करें। टीका सहित PDF चुनें।"));
+        v.setCoreConcepts(lt(
+                "Dharma|Context|Varna debate|Ethics|Historical reading",
+                "धर्म|संदर्भ|वर्ण विमर्श|नीति|ऐतिहासिक अध्ययन"));
+        v.setModernRelevance(lt(
+                "Useful for understanding classical Indian legal-ethical history; not a substitute for constitutional values or contemporary justice.",
+                "भारतीय नीति-इतिहास समझने हेतु उपयोगी; संविधान और समकालीन न्याय का विकल्प नहीं।"));
+    }
+
+    private static void applyArthashastra(Veda v) {
+        v.setOverviews(lt(
+                "Kautilya's Arthashastra — statecraft, economy, espionage, and administration for a prosperous, secure kingdom.",
+                "कौटिल्य अर्थशास्त्र — राज्य, अर्थ, गुप्तचर और प्रशासन का ग्रंथ।"));
+        v.setSignificances(lt(
+                "One of the world's earliest systematic treatises on governance and political economy.",
+                "शासन और राजनीतिक अर्थव्यवस्था पर विश्व के प्रारंभिक व्यवस्थित ग्रंथों में से एक।"));
+        v.setLearningGuides(lt(
+                "Start with book summaries on kingship and treasury. Compare with modern public administration ideas — critically.",
+                "राजधर्म और कोश अध्यायों के सार से आरंभ। आधुनिक प्रशासन से तुलना — विवेक सहित।"));
+        v.setCoreConcepts(lt(
+                "Rajadharma|Economy|Strategy|Administration|Security",
+                "राजधर्म|अर्थ|रणनीति|प्रशासन|सुरक्षा"));
+    }
+
+    private static void applyChanakyaNiti(Veda v) {
+        v.setOverviews(lt(
+                "Chanakya Niti — short maxims on friendship, learning, leadership, and caution in worldly life.",
+                "चाणक्य नीति — मित्रता, विद्या, नेतृत्व और सांसारिक सावधानी की सूक्तियाँ।"));
+        v.setSignificances(lt(
+                "Popular practical wisdom tradition alongside Arthashastra, used in education and leadership talks.",
+                "अर्थशास्त्र के साथ लोकप्रिय व्यावहारिक ज्ञान — शिक्षा और नेतृत्व चर्चाओं में।"));
+        v.setLearningGuides(lt(
+                "Read 3–5 maxims daily and journal one application. Pair with Gita's nishkama karma to balance strategy with ethics.",
+                "प्रतिदिन ३–५ सूक्तियाँ पढ़ें और एक अनुप्रयोग लिखें। गीता के निष्काम कर्म से संतुलित करें।"));
+        v.setCoreConcepts(lt(
+                "Niti|Learning|Leadership|Caution|Worldly wisdom",
+                "नीति|विद्या|नेतृत्व|सावधानी|लोक व्यवहार"));
     }
 
     private static List<LocalizedText> lt(String en, String hi) {

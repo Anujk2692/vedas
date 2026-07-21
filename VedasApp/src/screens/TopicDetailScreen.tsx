@@ -1,7 +1,7 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import type {RouteProp} from '@react-navigation/native';
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {FlatList, Linking, Pressable, StyleSheet, Text, View} from 'react-native';
 import {api} from '../api/client';
 import type {ExternalResource, Topic} from '../api/types';
@@ -10,6 +10,7 @@ import {ScreenLoader} from '../components/ui/ScreenLoader';
 import {SectionHeader} from '../components/ui/SectionHeader';
 import {useCachedFetch} from '../hooks/useCachedFetch';
 import {useLanguage} from '../context/LanguageContext';
+import {useUserPreferences} from '../context/UserPreferencesContext';
 import type {RootStackParamList} from '../navigation/types';
 import {borderRadius, colors, shadows, spacing} from '../theme/colors';
 import {LIST_BOTTOM_INSET} from '../utils/layout';
@@ -18,6 +19,7 @@ export function TopicDetailScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'TopicDetail'>>();
   const {language} = useLanguage();
+  const {addRecentItem} = useUserPreferences();
   const fetchTopic = useCallback(
     () => api.getTopic(route.params.slug, language),
     [route.params.slug, language],
@@ -39,6 +41,19 @@ export function TopicDetailScreen() {
     [route.params.slug, language],
   );
 
+  useEffect(() => {
+    if (!topic) {
+      return;
+    }
+    addRecentItem({
+      id: topic.slug,
+      kind: 'topic',
+      title: topic.title,
+      subtitle: 'Gyan topic',
+      targetId: topic.slug,
+    }).catch(() => undefined);
+  }, [topic, addRecentItem]);
+
   if (loading && !topic) {
     return (
       <View style={styles.container}>
@@ -59,7 +74,14 @@ export function TopicDetailScreen() {
             <View style={styles.header}>
               <Text style={styles.icon}>{topic.icon}</Text>
               <Text style={styles.title}>{topic.title}</Text>
-              <Text style={styles.description}>{topic.description}</Text>
+              <Text style={styles.sectionLabel}>Simple</Text>
+              <Text style={styles.description}>
+                {topic.simpleExplanation || topic.summary || topic.description}
+              </Text>
+              <Text style={styles.sectionLabel}>Detailed</Text>
+              <Text style={styles.description}>
+                {topic.detailedExplanation || topic.description}
+              </Text>
               {(topic.relatedScriptureSlugs?.length ?? 0) > 0 && (
                 <>
                   <SectionHeader title="संबंधित ग्रंथ" subtitle="Related scriptures" />
@@ -103,6 +125,13 @@ const styles = StyleSheet.create({
   header: {marginBottom: spacing.sm},
   icon: {fontSize: 40, marginBottom: spacing.sm},
   title: {fontSize: 24, fontWeight: '800', color: colors.text},
+  sectionLabel: {
+    marginTop: spacing.md,
+    fontSize: 12,
+    fontWeight: '800',
+    color: colors.primary,
+    textTransform: 'uppercase',
+  },
   description: {fontSize: 15, color: colors.textSecondary, marginTop: spacing.sm, lineHeight: 24},
   scriptureRow: {flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: spacing.md},
   scriptureChip: {

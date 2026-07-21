@@ -18,13 +18,19 @@ import {AartiListScreen} from '../screens/AartiListScreen';
 import {AudioPlayerScreen} from '../screens/AudioPlayerScreen';
 import {AudioScreen} from '../screens/AudioScreen';
 import {ChapterReaderScreen} from '../screens/ChapterReaderScreen';
+import {CultureHubScreen} from '../screens/CultureHubScreen';
+import {DeityDetailScreen} from '../screens/DeityDetailScreen';
+import {FestivalDetailScreen} from '../screens/FestivalDetailScreen';
 import {GyanScreen} from '../screens/GyanScreen';
 import {HomeScreen} from '../screens/HomeScreen';
 import {MeditationTimerScreen} from '../screens/MeditationTimerScreen';
 import {PdfViewerScreen} from '../screens/PdfViewerScreen';
+import {QuizListScreen} from '../screens/QuizListScreen';
+import {QuizPlayScreen} from '../screens/QuizPlayScreen';
 import {SearchScreen} from '../screens/SearchScreen';
 import {SettingsScreen} from '../screens/SettingsScreen';
 import {StudyPathDetailScreen} from '../screens/StudyPathDetailScreen';
+import {TempleDetailScreen} from '../screens/TempleDetailScreen';
 import {TopicDetailScreen} from '../screens/TopicDetailScreen';
 import {VedaDetailScreen} from '../screens/VedaDetailScreen';
 import {VideoPlayerScreen} from '../screens/VideoPlayerScreen';
@@ -233,6 +239,63 @@ export function AppNavigator() {
                 <StackScreenHeader title="Meditation Timer" subtitle="ध्यान · Daily practice" />
               ),
             }}
+          />
+          <Stack.Screen
+            name="QuizList"
+            component={QuizListScreen}
+            options={{
+              header: () => (
+                <StackScreenHeader title="Daily Quiz" subtitle="Learn · Check · Grow" />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="QuizPlay"
+            component={QuizPlayScreen}
+            options={({route}) => ({
+              header: () => (
+                <StackScreenHeader title={route.params.title} subtitle="Interactive learning" />
+              ),
+            })}
+          />
+          <Stack.Screen
+            name="CultureHub"
+            component={CultureHubScreen}
+            options={{
+              header: () => (
+                <StackScreenHeader
+                  title="Deities · Temples · Festivals"
+                  subtitle="Temple guide & Sanatan culture"
+                />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="DeityDetail"
+            component={DeityDetailScreen}
+            options={({route}) => ({
+              header: () => (
+                <StackScreenHeader title={route.params.title} subtitle="Gods & Goddesses" />
+              ),
+            })}
+          />
+          <Stack.Screen
+            name="TempleDetail"
+            component={TempleDetailScreen}
+            options={({route}) => ({
+              header: () => (
+                <StackScreenHeader title={route.params.title} subtitle="Temple guide" />
+              ),
+            })}
+          />
+          <Stack.Screen
+            name="FestivalDetail"
+            component={FestivalDetailScreen}
+            options={({route}) => ({
+              header: () => (
+                <StackScreenHeader title={route.params.title} subtitle="Festival guide" />
+              ),
+            })}
           />
           <Stack.Screen
             name="PdfViewer"

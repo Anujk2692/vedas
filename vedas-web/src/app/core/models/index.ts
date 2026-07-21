@@ -94,6 +94,8 @@ export interface Topic {
   title: string;
   description: string;
   summary: string;
+  simpleExplanation?: string;
+  detailedExplanation?: string;
   relatedScriptureSlugs?: string[];
 }
 
@@ -142,8 +144,84 @@ export interface Panchang {
   dateLabel: string;
   weekday: string;
   tithi: string;
+  nakshatra?: string;
+  yoga?: string;
   festival: string;
+  festivalWhy?: string;
+  festivalRitual?: string;
   note: string;
+}
+
+export interface QuizSummary {
+  id: string;
+  title: string;
+  description: string;
+  topicSlug: string;
+  questionCount: number;
+  level: string;
+}
+
+export interface QuizQuestion {
+  id: string;
+  prompt: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+  scriptureRef?: string;
+}
+
+export interface Quiz {
+  id: string;
+  title: string;
+  description: string;
+  topicSlug: string;
+  level: string;
+  questions: QuizQuestion[];
+}
+
+export interface Deity {
+  slug: string;
+  category: string;
+  name: string;
+  sanskritName: string;
+  story: string;
+  symbolism: string;
+  family: string;
+  weapons: string;
+  vehicles: string;
+  mantras: string[];
+  festivalSlugs: string[];
+  templeSlugs: string[];
+  imageUrl?: string;
+}
+
+export interface Temple {
+  slug: string;
+  name: string;
+  deitySlug: string;
+  location: string;
+  history: string;
+  importance: string;
+  architecture: string;
+  timings: string;
+  festivalSlugs: string[];
+  nearby: string;
+  virtualTourUrl?: string;
+  imageUrl?: string;
+}
+
+export interface FestivalGuide {
+  slug: string;
+  name: string;
+  whenLabel: string;
+  why: string;
+  story: string;
+  rituals: string;
+  pujaMethod: string;
+  mantras: string;
+  bhog: string;
+  regionalTraditions: string;
+  deitySlugs: string[];
 }
 
 export interface AskResponse {

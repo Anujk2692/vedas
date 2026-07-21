@@ -66,6 +66,18 @@ public class SanatanScriptureSync {
                 "Patanjali's foundational text on Ashtanga Yoga.",
                 "महर्षि पतंजलि का अष्टांग योग का मूल ग्रंथ।",
                 "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800", 4, 196));
+        list.add(stub("manusmriti", 12, "NITI", "मनुस्मृति", "Manusmriti",
+                "Classical dharma-shastra — study with historical context and critical reading.",
+                "शास्त्रीय धर्मशास्त्र — ऐतिहासिक संदर्भ और विवेकपूर्ण अध्ययन सहित।",
+                "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800", 12, 2685));
+        list.add(stub("arthashastra", 13, "NITI", "अर्थशास्त्र", "Arthashastra",
+                "Kautilya's treatise on statecraft, economy, and governance.",
+                "कौटिल्य का राज्य, अर्थ और शासन पर ग्रंथ।",
+                "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800", 15, 0));
+        list.add(stub("chanakya-niti", 14, "NITI", "चाणक्य नीति", "Chanakya Niti",
+                "Practical maxims on ethics, strategy, and daily wisdom attributed to Chanakya.",
+                "चाणक्य से जुड़ी नीति, रणनीति और जीवन-ज्ञान की सूक्तियाँ।",
+                "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800", 17, 0));
         return list;
     }
 

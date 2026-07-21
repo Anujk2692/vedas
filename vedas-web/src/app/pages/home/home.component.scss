@@ -67,6 +67,20 @@ h1 {
   font-weight: 700;
 }
 
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.recent-item {
+  text-decoration: none;
+  color: #3d2314;
+  font-weight: 600;
+  padding: 0.4rem 0;
+  border-top: 1px solid rgba(122, 50, 0, 0.12);
+}
+
 @media (max-width: 768px) {
   .hero-grid {
     grid-template-columns: 1fr;

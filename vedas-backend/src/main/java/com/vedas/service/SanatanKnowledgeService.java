@@ -88,6 +88,10 @@ public class SanatanKnowledgeService {
         dto.setTitle(LocalizationUtil.resolve(t.getTitles(), lang));
         dto.setDescription(LocalizationUtil.resolve(t.getDescriptions(), lang));
         dto.setSummary(LocalizationUtil.resolve(t.getSummaries(), lang));
+        String simple = LocalizationUtil.resolve(t.getSimpleExplanations(), lang);
+        String detailed = LocalizationUtil.resolve(t.getDetailedExplanations(), lang);
+        dto.setSimpleExplanation(simple != null && !simple.isBlank() ? simple : dto.getSummary());
+        dto.setDetailedExplanation(detailed != null && !detailed.isBlank() ? detailed : dto.getDescription());
         dto.setRelatedScriptureSlugs(t.getRelatedScriptureSlugs());
         return dto;
     }

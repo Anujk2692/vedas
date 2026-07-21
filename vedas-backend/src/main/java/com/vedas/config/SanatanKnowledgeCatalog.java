@@ -16,31 +16,194 @@ public final class SanatanKnowledgeCatalog {
 
     public static List<Topic> topics() {
         List<Topic> list = new ArrayList<>();
-        list.add(topic("dharma", 1, "🕉", "धर्म क्या है?", "What is Dharma?",
-                "धर्म वह मार्ग है जो जीवन को व्यवस्था, नीति और आध्यात्मिक उन्नति की ओर ले जाता है। गीता में धर्म का अर्थ कर्तव्य, सत्य और न्याय से जुड़ा है।",
+        list.add(topic(1, "sanatan-dharma", "🕉",
+                "सनातन धर्म क्या है?", "What is Sanatan Dharma?",
+                "सनातन धर्म शाश्वत जीवन-मार्ग है — सत्य, धर्म, कर्म और मोक्ष की खोज।",
+                "Sanatan Dharma is the eternal way of living — seeking truth, duty, action, and liberation.",
+                "सरल शब्दों में: अच्छा जीवन जीने का शाश्वत मार्ग।",
+                "In simple words: the eternal path of living well and seeking truth.",
+                "यह परंपरा वेद, उपनिषद, गीता, रामायण और पुराणों से पोषित है। इसमें पूजा, ज्ञान, भक्ति और सेवा सभी समाहित हैं। 'सनातन' का अर्थ है अनादि-अनंत — समय से बँधा हुआ धर्म नहीं।",
+                "Fed by Vedas, Upanishads, Gita, Ramayana, and Puranas, it includes worship, knowledge, devotion, and service. 'Sanatan' means beginningless and endless — not a time-bound creed.",
+                List.of("gita", "ramayana", "upnishads")));
+        list.add(topic(2, "dharma", "⚖️",
+                "धर्म", "Dharma",
+                "धर्म वह मार्ग है जो जीवन को व्यवस्था, नीति और आध्यात्मिक उन्नति की ओर ले जाता है।",
                 "Dharma guides life through duty, truth, and righteousness.",
+                "धर्म = सही कर्तव्य और सही आचरण।",
+                "Dharma = right duty and right conduct.",
+                "गीता में धर्म व्यक्तिगत स्वधर्म से जुड़ा है — अपनी प्रकृति और भूमिका के अनुसार कर्म। महाभारत धर्म के कठिन प्रश्नों को कथाओं से दर्शाती है।",
+                "In the Gita, dharma includes svadharma — action aligned with one's nature and role. The Mahabharata explores hard ethical questions through story.",
                 List.of("gita", "mahabharata", "ramayana")));
-        list.add(topic("karma", 2, "⚖", "कर्म सिद्धांत", "Law of Karma",
-                "प्रत्येक कर्म का फल अवश्य मिलता है। गीता कर्मयोग सिखाती है — कर्म करो, फल की चिंता मत करो।",
-                "Every action bears fruit; perform duty without attachment to results.",
+        list.add(topic(3, "karma", "🔄",
+                "कर्म सिद्धांत", "Law of Karma",
+                "प्रत्येक कर्म का फल अवश्य मिलता है। गीता कर्मयोग सिखाती है।",
+                "Every action bears fruit; the Gita teaches Karma Yoga.",
+                "जो बोओगे वही काटोगे — पर फल छोड़कर कर्म करो।",
+                "As you sow, so you reap — yet act without clinging to results.",
+                "कर्म का अर्थ केवल पाप-पुण्य नहीं; यह मनोवृत्ति और प्रेरणा भी है। गीता २.४७ सिखाती है: कर्म में अधिकार है, फल में नहीं।",
+                "Karma is not only reward and punishment; intention matters. Gita 2.47: you have a right to action, not to the fruits.",
                 List.of("gita", "mahabharata")));
-        list.add(topic("moksha", 3, "✨", "मोक्ष", "Moksha — Liberation",
-                "मोक्ष आत्मा की संसार-चक्र से मुक्ति है। उपनिषद, गीता और वेदांत इस लक्ष्य की व्याख्या करते हैं।",
-                "Liberation from the cycle of birth and death — the ultimate spiritual goal.",
+        list.add(topic(4, "moksha", "✨",
+                "मोक्ष", "Moksha — Liberation",
+                "मोक्ष आत्मा की संसार-चक्र से मुक्ति है।",
+                "Liberation from the cycle of birth and death.",
+                "मोक्ष = जन्म-मरण के चक्र से स्वतंत्रता।",
+                "Moksha = freedom from the cycle of birth and death.",
+                "उपनिषद आत्मा-ब्रह्म एकता बताते हैं। गीता ज्ञान, भक्ति और कर्म के मार्ग दिखाती है। योगसूत्र चित्त-वृत्ति निरोध से शांति सिखाता है।",
+                "Upanishads teach Atman-Brahman unity. The Gita offers paths of knowledge, devotion, and action. Yoga Sutra points to stilling the mind.",
                 List.of("gita", "upnishads", "yoga-sutra")));
-        list.add(topic("yoga", 4, "🧘", "योग", "Yoga",
-                "योग मन, शरीर और आत्मा का मिलन है। अष्टांग योग, भक्ति, ज्ञान और कर्म — सभी योग के मार्ग हैं।",
-                "Union of mind, body, and soul through multiple paths of yoga.",
+        list.add(topic(5, "rebirth", "♻️",
+                "पुनर्जन्म", "Rebirth",
+                "आत्मा शरीर बदलती है जैसे वस्त्र — कर्म के अनुसार नई यात्रा।",
+                "The soul changes bodies as clothes — a new journey according to karma.",
+                "शरीर मरता है, आत्मा आगे बढ़ती है।",
+                "The body dies; the soul continues.",
+                "गीता २.२२ में वस्त्र-रूपक प्रसिद्ध है। पुनर्जन्म की समझ करुणा और जिम्मेदारी बढ़ाती है।",
+                "Gita 2.22 uses the clothes metaphor. Understanding rebirth deepens compassion and responsibility.",
+                List.of("gita", "upnishads")));
+        list.add(topic(6, "yugas", "🌀",
+                "युग", "Yugas",
+                "चार युग — सत्य, त्रेता, द्वापर, कलि — धर्म की घटती-बढ़ती तीव्रता।",
+                "Four ages — Satya, Treta, Dvapara, Kali — cycles of rising and falling dharma.",
+                "समय के चार बड़े चक्र।",
+                "Four great cycles of time.",
+                "पुराण युगों का विस्तार देते हैं। कलियुग में नाम-जप और साधारण धर्म को विशेष महत्व मिलता है।",
+                "Puranas elaborate the yugas. In Kali Yuga, nama-japa and simple dharma are especially valued.",
+                List.of("puranas", "mahabharata")));
+        list.add(topic(7, "vedas-intro", "📖",
+                "वेद", "Vedas",
+                "चार वेद — ऋक्, साम, यजुर्, अथर्व — ज्ञान की मूल स्रोत।",
+                "Four Vedas — Rig, Sama, Yajur, Atharva — the root of sacred knowledge.",
+                "वेद = प्राचीनतम पवित्र ज्ञान।",
+                "Vedas = the oldest sacred knowledge.",
+                "मंत्र, ब्राह्मण, आरण्यक और उपनिषद वेद की परतें हैं। अध्ययन श्रद्धा और गुरु-परंपरा से होता है।",
+                "Mantra, Brahmana, Aranyaka, and Upanishad are Vedic layers. Study proceeds with reverence and lineage.",
+                List.of("rigveda", "samaveda", "yajurveda", "atharvaveda")));
+        list.add(topic(8, "upanishads-intro", "🕉️",
+                "उपनिषद", "Upanishads",
+                "उपनिषद वेद का ज्ञानकांड — आत्मा और ब्रह्म का रहस्य।",
+                "Upanishads are the wisdom portion of the Vedas — Atman and Brahman.",
+                "उपनिषद = गहन आध्यात्मिक संवाद।",
+                "Upanishads = deep spiritual dialogues.",
+                "ईश, केन, कठ, मुण्डक, माण्डूक्य आदि प्रमुख हैं। 'तत्त्वमसि' जैसे महावाक्य वेदांत की नींव हैं।",
+                "Isha, Kena, Katha, Mundaka, Mandukya are key. Great sayings like 'Tat tvam asi' found Vedanta.",
+                List.of("upnishads")));
+        list.add(topic(9, "puranas-intro", "📚",
+                "पुराण", "Puranas",
+                "अठारह महापुराण — कथाओं से धर्म, भक्ति और सृष्टि-विज्ञान।",
+                "Eighteen Maha Puranas — dharma, devotion, and cosmology through story.",
+                "पुराण = कहानियों से शिक्षा।",
+                "Puranas = teaching through stories.",
+                "भागवत, विष्णु, शिव पुराण लोकप्रिय हैं। वे कठिन दर्शन को सुलभ कथा बनाते हैं।",
+                "Bhagavata, Vishnu, and Shiva Puranas are widely loved. They make philosophy accessible through narrative.",
+                List.of("puranas")));
+        list.add(topic(10, "ramayana-intro", "🏹",
+                "रामायण", "Ramayana",
+                "राम की कथा — धर्म, मर्यादा और भक्ति का आदर्श।",
+                "The story of Rama — ideals of dharma, dignity, and devotion.",
+                "रामायण = मर्यादा पुरुषोत्तम की यात्रा।",
+                "Ramayana = the journey of Maryada Purushottama.",
+                "वाल्मीकि रामायण और तुलसीदास का रामचरितमानस दो प्रमुख धाराएँ हैं। हनुमान भक्ति का केंद्र हैं।",
+                "Valmiki Ramayana and Tulsidas' Ramcharitmanas are two major streams. Hanuman is central to devotion.",
+                List.of("ramayana", "ramcharitmanas")));
+        list.add(topic(11, "mahabharata-intro", "⚔️",
+                "महाभारत", "Mahabharata",
+                "कुरुक्षेत्र का महाकाव्य — धर्मयुद्ध और गीता का घर।",
+                "The Kurukshetra epic — home of dharma-yuddha and the Gita.",
+                "महाभारत = जीवन के सभी प्रश्नों का ग्रंथ।",
+                "Mahabharata = a scripture of life's hardest questions.",
+                "भीष्म, विदुर नीति, शांति पर्व और अनुशासन पर्व ज्ञान के खजाने हैं। गीता इसी के भीष्म पर्व में है।",
+                "Bhishma, Vidura Niti, Shanti and Anushasana parvas are treasuries of wisdom. The Gita sits within Bhishma Parva.",
+                List.of("mahabharata", "gita")));
+        list.add(topic(12, "gita-intro", "🪷",
+                "भगवद्गीता", "Bhagavad Gita",
+                "कृष्ण-अर्जुन संवाद — कर्म, भक्ति और ज्ञान का सार।",
+                "Krishna-Arjuna dialogue — essence of karma, bhakti, and jnana.",
+                "गीता = जीवन का व्यावहारिक आध्यात्म।",
+                "Gita = practical spirituality for life.",
+                "१८ अध्याय, ~७०० श्लोक। प्रतिदिन एक श्लोक पढ़ना और सुनना सबसे अच्छा आरंभ है।",
+                "18 chapters, ~700 verses. Reading and listening to one verse daily is the best start.",
+                List.of("gita")));
+        list.add(topic(13, "vedanta", "🔮",
+                "वेदांत", "Vedanta",
+                "वेदांत — उपनिषदों का दर्शन: ब्रह्म सत्य, जगत् मिथ्या, जीवो ब्रह्मैव।",
+                "Vedanta — philosophy of the Upanishads: Brahman as ultimate reality.",
+                "वेदांत = वेद का अंतिम ज्ञान।",
+                "Vedanta = the culminating wisdom of the Vedas.",
+                "अद्वैत, विशिष्टाद्वैत और द्वैत प्रमुख धाराएँ हैं। गीता और ब्रह्मसूत्र भी वेदांत के स्तंभ हैं।",
+                "Advaita, Vishishtadvaita, and Dvaita are major schools. Gita and Brahma Sutra are pillars too.",
+                List.of("upnishads", "gita")));
+        list.add(topic(14, "yoga", "🧘",
+                "योग", "Yoga",
+                "योग मन, शरीर और आत्मा का मिलन — अष्टांग से भक्ति तक।",
+                "Yoga unites mind, body, and soul — from Ashtanga to bhakti.",
+                "योग = जुड़ना और स्थिर होना।",
+                "Yoga = union and steadiness.",
+                "पतंजलि योगसूत्र अष्टांग योग देता है। गीता कर्म, भक्ति, ज्ञान योग सिखाती है।",
+                "Patanjali's Yoga Sutra gives Ashtanga Yoga. The Gita teaches karma, bhakti, and jnana yoga.",
+                List.of("yoga-sutra", "gita")));
+        list.add(topic(15, "ayurveda", "🌿",
+                "आयुर्वेद", "Ayurveda",
+                "आयुर्वेद — जीवन विज्ञान: दोष, आहार, दिनचर्या।",
+                "Ayurveda — science of life: doshas, diet, and daily routine.",
+                "आयुर्वेद = स्वास्थ्य का शास्त्र।",
+                "Ayurveda = the science of health.",
+                "अथर्ववेद में औषधि मंत्र हैं। चरक-सुश्रुत परंपरा आयुर्वेद का विस्तार है। शिक्षा के लिए दिनचर्या और सात्विक आहार से आरंभ करें।",
+                "Atharvaveda holds healing mantras. Charaka-Sushruta expand the tradition. Start with dinacharya and sattvic food.",
+                List.of("atharvaveda")));
+        list.add(topic(16, "meditation", "🕯️",
+                "ध्यान", "Meditation",
+                "ध्यान — मन को एकाग्र कर आंतरिक शांति पाना।",
+                "Meditation — focusing the mind toward inner stillness.",
+                "ध्यान = शांत बैठकर देखना।",
+                "Meditation = sitting quietly and seeing clearly.",
+                "प्राणायाम, जप और श्वास-निरीक्षण सरल आरंभ हैं। गीता ६ अध्याय ध्यान योग सिखाता है।",
+                "Pranayama, japa, and breath awareness are simple starts. Gita chapter 6 teaches dhyana yoga.",
                 List.of("gita", "yoga-sutra")));
-        list.add(topic("darshan", 5, "📜", "दर्शन शास्त्र", "Indian Philosophy",
-                "षड्दर्शन — न्याय, वैशेषिक, सांख्य, योग, मीमांसा, वेदांत — भारतीय दर्शन की आधारशिला।",
-                "Six classical schools of Indian philosophy including Vedanta.",
+        list.add(topic(17, "darshan", "📜",
+                "दर्शन शास्त्र", "Indian Philosophy",
+                "षड्दर्शन — न्याय से वेदांत तक भारतीय दर्शन।",
+                "Six classical schools from Nyaya to Vedanta.",
+                "दर्शन = सत्य देखने के मार्ग।",
+                "Darshan = ways of seeing truth.",
+                "न्याय, वैशेषिक, सांख्य, योग, मीमांसा, वेदांत — प्रत्येक प्रश्न और विधि देता है।",
+                "Nyaya, Vaisheshika, Samkhya, Yoga, Mimamsa, Vedanta — each offers questions and method.",
                 List.of("upnishads", "gita", "yoga-sutra")));
-        list.add(topic("sanskrit", 6, "🔤", "संस्कृत की शुरुआत", "Learning Sanskrit",
-                "संस्कृत जानने से मूल ग्रंथों का सीधा अध्ययन संभव होता है। देवनागरी, मात्राएँ और श्लोक पाठ से आरंभ करें।",
-                "Learn Devanagari and chanting to read scriptures in the original.",
+        list.add(topic(18, "sanskrit", "🔤",
+                "संस्कृत की शुरुआत", "Learning Sanskrit",
+                "देवनागरी और श्लोक पाठ से मूल ग्रंथों तक पहुँच।",
+                "Reach original texts via Devanagari and chanting.",
+                "संस्कृत = मूल भाषा की कुंजी।",
+                "Sanskrit = the key to original wording.",
+                "मात्राएँ, संधि और श्लोक अभ्यास से आरंभ करें। गीता और गायत्री अच्छे पहले पाठ हैं।",
+                "Start with vowels, sandhi, and verse practice. Gita and Gayatri are excellent first texts.",
                 List.of("rigveda", "gita")));
         return list;
+    }
+
+    private static Topic topic(int order, String slug, String icon,
+                               String hiTitle, String enTitle,
+                               String hiDesc, String enDesc,
+                               String hiSimple, String enSimple,
+                               String hiDetailed, String enDetailed,
+                               List<String> related) {
+        Topic t = new Topic();
+        t.setSlug(slug);
+        t.setOrder(order);
+        t.setIcon(icon);
+        t.setTitles(lt(enTitle, hiTitle));
+        t.setDescriptions(lt(enDesc, hiDesc));
+        t.setSummaries(lt(enSimple, hiSimple));
+        t.setSimpleExplanations(lt(enSimple, hiSimple));
+        t.setDetailedExplanations(lt(enDetailed, hiDetailed));
+        t.setRelatedScriptureSlugs(related);
+        t.setActive(true);
+        return t;
+    }
+
+    private static Topic topic(String slug, int order, String icon, String hiTitle, String enTitle,
+                               String hiDesc, String enDesc, List<String> related) {
+        return topic(order, slug, icon, hiTitle, enTitle, hiDesc, enDesc, hiDesc, enDesc, hiDesc, enDesc, related);
     }
 
     public static List<StudyPath> studyPaths() {
@@ -92,20 +255,6 @@ public final class SanatanKnowledgeCatalog {
                 "ईश, केन, कठ उपनिषद आदि की हिंदी व्याख्या।",
                 "Hindi explanations of major Upanishads.", "upnishads", "moksha"));
         return list;
-    }
-
-    private static Topic topic(String slug, int order, String icon, String hiTitle, String enTitle,
-                               String hiDesc, String enDesc, List<String> related) {
-        Topic t = new Topic();
-        t.setSlug(slug);
-        t.setOrder(order);
-        t.setIcon(icon);
-        t.setTitles(lt(enTitle, hiTitle));
-        t.setDescriptions(lt(enDesc, hiDesc));
-        t.setSummaries(lt(enDesc, hiDesc));
-        t.setRelatedScriptureSlugs(related);
-        t.setActive(true);
-        return t;
     }
 
     private static StudyPath beginnerPath() {

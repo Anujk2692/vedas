@@ -108,6 +108,26 @@ export function GyanScreen() {
               </View>
               <Text style={styles.chevron}>›</Text>
             </Pressable>
+            <Pressable
+              style={({pressed}) => [styles.guruBanner, pressed && styles.pressed]}
+              onPress={() => navigation.navigate('QuizList')}>
+              <Text style={styles.guruIcon}>🧠</Text>
+              <View style={styles.guruBody}>
+                <Text style={styles.guruTitle}>Daily Quiz</Text>
+                <Text style={styles.guruDesc}>Dharma · Karma · Gita — keep your streak</Text>
+              </View>
+              <Text style={styles.chevron}>›</Text>
+            </Pressable>
+            <Pressable
+              style={({pressed}) => [styles.guruBanner, pressed && styles.pressed]}
+              onPress={() => navigation.navigate('CultureHub')}>
+              <Text style={styles.guruIcon}>🛕</Text>
+              <View style={styles.guruBody}>
+                <Text style={styles.guruTitle}>Deities · Temples · Festivals</Text>
+                <Text style={styles.guruDesc}>Stories, rituals, and temple guides</Text>
+              </View>
+              <Text style={styles.chevron}>›</Text>
+            </Pressable>
             <SectionHeader title="अध्ययन योजना" subtitle="Study paths — beginner to advanced" />
           </View>
         }

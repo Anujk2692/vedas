@@ -16,6 +16,11 @@ import type {
   Panchang,
   AskResponse,
   BookmarkSyncItem,
+  Quiz,
+  QuizSummary,
+  Deity,
+  Temple,
+  FestivalGuide,
   Veda,
   Verse,
 } from './types';
@@ -139,7 +144,17 @@ export const api = {
     return request<ExternalResource[]>(`/sanatan/resources${qs ? `?${qs}` : ''}`, lang);
   },
   getDailyShlok: (lang: string) => request<DailyShlok>('/sanatan/daily-shlok', lang),
+  getGitaOfDay: (lang: string) => request<DailyShlok>('/sanatan/gita-of-day', lang),
   getPanchang: (lang: string) => request<Panchang>('/sanatan/panchang', lang),
+  getQuizzes: (lang: string) => request<QuizSummary[]>('/sanatan/quizzes', lang),
+  getQuiz: (id: string, lang: string) => request<Quiz>(`/sanatan/quizzes/${id}`, lang),
+  getDeities: (lang: string) => request<Deity[]>('/sanatan/deities', lang),
+  getDeity: (slug: string, lang: string) => request<Deity>(`/sanatan/deities/${slug}`, lang),
+  getTemples: (lang: string) => request<Temple[]>('/sanatan/temples', lang),
+  getTemple: (slug: string, lang: string) => request<Temple>(`/sanatan/temples/${slug}`, lang),
+  getFestivals: (lang: string) => request<FestivalGuide[]>('/sanatan/festivals', lang),
+  getFestival: (slug: string, lang: string) =>
+    request<FestivalGuide>(`/sanatan/festivals/${slug}`, lang),
   askGuru: (question: string, lang: string) =>
     postRequest<AskResponse>('/sanatan/ask', {question, lang}, 90000),
   syncBookmarks: (deviceId: string, bookmarks: BookmarkSyncItem[]) =>

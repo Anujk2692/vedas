@@ -20,7 +20,11 @@ public class SpaForwardController {
             "/aartis",
             "/aartis/**",
             "/ai-guru",
-            "/meditation"
+            "/meditation",
+            "/quiz",
+            "/quiz/**",
+            "/culture",
+            "/culture/**"
     })
     public String forwardToIndex() {
         return "forward:/index.html";

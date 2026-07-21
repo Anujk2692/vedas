@@ -21,6 +21,7 @@ import {SanskritText} from '../components/SanskritText';
 import {EmptyState} from '../components/ui/EmptyState';
 import {useAudioPlayer} from '../context/AudioPlayerContext';
 import {useLanguage} from '../context/LanguageContext';
+import {useUserPreferences} from '../context/UserPreferencesContext';
 import type {RootStackParamList} from '../navigation/types';
 import {borderRadius, colors, shadows, spacing, typography} from '../theme/colors';
 import {flatListPerfProps} from '../utils/listPerf';
@@ -31,6 +32,7 @@ export function VedaDetailScreen() {
   const route = useRoute<RouteProp<RootStackParamList, 'VedaDetail'>>();
   const {language} = useLanguage();
   const {playTrack, playQueue} = useAudioPlayer();
+  const {addRecentItem} = useUserPreferences();
   const [veda, setVeda] = useState<Veda | null>(null);
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [media, setMedia] = useState<MediaItem[]>([]);
@@ -48,6 +50,13 @@ export function VedaDetailScreen() {
       setVeda(vedaData);
       vedaLoaded = true;
       setLoadingVeda(false);
+      await addRecentItem({
+        id: vedaData.id || route.params.vedaId,
+        kind: 'scripture',
+        title: vedaData.title || route.params.title,
+        subtitle: vedaData.sanskritName,
+        targetId: route.params.vedaId,
+      });
 
       const [chaptersData, audioMedia] = await Promise.all([
         api.getChapters(route.params.vedaId, language),
@@ -66,7 +75,7 @@ export function VedaDetailScreen() {
       setLoadingVeda(false);
       setLoadingChapters(false);
     }
-  }, [route.params.vedaId, language]);
+  }, [route.params.vedaId, route.params.title, language, addRecentItem]);
 
   useEffect(() => {
     loadData();

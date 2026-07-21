@@ -16,6 +16,11 @@ import {
   Topic,
   Veda,
   Verse,
+  Quiz,
+  QuizSummary,
+  Deity,
+  Temple,
+  FestivalGuide,
 } from '../models';
 
 @Injectable({ providedIn: 'root' })
@@ -77,8 +82,44 @@ export class ApiService {
     return this.http.get<DailyShlok>(this.withLang(lang, '/sanatan/daily-shlok'));
   }
 
+  getGitaOfDay(lang: string): Observable<DailyShlok> {
+    return this.http.get<DailyShlok>(this.withLang(lang, '/sanatan/gita-of-day'));
+  }
+
   getPanchang(lang: string): Observable<Panchang> {
     return this.http.get<Panchang>(this.withLang(lang, '/sanatan/panchang'));
+  }
+
+  getQuizzes(lang: string): Observable<QuizSummary[]> {
+    return this.http.get<QuizSummary[]>(this.withLang(lang, '/sanatan/quizzes'));
+  }
+
+  getQuiz(id: string, lang: string): Observable<Quiz> {
+    return this.http.get<Quiz>(this.withLang(lang, `/sanatan/quizzes/${id}`));
+  }
+
+  getDeities(lang: string): Observable<Deity[]> {
+    return this.http.get<Deity[]>(this.withLang(lang, '/sanatan/deities'));
+  }
+
+  getDeity(slug: string, lang: string): Observable<Deity> {
+    return this.http.get<Deity>(this.withLang(lang, `/sanatan/deities/${slug}`));
+  }
+
+  getTemples(lang: string): Observable<Temple[]> {
+    return this.http.get<Temple[]>(this.withLang(lang, '/sanatan/temples'));
+  }
+
+  getTemple(slug: string, lang: string): Observable<Temple> {
+    return this.http.get<Temple>(this.withLang(lang, `/sanatan/temples/${slug}`));
+  }
+
+  getFestivals(lang: string): Observable<FestivalGuide[]> {
+    return this.http.get<FestivalGuide[]>(this.withLang(lang, '/sanatan/festivals'));
+  }
+
+  getFestival(slug: string, lang: string): Observable<FestivalGuide> {
+    return this.http.get<FestivalGuide>(this.withLang(lang, `/sanatan/festivals/${slug}`));
   }
 
   askGuru(question: string, lang: string): Observable<AskResponse> {
