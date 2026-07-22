@@ -1,7 +1,8 @@
 import React from 'react';
 import {Image, StyleSheet, View, type ImageStyle, type StyleProp, type ViewStyle} from 'react-native';
-import {borderRadius, colors, shadows} from '../../theme/colors';
+import {shadows} from '../../theme/colors';
 
+/** Square Om/lotus mark — always rendered with contain so petals never crop. */
 const LOGO = require('../../../assets/images/app-logo-sm.png');
 
 interface Props {
@@ -12,16 +13,18 @@ interface Props {
 }
 
 export function AppLogo({size = 48, showRing = true, style, imageStyle}: Props) {
-  const ring = size + 8;
+  const ring = Math.round(size + size * 0.18);
   return (
     <View
       style={[
+        styles.wrap,
         showRing && styles.ring,
         showRing && {
           width: ring,
           height: ring,
           borderRadius: ring / 2,
         },
+        !showRing && {width: size, height: size},
         style,
       ]}>
       <Image
@@ -30,11 +33,10 @@ export function AppLogo({size = 48, showRing = true, style, imageStyle}: Props) 
           {
             width: size,
             height: size,
-            borderRadius: size * 0.22,
           },
           imageStyle,
         ]}
-        resizeMode="cover"
+        resizeMode="contain"
         accessibilityLabel="Sanatan Gyan logo"
       />
     </View>
@@ -42,9 +44,13 @@ export function AppLogo({size = 48, showRing = true, style, imageStyle}: Props) 
 }
 
 const styles = StyleSheet.create({
-  ring: {
+  wrap: {
     alignItems: 'center',
     justifyContent: 'center',
+    flexShrink: 0,
+    overflow: 'visible',
+  },
+  ring: {
     backgroundColor: 'rgba(255,255,255,0.12)',
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.22)',

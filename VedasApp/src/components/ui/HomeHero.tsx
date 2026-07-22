@@ -19,10 +19,12 @@ export function HomeHero({languageLabel, onLanguagePress}: Props) {
       <View style={[styles.content, {paddingTop: insets.top + spacing.md}]}>
         <View style={styles.topRow}>
           <View style={styles.brandWrap}>
-            <AppLogo size={44} />
-            <View>
+            <AppLogo size={40} />
+            <View style={styles.brandText}>
               <Text style={styles.brandLabel}>सनातन ज्ञान</Text>
-              <Text style={styles.brandTag}>Vedas · Gita · Itihasa · Upanishads</Text>
+              <Text style={styles.brandTag} numberOfLines={1}>
+                Vedas · Gita · Itihasa · Upanishads
+              </Text>
             </View>
           </View>
           <TouchableOpacity style={styles.langBtn} onPress={onLanguagePress} activeOpacity={0.85}>
@@ -81,8 +83,14 @@ const styles = StyleSheet.create({
   brandWrap: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: 10,
     flex: 1,
+    minWidth: 0,
+    marginRight: 8,
+  },
+  brandText: {
+    flex: 1,
+    minWidth: 0,
   },
   brandLabel: {
     fontSize: 13,

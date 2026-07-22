@@ -337,7 +337,7 @@ export function SettingsScreen() {
 
       <View style={styles.aboutCard}>
         <View style={styles.aboutLogoWrap}>
-          <AppLogo size={72} showRing={false} />
+          <AppLogo size={88} showRing={false} />
         </View>
         <Text style={styles.label}>Sanatan Gyan</Text>
         <SanskritText text="सनातन ज्ञान" style={styles.aboutSanskrit} size={18} />

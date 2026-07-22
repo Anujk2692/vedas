@@ -2,7 +2,10 @@
 # https://dashboard.render.com/project/prj-d952s0m7r5hc73duups0
 #
 # After push: Render Dashboard → New → Blueprint → select anujchoudhary2692-boop/vedas
-# Set MONGODB_URI to your MongoDB Atlas connection string (Database → Connect).
+# Set SPRING_DATA_MONGODB_URI to your MongoDB Atlas connection string (Database → Connect).
+# Use database name vedas_service_db, e.g.:
+# mongodb+srv://USER:PASS@CLUSTER.mongodb.net/vedas_service_db?retryWrites=true&w=majority
+# Atlas Network Access must allow 0.0.0.0/0 for Render free tier.
 
 services:
   - type: web
