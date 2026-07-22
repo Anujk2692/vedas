@@ -27,6 +27,27 @@ public class DataSeeder {
             SanatanScriptureSync sanatanScriptureSync,
             SanatanKnowledgeSync sanatanKnowledgeSync) {
         return args -> {
+            try {
+                runSeed(languageRepository, vedaRepository, chapterRepository, verseRepository,
+                        mediaRepository, chapterCatalogSync, aartiCatalogSync,
+                        sanatanScriptureSync, sanatanKnowledgeSync);
+            } catch (Exception e) {
+                System.err.println("WARNING: startup seed/sync failed (API will still serve): " + e.getMessage());
+                e.printStackTrace();
+            }
+        };
+    }
+
+    private void runSeed(
+            LanguageRepository languageRepository,
+            VedaRepository vedaRepository,
+            ChapterRepository chapterRepository,
+            VerseRepository verseRepository,
+            MediaRepository mediaRepository,
+            ChapterCatalogSync chapterCatalogSync,
+            AartiCatalogSync aartiCatalogSync,
+            SanatanScriptureSync sanatanScriptureSync,
+            SanatanKnowledgeSync sanatanKnowledgeSync) {
             if (languageRepository.count() == 0) {
                 seedLanguages(languageRepository);
             }
@@ -34,7 +55,14 @@ public class DataSeeder {
             if (vedaRepository.count() > 0 && !forceSeed) {
                 upsertVedaDetails(vedaRepository, chapterRepository, verseRepository);
                 sanatanScriptureSync.syncAll();
-                chapterCatalogSync.syncAll();
+                // Only re-sync chapter catalogs when Gita is incomplete — avoids rewriting ~700
+                // verses on every Render cold start (free-tier crash loops).
+                long gitaVerses = vedaRepository.findBySlug("gita")
+                        .map(v -> verseRepository.countByVedaId(v.getId()))
+                        .orElse(0L);
+                if (gitaVerses < 600) {
+                    chapterCatalogSync.syncAll();
+                }
                 aartiCatalogSync.syncAll();
                 sanatanKnowledgeSync.syncAll();
                 updateAllVedaCounts(vedaRepository, chapterRepository, verseRepository);
@@ -78,7 +106,6 @@ public class DataSeeder {
             sanatanScriptureSync.syncAll();
             sanatanKnowledgeSync.syncAll();
             updateAllVedaCounts(vedaRepository, chapterRepository, verseRepository);
-        };
     }
 
     private void updateAllVedaCounts(VedaRepository vedaRepo, ChapterRepository chapterRepo,

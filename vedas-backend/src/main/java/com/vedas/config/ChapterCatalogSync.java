@@ -87,6 +87,17 @@ public class ChapterCatalogSync {
 
     private void syncVerses(String vedaId, String slug, String chapterId, int chapterNumber,
                             List<VedaChapterCatalog.VerseDef> defs) {
+        if (defs == null || defs.isEmpty()) {
+            return;
+        }
+        // Skip heavy Gita rewrites when the chapter already has a full verse set (prevents
+        // free-tier OOM/crash loops on every Render cold start).
+        if ("gita".equals(slug)) {
+            List<Verse> existing = verseRepository.findByChapterIdOrderByNumberAsc(chapterId);
+            if (existing.size() >= defs.size()) {
+                return;
+            }
+        }
         for (VedaChapterCatalog.VerseDef def : defs) {
             Verse verse = verseRepository.findByChapterIdAndNumber(chapterId, def.number)
                     .orElseGet(Verse::new);
