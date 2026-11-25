@@ -28,7 +28,11 @@ class ChildNameServiceTest {
         assertEquals("Shiva", res.getDeity());
         assertEquals("hi", res.getLanguage());
         assertTrue(res.getTotalSuggestions() >= 5);
-        assertTrue(res.getSuggestions().stream().anyMatch(s -> "Aarav".equals(s.getName())));
+        var aarav = res.getSuggestions().stream().filter(s -> "Aarav".equals(s.getName())).findFirst().orElseThrow();
+        assertEquals("आरव", aarav.getScriptText());
+        assertNotNull(aarav.getRashi());
+        assertNotNull(aarav.getNakshatra());
+        assertTrue(aarav.getNumerologyNumber() >= 1 && aarav.getNumerologyNumber() <= 9);
         assertTrue(res.getSuggestions().stream().allMatch(s -> s.getMeaning() != null && !s.getMeaning().isBlank()));
     }
 
@@ -44,5 +48,20 @@ class ChildNameServiceTest {
         ChildNameResponseDto res = service.suggest(req);
 
         assertTrue(res.getSuggestions().stream().anyMatch(s -> "Gurleen".equals(s.getName()) || "Angad".equals(s.getName())));
+    }
+
+    @Test
+    void prioritizesNamesMatchingStartingLetter() {
+        ChildNameRequestDto req = new ChildNameRequestDto();
+        req.setFatherName("Anuj");
+        req.setMotherName("Priya");
+        req.setDeity("Shiva");
+        req.setStartingLetter("R");
+        req.setLanguage("en");
+
+        ChildNameResponseDto res = service.suggest(req);
+
+        assertFalse(res.getSuggestions().isEmpty());
+        assertTrue(res.getSuggestions().get(0).getName().startsWith("R"));
     }
 }

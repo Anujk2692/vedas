@@ -241,16 +241,26 @@ export interface ChildNameRequest {
   religion?: string;
   country?: string;
   language?: string;
+  startingLetter?: string;
 }
 
 export interface ChildNameSuggestion {
   name: string;
+  scriptText: string;
+  pronunciation: string;
   meaning: string;
+  spiritualSignificance: string;
   combinationSource: string;
   deityConnection: string;
   gender: string;
   religion: string;
   origin: string;
+  rashi: string;
+  nakshatra: string;
+  numerologyNumber: number;
+  numerologyTrait: string;
+  luckyDay: string;
+  luckyColor: string;
   synonyms: string[];
 }
 

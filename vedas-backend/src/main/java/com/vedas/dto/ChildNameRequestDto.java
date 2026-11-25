@@ -28,6 +28,9 @@ public class ChildNameRequestDto {
     @Size(max = 20, message = "Language is too long")
     private String language;
 
+    @Size(max = 5, message = "Starting letter is too long")
+    private String startingLetter;
+
     public String getFatherName() { return fatherName; }
     public void setFatherName(String fatherName) { this.fatherName = fatherName; }
     public String getMotherName() { return motherName; }
@@ -42,4 +45,6 @@ public class ChildNameRequestDto {
     public void setCountry(String country) { this.country = country; }
     public String getLanguage() { return language; }
     public void setLanguage(String language) { this.language = language; }
+    public String getStartingLetter() { return startingLetter; }
+    public void setStartingLetter(String startingLetter) { this.startingLetter = startingLetter; }
 }
