@@ -103,16 +103,6 @@ interface StoredPrefs {
 
 const DEFAULT_STREAK: SadhanaStreak = {current: 0, longest: 0, lastDate: null};
 
-const DEFAULTS: StoredPrefs = {
-  favorites: [],
-  readingProgress: null,
-  studyPathProgress: [],
-  recentlyViewed: [],
-  sadhanaStreak: DEFAULT_STREAK,
-  readingFontScale: 'normal',
-  playbackRate: 1,
-};
-
 function todayKey(): string {
   return new Date().toISOString().slice(0, 10);
 }

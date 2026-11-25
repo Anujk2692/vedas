@@ -8,6 +8,7 @@ import com.vedas.service.GitaOfDayService;
 import com.vedas.service.PanchangService;
 import com.vedas.service.QuizService;
 import com.vedas.service.SanatanKnowledgeService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -74,7 +75,7 @@ public class SanatanKnowledgeController {
     }
 
     @PostMapping("/ask")
-    public AskResponseDto ask(@RequestBody AskRequestDto request) {
+    public AskResponseDto ask(@Valid @RequestBody AskRequestDto request) {
         String lang = request.getLang() != null ? request.getLang() : "hi";
         return aiGuruService.ask(request.getQuestion(), lang);
     }

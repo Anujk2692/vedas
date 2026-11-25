@@ -2,6 +2,8 @@ package com.vedas.config;
 
 import com.vedas.model.*;
 import com.vedas.repository.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +13,8 @@ import java.util.List;
 
 @Configuration
 public class DataSeeder {
+
+    private static final Logger log = LoggerFactory.getLogger(DataSeeder.class);
 
     @Value("${vedas.seed.force:false}")
     private boolean forceSeed;
@@ -32,8 +36,7 @@ public class DataSeeder {
                         mediaRepository, chapterCatalogSync, aartiCatalogSync,
                         sanatanScriptureSync, sanatanKnowledgeSync);
             } catch (Exception e) {
-                System.err.println("WARNING: startup seed/sync failed (API will still serve): " + e.getMessage());
-                e.printStackTrace();
+                log.warn("Startup seed/sync failed (API will still serve): {}", e.getMessage(), e);
             }
         };
     }

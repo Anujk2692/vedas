@@ -112,7 +112,7 @@ export async function speakTranslatedText(text: string, appLanguage: string): Pr
 
     try {
       Tts.speak(trimmed);
-    } catch (e) {
+    } catch {
       fail();
     }
   });

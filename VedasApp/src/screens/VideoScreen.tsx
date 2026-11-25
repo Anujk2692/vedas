@@ -32,7 +32,7 @@ export function VideoScreen() {
     fetchVideos,
     [language],
   );
-  const media = data ?? [];
+  const media = useMemo(() => data ?? [], [data]);
   const playlist = useMemo(
     () => media.map(item => ({url: item.url, title: item.title, subtitle: item.reciter})),
     [media],

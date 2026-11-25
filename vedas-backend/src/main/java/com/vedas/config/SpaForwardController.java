@@ -16,6 +16,8 @@ public class SpaForwardController {
             "/chapter/**",
             "/gyan",
             "/gyan/**",
+            "/clarity",
+            "/child-names",
             "/search",
             "/aartis",
             "/aartis/**",

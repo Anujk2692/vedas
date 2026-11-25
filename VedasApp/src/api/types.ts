@@ -346,3 +346,35 @@ export interface AskResponse {
   relatedVerses: Verse[];
   relatedTopics: Topic[];
 }
+
+export interface ChildNameRequest {
+  fatherName: string;
+  motherName: string;
+  deity?: string;
+  gender?: string;
+  religion?: string;
+  country?: string;
+  language?: string;
+}
+
+export interface ChildNameSuggestion {
+  name: string;
+  meaning: string;
+  combinationSource: string;
+  deityConnection: string;
+  gender: string;
+  religion: string;
+  origin: string;
+  synonyms: string[];
+}
+
+export interface ChildNameResponse {
+  fatherName: string;
+  motherName: string;
+  deity: string;
+  religion: string;
+  country: string;
+  language: string;
+  totalSuggestions: number;
+  suggestions: ChildNameSuggestion[];
+}

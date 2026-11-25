@@ -34,9 +34,21 @@ export function normalizeApiHost(input: string): string {
   return host.split('/')[0];
 }
 
+function isLocalDevHost(host: string): boolean {
+  const hostOnly = host.split(':')[0].toLowerCase();
+  return (
+    hostOnly === 'localhost' ||
+    hostOnly === '127.0.0.1' ||
+    hostOnly === '10.0.2.2' ||
+    /^192\.168\.\d+\.\d+$/.test(hostOnly) ||
+    /^10\.\d+\.\d+\.\d+$/.test(hostOnly) ||
+    /^172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+$/.test(hostOnly)
+  );
+}
+
 export function buildApiBaseUrl(host: string): string {
   const normalized = normalizeApiHost(host);
-  if (normalized.includes('onrender.com')) {
+  if (!isLocalDevHost(normalized)) {
     return `https://${normalized}/api`;
   }
   const withPort = normalized.includes(':') ? normalized : `${normalized}:8080`;

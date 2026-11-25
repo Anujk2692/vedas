@@ -6,6 +6,7 @@
       <p class="lead">Read · Listen · Study — Vedas, Gita, Ramayana, Upanishads and more in Hindi &amp; English.</p>
       <div class="hero-actions">
         <a routerLink="/scriptures" class="btn btn-primary">Explore Scriptures</a>
+        <a routerLink="/clarity" class="btn btn-outline">✨ Life Clarity</a>
         <a routerLink="/gyan" class="btn btn-outline">Study Paths</a>
         <a routerLink="/quiz" class="btn btn-outline">Daily Quiz</a>
         <a routerLink="/culture" class="btn btn-outline">Culture</a>
@@ -23,6 +24,19 @@
   @if (error) {
     <p class="error">{{ error }}</p>
   }
+
+  <article class="card clarity-spotlight">
+    <div class="card-head">
+      <span>✨ जीवन बोध · Life Clarity</span>
+      <span class="pill">Practical Vedanta</span>
+    </div>
+    <p class="clarity-quote">“What you seek outside cannot be found without clarity within.”</p>
+    <p>Explore direct, scripture-grounded clarity on Fear, Relationships, Purpose &amp; Overthinking — or ask AI Guru your own question.</p>
+    <div class="hero-actions" style="margin-top: 0.75rem">
+      <a routerLink="/clarity" class="btn btn-primary">Open Life Clarity</a>
+      <a routerLink="/ai-guru" class="btn btn-outline">Ask AI Guru</a>
+    </div>
+  </article>
 
   @if (shlok) {
     <article class="card shlok-card">

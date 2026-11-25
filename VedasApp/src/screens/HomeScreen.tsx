@@ -17,6 +17,7 @@ import {ContinueLearningCard} from '../components/ContinueLearningCard';
 import {ErrorBanner} from '../components/ErrorBanner';
 import {GitaOfDayCard} from '../components/GitaOfDayCard';
 import {LanguagePicker} from '../components/LanguagePicker';
+import {LifeClarityCard} from '../components/LifeClarityCard';
 import {MantraOfDayCard} from '../components/MantraOfDayCard';
 import {PanchangCard} from '../components/PanchangCard';
 import {RecentlyViewedCard} from '../components/RecentlyViewedCard';
@@ -30,7 +31,6 @@ import {ScreenLoader} from '../components/ui/ScreenLoader';
 import {SectionHeader} from '../components/ui/SectionHeader';
 import {useCachedFetch} from '../hooks/useCachedFetch';
 import {useLanguage} from '../context/LanguageContext';
-import {useUserPreferences} from '../context/UserPreferencesContext';
 import type {RootStackParamList, TabParamList} from '../navigation/types';
 import {colors, spacing} from '../theme/colors';
 import {flatListPerfProps} from '../utils/listPerf';
@@ -57,7 +57,6 @@ export function HomeScreen() {
     >
   >();
   const {language, languages} = useLanguage();
-  const {favorites} = useUserPreferences();
   const [showLanguagePicker, setShowLanguagePicker] = useState(false);
   const fetchVedas = useCallback(() => api.getVedas(language, true), [language]);
   const {data, loading, refreshing, error, refresh} = useCachedFetch<Veda[]>(
@@ -66,7 +65,7 @@ export function HomeScreen() {
     fetchVedas,
     [language],
   );
-  const vedas = data ?? [];
+  const vedas = useMemo(() => data ?? [], [data]);
 
   const rows = useMemo(() => {
     const order = ['VEDA', 'ITIHASA', 'UPANISHAD', 'PURANA', 'DARSHAN', 'NITI'];
@@ -131,6 +130,7 @@ export function HomeScreen() {
               languageLabel={currentLang?.nativeName ?? language}
               onLanguagePress={() => setShowLanguagePicker(true)}
             />
+            <LifeClarityCard onAskGuru={() => navigation.navigate('AiGuru')} />
             <MantraOfDayCard />
             <GitaOfDayCard />
             <PanchangCard />
@@ -140,6 +140,7 @@ export function HomeScreen() {
             <RecentlyViewedCard />
             <View style={styles.quickRow}>
               <QuickActionChip icon="🙏" label="AI Guru" accent onPress={() => navigation.navigate('AiGuru')} />
+              <QuickActionChip icon="👶" label="Child Names" onPress={() => navigation.navigate('ChildNames')} />
               <QuickActionChip icon="📚" label="Gyan" onPress={() => navigation.navigate('Gyan')} />
               <QuickActionChip icon="🧠" label="Quiz" onPress={() => navigation.navigate('QuizList')} />
               <QuickActionChip

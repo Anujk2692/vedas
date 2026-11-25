@@ -3,6 +3,7 @@ package com.vedas.controller;
 import com.vedas.dto.TranslateRequestDto;
 import com.vedas.dto.TranslateResultDto;
 import com.vedas.service.TranslateService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +17,7 @@ public class TranslateController {
     }
 
     @PostMapping("/translate")
-    public TranslateResultDto translate(@RequestBody TranslateRequestDto request) {
+    public TranslateResultDto translate(@Valid @RequestBody TranslateRequestDto request) {
         return translateService.translate(request.getText(), request.getLang());
     }
 }

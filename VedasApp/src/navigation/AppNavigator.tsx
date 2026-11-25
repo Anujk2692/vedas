@@ -18,6 +18,7 @@ import {AartiListScreen} from '../screens/AartiListScreen';
 import {AudioPlayerScreen} from '../screens/AudioPlayerScreen';
 import {AudioScreen} from '../screens/AudioScreen';
 import {ChapterReaderScreen} from '../screens/ChapterReaderScreen';
+import {ChildNameScreen} from '../screens/ChildNameScreen';
 import {CultureHubScreen} from '../screens/CultureHubScreen';
 import {DeityDetailScreen} from '../screens/DeityDetailScreen';
 import {FestivalDetailScreen} from '../screens/FestivalDetailScreen';
@@ -266,6 +267,18 @@ export function AppNavigator() {
                 <StackScreenHeader
                   title="Deities · Temples · Festivals"
                   subtitle="Temple guide & Sanatan culture"
+                />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="ChildNames"
+            component={ChildNameScreen}
+            options={{
+              header: () => (
+                <StackScreenHeader
+                  title="Child Name Studio"
+                  subtitle="Parent blends & deity synonyms"
                 />
               ),
             }}

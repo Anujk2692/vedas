@@ -3,6 +3,7 @@ package com.vedas.controller;
 import com.vedas.dto.BookmarkDto;
 import com.vedas.dto.BookmarkSyncRequestDto;
 import com.vedas.service.UserBookmarkService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/bookmarks/sync")
-    public List<BookmarkDto> syncBookmarks(@RequestBody BookmarkSyncRequestDto request) {
+    public List<BookmarkDto> syncBookmarks(@Valid @RequestBody BookmarkSyncRequestDto request) {
         return bookmarkService.syncBookmarks(request.getDeviceId(), request.getBookmarks());
     }
 }

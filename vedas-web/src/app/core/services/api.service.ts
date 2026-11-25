@@ -7,6 +7,8 @@ import {
   AartiSummary,
   AskResponse,
   Chapter,
+  ChildNameRequest,
+  ChildNameResponse,
   DailyShlok,
   Language,
   Panchang,
@@ -124,6 +126,10 @@ export class ApiService {
 
   askGuru(question: string, lang: string): Observable<AskResponse> {
     return this.http.post<AskResponse>(`${this.base}/sanatan/ask`, { question, lang });
+  }
+
+  suggestChildNames(payload: ChildNameRequest): Observable<ChildNameResponse> {
+    return this.http.post<ChildNameResponse>(`${this.base}/child-names/suggest`, payload);
   }
 
   health(): Observable<string> {

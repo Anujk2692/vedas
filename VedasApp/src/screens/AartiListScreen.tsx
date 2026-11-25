@@ -48,7 +48,7 @@ export function AartiListScreen() {
     fetchAartis,
     [language],
   );
-  const aartis = data ?? [];
+  const aartis = useMemo(() => data ?? [], [data]);
 
   const filtered = useMemo(() => {
     if (filter === 'ALL') {

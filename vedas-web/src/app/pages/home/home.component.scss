@@ -57,6 +57,19 @@ h1 {
   margin: 0.75rem 0;
 }
 
+.clarity-spotlight {
+  background: linear-gradient(135deg, #fff9f2 0%, #fff1df 100%);
+  border: 1.5px solid rgba(196, 92, 0, 0.25);
+  margin-bottom: 1.25rem;
+}
+
+.clarity-quote {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #2c1810;
+  margin: 0.65rem 0 0.4rem;
+}
+
 .translit {
   font-style: italic;
   color: #9a7b6a;

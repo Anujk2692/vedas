@@ -16,6 +16,8 @@ import type {
   Panchang,
   AskResponse,
   BookmarkSyncItem,
+  ChildNameRequest,
+  ChildNameResponse,
   Quiz,
   QuizSummary,
   Deity,
@@ -157,6 +159,8 @@ export const api = {
     request<FestivalGuide>(`/sanatan/festivals/${slug}`, lang),
   askGuru: (question: string, lang: string) =>
     postRequest<AskResponse>('/sanatan/ask', {question, lang}, 90000),
+  suggestChildNames: (payload: ChildNameRequest) =>
+    postRequest<ChildNameResponse>('/child-names/suggest', payload),
   syncBookmarks: (deviceId: string, bookmarks: BookmarkSyncItem[]) =>
     postRequest<BookmarkSyncItem[]>('/user/bookmarks/sync', {deviceId, bookmarks}),
 };

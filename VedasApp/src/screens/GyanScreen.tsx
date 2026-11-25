@@ -57,10 +57,6 @@ export function GyanScreen() {
     }
   };
 
-  const openScripture = (slug: string, title: string) => {
-    navigation.navigate('VedaDetail', {vedaId: slug, title});
-  };
-
   if (loading && !data) {
     return (
       <View style={styles.container}>

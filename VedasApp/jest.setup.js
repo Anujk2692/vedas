@@ -1,3 +1,4 @@
+/* eslint-env jest */
 jest.mock('react-native-gesture-handler', () => {
   const View = require('react-native').View;
   return {
@@ -105,4 +106,20 @@ jest.mock('@react-native-voice/voice', () => ({
     onSpeechError: jest.fn(),
     onSpeechEnd: jest.fn(),
   },
+}));
+
+jest.mock('@notifee/react-native', () => ({
+  __esModule: true,
+  default: {
+    requestPermission: jest.fn(() => Promise.resolve({authorizationStatus: 1})),
+    createChannel: jest.fn(() => Promise.resolve('daily-reminder')),
+    createTriggerNotification: jest.fn(() => Promise.resolve('notif-id')),
+    cancelNotification: jest.fn(() => Promise.resolve()),
+    cancelAllNotifications: jest.fn(() => Promise.resolve()),
+    getTriggerNotificationIds: jest.fn(() => Promise.resolve([])),
+  },
+  AndroidImportance: {HIGH: 4, DEFAULT: 3},
+  AuthorizationStatus: {AUTHORIZED: 1, PROVISIONAL: 2},
+  RepeatFrequency: {DAILY: 1},
+  TriggerType: {TIMESTAMP: 0},
 }));

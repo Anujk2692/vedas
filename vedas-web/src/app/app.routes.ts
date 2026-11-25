@@ -14,6 +14,8 @@ import { AiGuruComponent } from './pages/ai-guru/ai-guru.component';
 import { MeditationComponent } from './pages/meditation/meditation.component';
 import { QuizComponent } from './pages/quiz/quiz.component';
 import { CultureComponent } from './pages/culture/culture.component';
+import { ClarityComponent } from './pages/clarity/clarity.component';
+import { ChildNamesComponent } from './pages/child-names/child-names.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +29,8 @@ export const routes: Routes = [
       { path: 'gyan', component: GyanComponent },
       { path: 'gyan/path/:slug', component: StudyPathComponent },
       { path: 'gyan/topic/:slug', component: TopicComponent },
+      { path: 'clarity', component: ClarityComponent },
+      { path: 'child-names', component: ChildNamesComponent },
       { path: 'search', component: SearchComponent },
       { path: 'aartis', component: AartisComponent },
       { path: 'aartis/:slug', component: AartiDetailComponent },

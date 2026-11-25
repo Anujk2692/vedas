@@ -12,7 +12,7 @@ WORKDIR /app
 COPY vedas-backend/pom.xml .
 COPY vedas-backend/src ./src
 COPY --from=web /web/dist/vedas-web/browser ./src/main/resources/static
-RUN mvn -q clean package -DskipTests
+RUN mvn -q clean package
 
 # Stage 3 — runtime
 FROM eclipse-temurin:17-jre-alpine
