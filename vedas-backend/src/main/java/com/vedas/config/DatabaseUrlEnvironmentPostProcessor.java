@@ -17,7 +17,13 @@ public class DatabaseUrlEnvironmentPostProcessor implements EnvironmentPostProce
 
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-        String raw = environment.getProperty("spring.datasource.url");
+        String raw = environment.getProperty("SPRING_DATASOURCE_URL");
+        if (raw == null || raw.isBlank()) {
+            raw = environment.getProperty("DATABASE_URL");
+        }
+        if (raw == null || raw.isBlank()) {
+            raw = environment.getProperty("spring.datasource.url");
+        }
         if (raw == null || raw.isBlank() || raw.startsWith("jdbc:")) {
             return;
         }
@@ -36,10 +42,12 @@ public class DatabaseUrlEnvironmentPostProcessor implements EnvironmentPostProce
                 String userInfo = uri.getUserInfo();
                 if (userInfo != null && userInfo.contains(":")) {
                     String[] parts = userInfo.split(":", 2);
-                    if (environment.getProperty("SPRING_DATASOURCE_USERNAME") == null) {
+                    String envUser = environment.getProperty("SPRING_DATASOURCE_USERNAME");
+                    if (envUser == null || envUser.isBlank()) {
                         overrides.put("spring.datasource.username", parts[0]);
                     }
-                    if (environment.getProperty("SPRING_DATASOURCE_PASSWORD") == null) {
+                    String envPass = environment.getProperty("SPRING_DATASOURCE_PASSWORD");
+                    if (envPass == null || envPass.isBlank()) {
                         overrides.put("spring.datasource.password", parts[1]);
                     }
                 }
