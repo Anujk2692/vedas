@@ -1,12 +1,12 @@
 # Render Blueprint — connect repo at:
 # https://dashboard.render.com/project/prj-d952s0m7r5hc73duups0
 #
-# Uses Render's managed PostgreSQL database `all-service-db` (DB name `all_service_db`, user `allservice`).
+# Uses Render's managed PostgreSQL database `sanatan-db` (DB name `sanatan_db`, user `sanatan`).
 
 databases:
-  - name: all-service-db
-    databaseName: all_service_db
-    user: allservice
+  - name: sanatan-db
+    databaseName: sanatan_db
+    user: sanatan
     plan: free
     region: singapore
 
@@ -23,15 +23,15 @@ services:
         value: "17"
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
-          name: all-service-db
+          name: sanatan-db
           property: connectionString
       - key: SPRING_DATASOURCE_USERNAME
         fromDatabase:
-          name: all-service-db
+          name: sanatan-db
           property: user
       - key: SPRING_DATASOURCE_PASSWORD
         fromDatabase:
-          name: all-service-db
+          name: sanatan-db
           property: password
       - key: MIGRATE_MONGO
         value: "false"
