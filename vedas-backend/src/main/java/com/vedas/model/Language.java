@@ -1,13 +1,15 @@
 package com.vedas.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*;
 
-@Document(collection = "languages")
+@Entity
+@Table(name = "languages")
 public class Language {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @Column(unique = true, nullable = false)
     private String code;
     private String name;
     private String nativeName;

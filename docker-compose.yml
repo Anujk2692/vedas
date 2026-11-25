@@ -1,12 +1,21 @@
 services:
-  mongodb:
-    image: mongo:7
-    container_name: vedas-mongodb
+  postgres:
+    image: postgres:16
+    container_name: vedas-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:all_service_db}
+      POSTGRES_USER: ${POSTGRES_USER:allservice}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:allservice}
     ports:
-      - "27017:27017"
+      - "5432:5432"
     volumes:
-      - vedas_mongo_data:/data/db
+      - vedas_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U allservice -d all_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: unless-stopped
 
 volumes:
-  vedas_mongo_data:
+  vedas_postgres_data:

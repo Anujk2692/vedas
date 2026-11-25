@@ -2,10 +2,18 @@ server:
   port: ${PORT:8080}
 
 spring:
-  data:
-    mongodb:
-      # Prefer DB name vedas_service_db (Atlas / production). Override with SPRING_DATA_MONGODB_URI.
-      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:27017/vedas_service_db}
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:${DATABASE_URL:jdbc:postgresql://127.0.0.1:5432/all_service_db}}
+    username: ${SPRING_DATASOURCE_USERNAME:${POSTGRES_USER:allservice}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${POSTGRES_PASSWORD:allservice}}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
   servlet:
     multipart:
       max-file-size: 500MB
@@ -18,6 +26,10 @@ vedas:
     base-url: ${VEDAS_MEDIA_BASE_URL:http://localhost:8080/api/media}
   seed:
     force: false
+  migrate-mongo: ${MIGRATE_MONGO:false}
+  legacy-mongo:
+    uri: ${SPRING_DATA_MONGODB_URI:}
+    database: ${SPRING_DATA_MONGODB_DATABASE:all_service_db}
   ai:
     enabled: ${VEDAS_AI_ENABLED:false}
     openai-api-key: ${VEDAS_OPENAI_API_KEY:}

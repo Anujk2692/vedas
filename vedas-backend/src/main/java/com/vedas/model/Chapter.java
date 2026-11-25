@@ -1,33 +1,50 @@
 package com.vedas.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.vedas.model.converter.LocalizedTextListConverter;
+import jakarta.persistence.*;
 
 import java.util.List;
 
-@Document(collection = "chapters")
+@Entity
+@Table(name = "chapters", indexes = @Index(name = "idx_chapters_veda", columnList = "vedaId"))
 public class Chapter {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @Indexed
     private String vedaId;
+    @Column(name = "item_number")
     private int number;
     private String sanskritName;
     private String transliteration;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> titles;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> summaries;
     private int verseCount;
+    @Column(columnDefinition = "TEXT")
     private String audioUrl;
+    @Column(columnDefinition = "TEXT")
     private String videoUrl;
     private int durationSeconds;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> overviews;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> divisionLabels;
     private int suktaCount;
     private int mantraCount;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> attributedSages;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> keyThemes;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> notableSuktas;
 
     public String getId() { return id; }

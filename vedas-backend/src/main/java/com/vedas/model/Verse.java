@@ -1,29 +1,42 @@
 package com.vedas.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.vedas.model.converter.LocalizedTextListConverter;
+import jakarta.persistence.*;
 
 import java.util.List;
 
-@Document(collection = "verses")
+@Entity
+@Table(name = "verses", indexes = {
+        @Index(name = "idx_verses_veda", columnList = "vedaId"),
+        @Index(name = "idx_verses_chapter", columnList = "chapterId")
+})
 public class Verse {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @Indexed
     private String vedaId;
-    @Indexed
     private String chapterId;
+    @Column(name = "item_number")
     private int number;
+    @Column(columnDefinition = "TEXT")
     private String sanskrit;
+    @Column(columnDefinition = "TEXT")
     private String transliteration;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> translations;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> commentaries;
+    @Column(columnDefinition = "TEXT")
     private String audioUrl;
+    @Column(columnDefinition = "TEXT")
     private String videoUrl;
     private int audioDurationSeconds;
     private String suktaReference;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> rishis;
 
     public String getId() { return id; }

@@ -1,25 +1,32 @@
 package com.vedas.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.vedas.model.converter.LocalizedTextListConverter;
+import jakarta.persistence.*;
 
 import java.util.List;
 
-@Document(collection = "media")
+@Entity
+@Table(name = "media")
 public class MediaAsset {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String title;
+    @Enumerated(EnumType.STRING)
     private MediaType type;
     private String vedaId;
     private String chapterId;
     private String verseId;
+    @Column(columnDefinition = "TEXT")
     private String url;
+    @Column(columnDefinition = "TEXT")
     private String thumbnailUrl;
     private int durationSeconds;
     private String languageCode;
     private String reciter;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> descriptions;
     private boolean featured;
 

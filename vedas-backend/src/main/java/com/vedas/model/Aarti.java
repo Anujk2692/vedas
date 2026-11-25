@@ -1,12 +1,14 @@
 package com.vedas.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.vedas.model.converter.AartiLineListConverter;
+import com.vedas.model.converter.AartiRecordingListConverter;
+import com.vedas.model.converter.LocalizedTextListConverter;
+import jakarta.persistence.*;
 
 import java.util.List;
 
-@Document(collection = "aartis")
+@Entity
+@Table(name = "aartis")
 public class Aarti {
 
     public enum DeityType {
@@ -14,23 +16,38 @@ public class Aarti {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @Indexed(unique = true)
+    @Column(unique = true, nullable = false)
     private String slug;
+    @Column(name = "sort_order")
     private int order;
+    @Enumerated(EnumType.STRING)
     private DeityType deityType;
     private String sanskritName;
     private String transliteration;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> titles;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> descriptions;
+    @Column(columnDefinition = "TEXT")
     private String coverImageUrl;
+    @Column(columnDefinition = "TEXT")
     private String pdfUrl;
+    @Column(columnDefinition = "TEXT")
     private String audioUrl;
+    @Column(columnDefinition = "TEXT")
     private String videoUrl;
     private int audioDurationSeconds;
     private int videoDurationSeconds;
     private String reciter;
+    @Convert(converter = AartiLineListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<AartiLine> lines;
+    @Convert(converter = AartiRecordingListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<AartiRecording> recordings;
     private boolean active;
 

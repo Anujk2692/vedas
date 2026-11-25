@@ -2,11 +2,12 @@ package com.vedas.controller;
 
 import com.vedas.dto.*;
 import com.vedas.service.VedasService;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
 import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,27 +18,29 @@ import java.util.Map;
 public class VedasController {
 
     private final VedasService vedasService;
-    private final MongoTemplate mongoTemplate;
+    private final DataSource dataSource;
 
-    public VedasController(VedasService vedasService, MongoTemplate mongoTemplate) {
+    public VedasController(VedasService vedasService, DataSource dataSource) {
         this.vedasService = vedasService;
-        this.mongoTemplate = mongoTemplate;
+        this.dataSource = dataSource;
     }
 
     @GetMapping("/health")
     public ResponseEntity<Map<String, Object>> health() {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", Instant.now().toString());
-        try {
-            mongoTemplate.executeCommand("{ ping: 1 }");
-            body.put("status", "UP");
-            body.put("database", "UP");
-            return ResponseEntity.ok(body);
-        } catch (Exception e) {
-            body.put("status", "DEGRADED");
-            body.put("database", "DOWN");
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(body);
+        try (Connection conn = dataSource.getConnection()) {
+            if (conn.isValid(2)) {
+                body.put("status", "UP");
+                body.put("database", "UP");
+                return ResponseEntity.ok(body);
+            }
+        } catch (Exception ignored) {
+            // fall through to degraded
         }
+        body.put("status", "DEGRADED");
+        body.put("database", "DOWN");
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(body);
     }
 
     @GetMapping("/languages")

@@ -1,23 +1,40 @@
 package com.vedas.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.vedas.model.converter.LocalizedTextListConverter;
+import com.vedas.model.converter.StringListConverter;
+import jakarta.persistence.*;
 
 import java.util.List;
 
-@Document(collection = "topics")
+@Entity
+@Table(name = "topics")
 public class Topic {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @Column(unique = true)
     private String slug;
+    @Column(name = "sort_order")
     private int order;
     private String icon;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> titles;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> descriptions;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> summaries;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> simpleExplanations;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> detailedExplanations;
+    @Convert(converter = StringListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<String> relatedScriptureSlugs;
     private boolean active;
 

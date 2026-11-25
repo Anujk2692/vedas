@@ -1,20 +1,24 @@
 package com.vedas.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*;
 
-@Document(collection = "user_bookmarks")
-@CompoundIndex(name = "device_item", def = "{'deviceId': 1, 'itemId': 1}", unique = true)
+@Entity
+@Table(
+        name = "user_bookmarks",
+        uniqueConstraints = @UniqueConstraint(name = "uk_device_item", columnNames = {"deviceId", "itemId"})
+)
 public class UserBookmark {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String deviceId;
     private String itemId;
     private String type;
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String sanskrit;
+    @Column(columnDefinition = "TEXT")
     private String subtitle;
     private String chapterId;
     private String vedaTitle;

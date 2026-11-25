@@ -1,23 +1,33 @@
 package com.vedas.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.vedas.model.converter.LocalizedTextListConverter;
+import jakarta.persistence.*;
 
 import java.util.List;
 
-@Document(collection = "external_resources")
+@Entity
+@Table(name = "external_resources")
 public class ExternalResource {
 
     public enum ResourceType { PDF, WEB, VIDEO, LIBRARY, YOUTUBE }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @Column(unique = true)
     private String slug;
+    @Column(name = "sort_order")
     private int order;
+    @Enumerated(EnumType.STRING)
     private ResourceType type;
+    @Column(columnDefinition = "TEXT")
     private String url;
     private String sourceName;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> titles;
+    @Convert(converter = LocalizedTextListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<LocalizedText> descriptions;
     private String scriptureSlug;
     private String topicSlug;
