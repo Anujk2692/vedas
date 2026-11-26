@@ -98,10 +98,11 @@ import { AskResponse } from '../../core/models';
   `,
   styles: `
     .narrow { max-width: 720px; }
-    .auto-speak { display: flex; align-items: center; gap: 0.5rem; margin: 0.75rem 0; font-size: 0.9rem; color: #7a3200; }
+    .auto-speak { display: inline-flex; align-items: center; gap: 0.5rem; margin: 0.75rem 0; font-size: 0.9rem; color: #7a3200; cursor: pointer; }
+    .auto-speak input[type="checkbox"] { flex: 0 0 auto; width: 17px; height: 17px; min-width: 0; padding: 0; accent-color: #c45c00; cursor: pointer; }
     .listening { margin: 0.75rem 0; background: #fff3e6; color: #7a3200; font-weight: 600; }
     .search-bar { display: flex; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap; }
-    input { flex: 1; min-width: 180px; padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid rgba(196,92,0,0.2); }
+    .search-bar input { flex: 1; min-width: 180px; padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid rgba(196,92,0,0.2); }
     .mic, .listen { white-space: nowrap; }
     .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
     .chip { border: 1px solid rgba(196,92,0,0.2); background: #fff3e6; border-radius: 999px; padding: 0.4rem 0.85rem; cursor: pointer; font-size: 0.85rem; }
