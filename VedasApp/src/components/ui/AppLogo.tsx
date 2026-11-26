@@ -33,10 +33,11 @@ export function AppLogo({size = 48, showRing = true, style, imageStyle}: Props) 
           {
             width: size,
             height: size,
+            borderRadius: size / 2,
           },
           imageStyle,
         ]}
-        resizeMode="contain"
+        resizeMode="cover"
         accessibilityLabel="Sanatan Gyan logo"
       />
     </View>
