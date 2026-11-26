@@ -73,6 +73,7 @@ export interface AartiSummary {
   description: string;
   deityType: 'DEVI' | 'DEVTA';
   sanskritName: string;
+  transliteration?: string;
 }
 
 export interface AartiLine {
