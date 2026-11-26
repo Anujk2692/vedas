@@ -28,6 +28,7 @@ const LANGUAGES = [
 
 export function ChildNameScreen() {
   const {language: appLang} = useLanguage();
+  const isHi = appLang === 'hi' || appLang === 'sa';
   const [fatherName, setFatherName] = useState('');
   const [motherName, setMotherName] = useState('');
   const [deity, setDeity] = useState('Any');
@@ -119,31 +120,33 @@ export function ChildNameScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.formCard}>
-        <Text style={styles.badge}>✨ नामकरण · CHILD NAME STUDIO</Text>
-        <Text style={styles.title}>Sacred Child Name Suggestions</Text>
+        <Text style={styles.badge}>{isHi ? '✨ नामकरण · शिशु नाम स्टूडियो' : '✨ नामकरण · CHILD NAME STUDIO'}</Text>
+        <Text style={styles.title}>{isHi ? 'पवित्र शिशु नाम सुझाव' : 'Sacred Child Name Suggestions'}</Text>
         <Text style={styles.subtitle}>
-          Combine Father & Mother names with God/Goddess synonyms, Rashi Akshar, Nakshatra, Numerology, and meaning in your language.
+          {isHi
+            ? 'माता-पिता के नाम, इष्ट देव/देवी के पर्यायवाची, राशि अक्षर, नक्षत्र और अंकशास्त्र के साथ अर्थपूर्ण नाम खोजें।'
+            : 'Combine Father & Mother names with God/Goddess synonyms, Rashi Akshar, Nakshatra, Numerology, and meaning in your language.'}
         </Text>
 
-        <Text style={styles.label}>Father’s Name *</Text>
+        <Text style={styles.label}>{isHi ? 'पिता का नाम *' : 'Father’s Name *'}</Text>
         <TextInput
           style={styles.input}
           value={fatherName}
           onChangeText={setFatherName}
-          placeholder="e.g. Anuj"
+          placeholder={isHi ? 'जैसे: अनुज' : 'e.g. Anuj'}
           placeholderTextColor={colors.textMuted}
         />
 
-        <Text style={styles.label}>Mother’s Name *</Text>
+        <Text style={styles.label}>{isHi ? 'माता का नाम *' : 'Mother’s Name *'}</Text>
         <TextInput
           style={styles.input}
           value={motherName}
           onChangeText={setMotherName}
-          placeholder="e.g. Priya"
+          placeholder={isHi ? 'जैसे: प्रिया' : 'e.g. Priya'}
           placeholderTextColor={colors.textMuted}
         />
 
-        <Text style={styles.label}>Starting Letter / Rashi Akshar (Optional)</Text>
+        <Text style={styles.label}>{isHi ? 'प्रथम अक्षर / राशि अक्षर (वैकल्पिक)' : 'Starting Letter / Rashi Akshar (Optional)'}</Text>
         <TextInput
           style={styles.input}
           value={startingLetter}

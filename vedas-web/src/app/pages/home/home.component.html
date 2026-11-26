@@ -1,16 +1,17 @@
 <section class="hero">
   <div class="container hero-grid">
     <div>
-      <p class="eyebrow">Namaste</p>
-      <h1>Sacred Scriptures &amp; Sanatan Knowledge</h1>
-      <p class="lead">Read · Listen · Study — Vedas, Gita, Ramayana, Upanishads and more in Hindi &amp; English.</p>
+      <p class="eyebrow">{{ ui().eyebrow }}</p>
+      <h1>{{ ui().title }}</h1>
+      <p class="lead">{{ ui().lead }}</p>
       <div class="hero-actions">
-        <a routerLink="/scriptures" class="btn btn-primary">Explore Scriptures</a>
-        <a routerLink="/clarity" class="btn btn-outline">✨ Life Clarity</a>
-        <a routerLink="/gyan" class="btn btn-outline">Study Paths</a>
-        <a routerLink="/quiz" class="btn btn-outline">Daily Quiz</a>
-        <a routerLink="/culture" class="btn btn-outline">Culture</a>
-        <a routerLink="/ai-guru" class="btn btn-outline">Ask AI Guru</a>
+        <a routerLink="/scriptures" class="btn btn-primary">{{ ui().exploreScriptures }}</a>
+        <a routerLink="/clarity" class="btn btn-outline">{{ ui().lifeClarity }}</a>
+        <a routerLink="/child-names" class="btn btn-outline">{{ ui().childNames }}</a>
+        <a routerLink="/gyan" class="btn btn-outline">{{ ui().studyPaths }}</a>
+        <a routerLink="/quiz" class="btn btn-outline">{{ ui().dailyQuiz }}</a>
+        <a routerLink="/culture" class="btn btn-outline">{{ ui().culture }}</a>
+        <a routerLink="/ai-guru" class="btn btn-outline">{{ ui().askAiGuru }}</a>
       </div>
     </div>
     <img src="/logo.png" alt="Sanatan Gyan" class="hero-logo" width="148" height="148" />
@@ -19,29 +20,29 @@
 
 <div class="container">
   @if (loading) {
-    <p class="loading">Loading…</p>
+    <p class="loading">{{ ui().loading }}</p>
   }
   @if (error) {
-    <p class="error">{{ error }}</p>
+    <p class="error">{{ ui().loadError }}</p>
   }
 
   <article class="card clarity-spotlight">
     <div class="card-head">
-      <span>✨ जीवन बोध · Life Clarity</span>
-      <span class="pill">Practical Vedanta</span>
+      <span>{{ ui().clarityBadge }}</span>
+      <span class="pill">{{ ui().clarityPill }}</span>
     </div>
-    <p class="clarity-quote">“What you seek outside cannot be found without clarity within.”</p>
-    <p>Explore direct, scripture-grounded clarity on Fear, Relationships, Purpose &amp; Overthinking — or ask AI Guru your own question.</p>
+    <p class="clarity-quote">{{ ui().clarityQuote }}</p>
+    <p>{{ ui().clarityDesc }}</p>
     <div class="hero-actions" style="margin-top: 0.75rem">
-      <a routerLink="/clarity" class="btn btn-primary">Open Life Clarity</a>
-      <a routerLink="/ai-guru" class="btn btn-outline">Ask AI Guru</a>
+      <a routerLink="/clarity" class="btn btn-primary">{{ ui().openClarity }}</a>
+      <a routerLink="/ai-guru" class="btn btn-outline">{{ ui().askAiGuru }}</a>
     </div>
   </article>
 
   @if (shlok) {
     <article class="card shlok-card">
       <div class="card-head">
-        <span>आज का श्लोक</span>
+        <span>{{ ui().dailyShlok }}</span>
         <span class="pill">{{ shlok.theme }}</span>
       </div>
       <p class="sanskrit">{{ shlok.sanskrit }}</p>
@@ -54,7 +55,7 @@
   @if (gitaOfDay) {
     <article class="card shlok-card">
       <div class="card-head">
-        <span>गीता ऑफ़ द डे</span>
+        <span>{{ ui().gitaOfDay }}</span>
         <span class="pill">{{ gitaOfDay.theme }}</span>
       </div>
       <p class="sanskrit">{{ gitaOfDay.sanskrit }}</p>
@@ -62,14 +63,14 @@
       <p>{{ gitaOfDay.translation }}</p>
       <small>{{ gitaOfDay.source }}</small>
       <div class="hero-actions" style="margin-top: 0.75rem">
-        <a routerLink="/scriptures/gita" class="btn btn-outline">Open Gita</a>
+        <a routerLink="/scriptures/gita" class="btn btn-outline">{{ ui().openGita }}</a>
       </div>
     </article>
   }
 
   @if (panchang) {
     <article class="card panchang-card">
-      <h3>आज का पंचांग · {{ panchang.dateLabel }}</h3>
+      <h3>{{ ui().panchangTitle }} · {{ panchang.dateLabel }}</h3>
       <p><strong>{{ panchang.weekday }}</strong> · {{ panchang.tithi }}</p>
       @if (panchang.nakshatra) {
         <p>⭐ {{ panchang.nakshatra }}@if (panchang.yoga) { · 🧘 {{ panchang.yoga }}}</p>
@@ -81,7 +82,7 @@
         <p>{{ panchang.festivalWhy }}</p>
       }
       @if (panchang.festivalRitual) {
-        <p><strong>Ritual:</strong> {{ panchang.festivalRitual }}</p>
+        <p><strong>{{ ui().ritual }}</strong> {{ panchang.festivalRitual }}</p>
       }
       <small>{{ panchang.note }}</small>
     </article>
@@ -89,16 +90,16 @@
 
   @if (studyPath) {
     <article class="card">
-      <h3>Continue Learning</h3>
+      <h3>{{ ui().continueLearning }}</h3>
       <p>{{ studyPath.icon }} {{ studyPath.title }}</p>
       <p>{{ studyPath.description }}</p>
-      <a [routerLink]="['/gyan/path', studyPath.slug]" class="btn btn-primary">Open study path</a>
+      <a [routerLink]="['/gyan/path', studyPath.slug]" class="btn btn-primary">{{ ui().openStudyPath }}</a>
     </article>
   }
 
   @if (recent.length) {
     <article class="card">
-      <h3>Recently Viewed</h3>
+      <h3>{{ ui().recentlyViewed }}</h3>
       <div class="recent-list">
         @for (item of recent; track item.id) {
           <a
@@ -123,7 +124,7 @@
             <h3>{{ v.title }}</h3>
             <p class="sanskrit-sm">{{ v.sanskritName }}</p>
             <p>{{ v.description }}</p>
-            <span class="meta">{{ v.chapterCount }} chapters · {{ v.verseCount }} verses</span>
+            <span class="meta">{{ v.chapterCount }} {{ ui().chapters }} · {{ v.verseCount }} {{ ui().verses }}</span>
           </a>
         }
       </div>

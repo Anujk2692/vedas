@@ -139,22 +139,26 @@ export function HomeScreen() {
             <ContinueReadingCard />
             <RecentlyViewedCard />
             <View style={styles.quickRow}>
-              <QuickActionChip icon="🙏" label="AI Guru" accent onPress={() => navigation.navigate('AiGuru')} />
-              <QuickActionChip icon="👶" label="Child Names" onPress={() => navigation.navigate('ChildNames')} />
-              <QuickActionChip icon="📚" label="Gyan" onPress={() => navigation.navigate('Gyan')} />
-              <QuickActionChip icon="🧠" label="Quiz" onPress={() => navigation.navigate('QuizList')} />
+              <QuickActionChip icon="🙏" label={language === 'hi' || language === 'sa' ? 'AI गुरु' : 'AI Guru'} accent onPress={() => navigation.navigate('AiGuru')} />
+              <QuickActionChip icon="👶" label={language === 'hi' || language === 'sa' ? 'नामकरण' : 'Child Names'} onPress={() => navigation.navigate('ChildNames')} />
+              <QuickActionChip icon="📚" label={language === 'hi' || language === 'sa' ? 'ज्ञान' : 'Gyan'} onPress={() => navigation.navigate('Gyan')} />
+              <QuickActionChip icon="🧠" label={language === 'hi' || language === 'sa' ? 'क्विज़' : 'Quiz'} onPress={() => navigation.navigate('QuizList')} />
               <QuickActionChip
                 icon="🛕"
-                label="Culture"
+                label={language === 'hi' || language === 'sa' ? 'संस्कृति' : 'Culture'}
                 onPress={() => navigation.navigate('CultureHub')}
               />
-              <QuickActionChip icon="🪔" label="Aarti" onPress={() => navigation.navigate('Aarti')} />
-              <QuickActionChip icon="🔍" label="Search" onPress={() => navigation.navigate('Search')} />
-              <QuickActionChip icon="🎵" label="Listen" onPress={() => navigation.navigate('Audio')} />
+              <QuickActionChip icon="🪔" label={language === 'hi' || language === 'sa' ? 'आरती' : 'Aarti'} onPress={() => navigation.navigate('Aarti')} />
+              <QuickActionChip icon="🔍" label={language === 'hi' || language === 'sa' ? 'खोजें' : 'Search'} onPress={() => navigation.navigate('Search')} />
+              <QuickActionChip icon="🎵" label={language === 'hi' || language === 'sa' ? 'सुनें' : 'Listen'} onPress={() => navigation.navigate('Audio')} />
             </View>
             <InfoBanner
               icon="📥"
-              text="ऑफ़लाइन: एक बार खोलने पर सामग्री कैश हो जाती है। Settings → Clear App Cache से रीफ़्रेश करें।"
+              text={
+                language === 'hi' || language === 'sa'
+                  ? 'ऑफ़लाइन: एक बार खोलने पर सामग्री कैश हो जाती है। Settings → Clear App Cache से रीफ़्रेश करें।'
+                  : 'Offline: Content is cached once opened. Refresh via Settings → Clear App Cache.'
+              }
             />
           </View>
         }

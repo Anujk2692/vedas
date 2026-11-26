@@ -8,17 +8,17 @@
       </div>
     </a>
     <nav class="nav">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-      <a routerLink="/scriptures" routerLinkActive="active">Scriptures</a>
-      <a routerLink="/gyan" routerLinkActive="active">Gyan</a>
-      <a routerLink="/clarity" routerLinkActive="active">Clarity</a>
-      <a routerLink="/child-names" routerLinkActive="active">Names</a>
-      <a routerLink="/aartis" routerLinkActive="active">Aarti</a>
-      <a routerLink="/search" routerLinkActive="active">Search</a>
-      <a routerLink="/ai-guru" routerLinkActive="active">AI Guru</a>
-      <a routerLink="/quiz" routerLinkActive="active">Quiz</a>
-      <a routerLink="/culture" routerLinkActive="active">Culture</a>
-      <a routerLink="/meditation" routerLinkActive="active">Meditate</a>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{ langService.ui().nav.home }}</a>
+      <a routerLink="/scriptures" routerLinkActive="active">{{ langService.ui().nav.scriptures }}</a>
+      <a routerLink="/gyan" routerLinkActive="active">{{ langService.ui().nav.gyan }}</a>
+      <a routerLink="/clarity" routerLinkActive="active">{{ langService.ui().nav.clarity }}</a>
+      <a routerLink="/child-names" routerLinkActive="active">{{ langService.ui().nav.names }}</a>
+      <a routerLink="/aartis" routerLinkActive="active">{{ langService.ui().nav.aarti }}</a>
+      <a routerLink="/search" routerLinkActive="active">{{ langService.ui().nav.search }}</a>
+      <a routerLink="/ai-guru" routerLinkActive="active">{{ langService.ui().nav.aiGuru }}</a>
+      <a routerLink="/quiz" routerLinkActive="active">{{ langService.ui().nav.quiz }}</a>
+      <a routerLink="/culture" routerLinkActive="active">{{ langService.ui().nav.culture }}</a>
+      <a routerLink="/meditation" routerLinkActive="active">{{ langService.ui().nav.meditate }}</a>
     </nav>
     <div class="lang-switch">
       <button type="button" [class.on]="langService.lang() === 'hi'" (click)="setLang('hi')">हिं</button>
@@ -33,7 +33,7 @@
 
 <footer class="site-footer">
   <div class="container">
-    <p>🕉 Sanatan Gyan — Vedas · Gita · Itihasa · Upanishads</p>
-    <p class="muted">Website &amp; API: vedas-oax2.onrender.com · © {{ year }}</p>
+    <p>{{ langService.ui().footer.tagline }}</p>
+    <p class="muted">{{ langService.ui().footer.sub }} · © {{ year }}</p>
   </div>
 </footer>

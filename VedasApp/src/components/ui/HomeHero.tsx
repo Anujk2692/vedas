@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useLanguage} from '../../context/LanguageContext';
 import {AppLogo} from './AppLogo';
 import {borderRadius, colors, shadows, spacing, typography} from '../../theme/colors';
 
@@ -11,6 +12,8 @@ interface Props {
 
 export function HomeHero({languageLabel, onLanguagePress}: Props) {
   const insets = useSafeAreaInsets();
+  const {language} = useLanguage();
+  const isHi = language === 'hi' || language === 'sa';
 
   return (
     <View style={styles.hero}>
@@ -23,19 +26,21 @@ export function HomeHero({languageLabel, onLanguagePress}: Props) {
             <View style={styles.brandText}>
               <Text style={styles.brandLabel}>सनातन ज्ञान</Text>
               <Text style={styles.brandTag} numberOfLines={1}>
-                Vedas · Gita · Itihasa · Upanishads
+                {isHi ? 'वेद · गीता · इतिहास · उपनिषद' : 'Vedas · Gita · Itihasa · Upanishads'}
               </Text>
             </View>
           </View>
           <TouchableOpacity style={styles.langBtn} onPress={onLanguagePress} activeOpacity={0.85}>
-            <Text style={styles.langLabel}>Language</Text>
+            <Text style={styles.langLabel}>{isHi ? 'भाषा' : 'Language'}</Text>
             <Text style={styles.langValue}>{languageLabel}</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.greeting}>Namaste</Text>
-        <Text style={styles.title}>Sacred Scriptures</Text>
+        <Text style={styles.greeting}>{isHi ? 'नमस्ते' : 'Namaste'}</Text>
+        <Text style={styles.title}>{isHi ? 'पावन ग्रंथ' : 'Sacred Scriptures'}</Text>
         <Text style={styles.subtitle}>
-          Read · Listen · Watch · Study — Vedas, Gita, Ramayana and more in Hindi
+          {isHi
+            ? 'पढ़ें · सुनें · देखें · अध्ययन करें — वेद, गीता, रामायण और अधिक हिंदी में'
+            : 'Read · Listen · Watch · Study — Vedas, Gita, Ramayana and more'}
         </Text>
       </View>
     </View>

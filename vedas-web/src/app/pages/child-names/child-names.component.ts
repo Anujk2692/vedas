@@ -13,25 +13,29 @@ const SHORTLIST_KEY = 'vedas_child_name_shortlist_v1';
   template: `
     <div class="container child-page">
       <section class="hero-card card">
-        <span class="pill">✨ नामकरण · CHILD NAME STUDIO</span>
-        <h1>Sacred Child Name Suggestions</h1>
+        <span class="pill">{{ isHi ? '✨ नामकरण · शिशु नाम स्टूडियो' : '✨ नामकरण · CHILD NAME STUDIO' }}</span>
+        <h1>{{ isHi ? 'पवित्र शिशु नाम सुझाव' : 'Sacred Child Name Suggestions' }}</h1>
         <p class="lead">
-          Combine Father &amp; Mother names with optional God/Goddess synonyms, Rashi Akshar (starting letter), Nakshatra, Numerology, and meaning in your chosen language.
+          {{
+            isHi
+              ? 'माता-पिता के नाम, इष्ट देव/देवी के पर्यायवाची, राशि अक्षर, नक्षत्र और अंकशास्त्र के साथ अर्थपूर्ण नाम खोजें।'
+              : 'Combine Father & Mother names with optional God/Goddess synonyms, Rashi Akshar (starting letter), Nakshatra, Numerology, and meaning in your chosen language.'
+          }}
         </p>
 
         <form class="form-grid" (ngSubmit)="generate()">
           <label class="field">
-            <span>Father's Name *</span>
-            <input type="text" [(ngModel)]="fatherName" name="fatherName" placeholder="e.g. Anuj" required />
+            <span>{{ isHi ? 'पिता का नाम *' : "Father's Name *" }}</span>
+            <input type="text" [(ngModel)]="fatherName" name="fatherName" [placeholder]="isHi ? 'जैसे: अनुज' : 'e.g. Anuj'" required />
           </label>
 
           <label class="field">
-            <span>Mother's Name *</span>
-            <input type="text" [(ngModel)]="motherName" name="motherName" placeholder="e.g. Priya" required />
+            <span>{{ isHi ? 'माता का नाम *' : "Mother's Name *" }}</span>
+            <input type="text" [(ngModel)]="motherName" name="motherName" [placeholder]="isHi ? 'जैसे: प्रिया' : 'e.g. Priya'" required />
           </label>
 
           <label class="field">
-            <span>God / Goddess (Optional)</span>
+            <span>{{ isHi ? 'देव / देवी (वैकल्पिक)' : 'God / Goddess (Optional)' }}</span>
             <select [(ngModel)]="deity" name="deity">
               @for (d of deities; track d) {
                 <option [value]="d">{{ d }}</option>
@@ -40,26 +44,26 @@ const SHORTLIST_KEY = 'vedas_child_name_shortlist_v1';
           </label>
 
           <label class="field">
-            <span>Starting Letter / Rashi Akshar</span>
+            <span>{{ isHi ? 'प्रथम अक्षर / राशि अक्षर' : 'Starting Letter / Rashi Akshar' }}</span>
             <input
               type="text"
               [(ngModel)]="startingLetter"
               name="startingLetter"
               maxlength="1"
-              placeholder="Optional (e.g. A, R, S)" />
+              [placeholder]="isHi ? 'वैकल्पिक (जैसे: A, R, S)' : 'Optional (e.g. A, R, S)'" />
           </label>
 
           <label class="field">
-            <span>Gender</span>
+            <span>{{ isHi ? 'लिंग' : 'Gender' }}</span>
             <select [(ngModel)]="gender" name="gender">
-              <option value="ANY">Any</option>
-              <option value="BOY">Boy</option>
-              <option value="GIRL">Girl</option>
+              <option value="ANY">{{ isHi ? 'कोई भी' : 'Any' }}</option>
+              <option value="BOY">{{ isHi ? 'लड़का' : 'Boy' }}</option>
+              <option value="GIRL">{{ isHi ? 'लड़की' : 'Girl' }}</option>
             </select>
           </label>
 
           <label class="field">
-            <span>Religion</span>
+            <span>{{ isHi ? 'धर्म' : 'Religion' }}</span>
             <select [(ngModel)]="religion" name="religion">
               @for (r of religions; track r) {
                 <option [value]="r">{{ r }}</option>
@@ -68,7 +72,7 @@ const SHORTLIST_KEY = 'vedas_child_name_shortlist_v1';
           </label>
 
           <label class="field">
-            <span>Country</span>
+            <span>{{ isHi ? 'देश' : 'Country' }}</span>
             <select [(ngModel)]="country" name="country">
               @for (c of countries; track c) {
                 <option [value]="c">{{ c }}</option>
@@ -77,7 +81,7 @@ const SHORTLIST_KEY = 'vedas_child_name_shortlist_v1';
           </label>
 
           <label class="field">
-            <span>Meaning Language</span>
+            <span>{{ isHi ? 'अर्थ की भाषा' : 'Meaning Language' }}</span>
             <select [(ngModel)]="language" name="language">
               <option value="en">English</option>
               <option value="hi">Hindi (हिन्दी)</option>
@@ -87,7 +91,7 @@ const SHORTLIST_KEY = 'vedas_child_name_shortlist_v1';
 
           <div class="submit-wrap">
             <button type="submit" class="btn btn-primary" [disabled]="loading">
-              {{ loading ? 'Generating…' : 'Suggest Names ✨' }}
+              {{ loading ? (isHi ? 'खोजा जा रहा है…' : 'Generating…') : (isHi ? 'नाम सुझाएं ✨' : 'Suggest Names ✨') }}
             </button>
           </div>
         </form>
@@ -455,6 +459,10 @@ export class ChildNamesComponent {
   showShortlistOnly = false;
   copiedName = '';
   shortlist: string[] = this.loadShortlist();
+
+  get isHi(): boolean {
+    return this.langService.isHi();
+  }
 
   get filteredSuggestions(): ChildNameSuggestion[] {
     if (!this.result) return [];

@@ -1,17 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../../core/services/api.service';
 import { LanguageService } from '../../core/services/language.service';
 import { DailyShlok, Panchang, StudyPath, Veda } from '../../core/models';
-
-const SECTION_LABELS: Record<string, string> = {
-  VEDA: 'चार वेद',
-  ITIHASA: 'इतिहास ग्रंथ',
-  UPANISHAD: 'उपनिषद',
-  PURANA: 'पुराण',
-  DARSHAN: 'दर्शन',
-  NITI: 'नीति ग्रंथ',
-};
 
 interface RecentItem {
   kind: 'scripture' | 'topic';
@@ -32,7 +23,8 @@ const RECENT_KEY = 'sanatan_recent_v1';
 })
 export class HomeComponent implements OnInit {
   private readonly api = inject(ApiService);
-  private readonly langService = inject(LanguageService);
+  readonly langService = inject(LanguageService);
+  readonly ui = computed(() => this.langService.ui().home);
 
   shlok: DailyShlok | null = null;
   gitaOfDay: DailyShlok | null = null;
@@ -67,10 +59,11 @@ export class HomeComponent implements OnInit {
     this.api.getVedas(lang).subscribe({
       next: vedas => {
         const order = ['VEDA', 'ITIHASA', 'UPANISHAD', 'PURANA', 'DARSHAN', 'NITI'];
+        const sectionLabels = this.ui().sections;
         this.grouped = order
           .map(type => ({
             type,
-            label: SECTION_LABELS[type] ?? type,
+            label: sectionLabels[type] ?? type,
             items: vedas.filter(v => (v.scriptureType ?? 'VEDA') === type),
           }))
           .filter(g => g.items.length > 0);
