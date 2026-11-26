@@ -20,8 +20,8 @@
       <a routerLink="/culture" routerLinkActive="active">{{ langService.ui().nav.culture }}</a>
       <a routerLink="/meditation" routerLinkActive="active">{{ langService.ui().nav.meditate }}</a>
     </nav>
-    <div class="lang-switch">
-      <button type="button" [class.on]="langService.lang() === 'hi'" (click)="setLang('hi')">हिं</button>
+    <div class="lang-switch notranslate" translate="no">
+      <button type="button" [class.on]="langService.lang() === 'hi'" (click)="setLang('hi')">हिन्दी</button>
       <button type="button" [class.on]="langService.lang() === 'en'" (click)="setLang('en')">EN</button>
     </div>
   </div>
