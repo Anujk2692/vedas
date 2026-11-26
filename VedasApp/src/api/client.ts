@@ -21,6 +21,7 @@ import type {
   Quiz,
   QuizSummary,
   Deity,
+  DevotionalItem,
   Temple,
   FestivalGuide,
   Veda,
@@ -161,6 +162,10 @@ export const api = {
     postRequest<AskResponse>('/sanatan/ask', {question, lang}, 90000),
   suggestChildNames: (payload: ChildNameRequest) =>
     postRequest<ChildNameResponse>('/child-names/suggest', payload),
+  getChalisas: (lang: string) => request<DevotionalItem[]>('/chalisas', lang),
+  getChalisa: (slug: string, lang: string) => request<DevotionalItem>(`/chalisas/${slug}`, lang),
+  getBhajans: (lang: string) => request<DevotionalItem[]>('/bhajans', lang),
+  getBhajan: (slug: string, lang: string) => request<DevotionalItem>(`/bhajans/${slug}`, lang),
   syncBookmarks: (deviceId: string, bookmarks: BookmarkSyncItem[]) =>
     postRequest<BookmarkSyncItem[]>('/user/bookmarks/sync', {deviceId, bookmarks}),
 };

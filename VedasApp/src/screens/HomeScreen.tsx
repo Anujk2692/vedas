@@ -149,6 +149,26 @@ export function HomeScreen() {
                 onPress={() => navigation.navigate('CultureHub')}
               />
               <QuickActionChip icon="🪔" label={language === 'hi' || language === 'sa' ? 'आरती' : 'Aarti'} onPress={() => navigation.navigate('Aarti')} />
+              <QuickActionChip
+                icon="📿"
+                label={language === 'hi' || language === 'sa' ? 'चालीसा' : 'Chalisa'}
+                onPress={() =>
+                  navigation.navigate('Devotional', {
+                    mode: 'chalisas',
+                    title: language === 'hi' || language === 'sa' ? 'चालीसा संग्रह' : 'Chalisa Collection',
+                  })
+                }
+              />
+              <QuickActionChip
+                icon="🎶"
+                label={language === 'hi' || language === 'sa' ? 'भजन' : 'Bhajan'}
+                onPress={() =>
+                  navigation.navigate('Devotional', {
+                    mode: 'bhajans',
+                    title: language === 'hi' || language === 'sa' ? 'भजन संग्रह' : 'Bhajan Collection',
+                  })
+                }
+              />
               <QuickActionChip icon="🔍" label={language === 'hi' || language === 'sa' ? 'खोजें' : 'Search'} onPress={() => navigation.navigate('Search')} />
               <QuickActionChip icon="🎵" label={language === 'hi' || language === 'sa' ? 'सुनें' : 'Listen'} onPress={() => navigation.navigate('Audio')} />
             </View>

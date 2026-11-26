@@ -388,3 +388,20 @@ export interface ChildNameResponse {
   totalSuggestions: number;
   suggestions: ChildNameSuggestion[];
 }
+
+export interface DevotionalLine {
+  sanskrit: string;
+  transliteration: string;
+  translation: string;
+}
+
+export interface DevotionalItem {
+  slug: string;
+  kind: 'CHALISA' | 'BHAJAN';
+  deity: string;
+  title: string;
+  sanskritName: string;
+  description: string;
+  lineCount: number;
+  lines?: DevotionalLine[];
+}

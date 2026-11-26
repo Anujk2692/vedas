@@ -16,6 +16,7 @@ export type RootStackParamList = {
   TopicDetail: {slug: string; title: string};
   AiGuru: undefined;
   ChildNames: undefined;
+  Devotional: {mode: 'chalisas' | 'bhajans'; title: string};
   MeditationTimer: undefined;
   QuizList: undefined;
   QuizPlay: {quizId: string; title: string};

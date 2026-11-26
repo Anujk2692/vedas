@@ -20,6 +20,7 @@ import {AudioScreen} from '../screens/AudioScreen';
 import {ChapterReaderScreen} from '../screens/ChapterReaderScreen';
 import {ChildNameScreen} from '../screens/ChildNameScreen';
 import {CultureHubScreen} from '../screens/CultureHubScreen';
+import {DevotionalScreen} from '../screens/DevotionalScreen';
 import {DeityDetailScreen} from '../screens/DeityDetailScreen';
 import {FestivalDetailScreen} from '../screens/FestivalDetailScreen';
 import {GyanScreen} from '../screens/GyanScreen';
@@ -282,6 +283,18 @@ export function AppNavigator() {
                 />
               ),
             }}
+          />
+          <Stack.Screen
+            name="Devotional"
+            component={DevotionalScreen}
+            options={({route}) => ({
+              header: () => (
+                <StackScreenHeader
+                  title={route.params.title}
+                  subtitle="Tap any stanza to listen"
+                />
+              ),
+            })}
           />
           <Stack.Screen
             name="DeityDetail"

@@ -10,6 +10,7 @@ import {
   ChildNameRequest,
   ChildNameResponse,
   DailyShlok,
+  DevotionalItem,
   Language,
   Panchang,
   SanatanHub,
@@ -130,6 +131,22 @@ export class ApiService {
 
   suggestChildNames(payload: ChildNameRequest): Observable<ChildNameResponse> {
     return this.http.post<ChildNameResponse>(`${this.base}/child-names/suggest`, payload);
+  }
+
+  getChalisas(lang: string): Observable<DevotionalItem[]> {
+    return this.http.get<DevotionalItem[]>(this.withLang(lang, '/chalisas'));
+  }
+
+  getChalisa(slug: string, lang: string): Observable<DevotionalItem> {
+    return this.http.get<DevotionalItem>(this.withLang(lang, `/chalisas/${slug}`));
+  }
+
+  getBhajans(lang: string): Observable<DevotionalItem[]> {
+    return this.http.get<DevotionalItem[]>(this.withLang(lang, '/bhajans'));
+  }
+
+  getBhajan(slug: string, lang: string): Observable<DevotionalItem> {
+    return this.http.get<DevotionalItem>(this.withLang(lang, `/bhajans/${slug}`));
   }
 
   health(): Observable<string> {

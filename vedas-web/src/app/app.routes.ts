@@ -16,6 +16,7 @@ import { QuizComponent } from './pages/quiz/quiz.component';
 import { CultureComponent } from './pages/culture/culture.component';
 import { ClarityComponent } from './pages/clarity/clarity.component';
 import { ChildNamesComponent } from './pages/child-names/child-names.component';
+import { DevotionalComponent } from './pages/devotional/devotional.component';
 
 export const routes: Routes = [
   {
@@ -34,6 +35,10 @@ export const routes: Routes = [
       { path: 'search', component: SearchComponent },
       { path: 'aartis', component: AartisComponent },
       { path: 'aartis/:slug', component: AartiDetailComponent },
+      { path: 'chalisas', component: DevotionalComponent, data: { mode: 'chalisas' } },
+      { path: 'chalisas/:slug', component: DevotionalComponent, data: { mode: 'chalisas' } },
+      { path: 'bhajans', component: DevotionalComponent, data: { mode: 'bhajans' } },
+      { path: 'bhajans/:slug', component: DevotionalComponent, data: { mode: 'bhajans' } },
       { path: 'ai-guru', component: AiGuruComponent },
       { path: 'meditation', component: MeditationComponent },
       { path: 'quiz', component: QuizComponent },

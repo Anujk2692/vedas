@@ -39,6 +39,8 @@ class FullApiIntegrationTest {
         mockMvc.perform(get("/api/vedas?lang=en")).andExpect(status().isOk()).andExpect(jsonPath("$[0].slug").exists());
         mockMvc.perform(get("/api/vedas/gita?lang=en")).andExpect(status().isOk()).andExpect(jsonPath("$.slug").value("gita"));
         mockMvc.perform(get("/api/aartis?lang=hi")).andExpect(status().isOk()).andExpect(jsonPath("$[0].slug").exists());
+        mockMvc.perform(get("/api/chalisas?lang=hi")).andExpect(status().isOk()).andExpect(jsonPath("$[0].slug").exists());
+        mockMvc.perform(get("/api/bhajans?lang=hi")).andExpect(status().isOk()).andExpect(jsonPath("$[0].slug").exists());
         mockMvc.perform(get("/api/media/all?type=AUDIO&lang=hi")).andExpect(status().isOk());
         mockMvc.perform(get("/api/media/all?type=VIDEO&lang=hi")).andExpect(status().isOk());
         mockMvc.perform(get("/api/search?q=karma&lang=en")).andExpect(status().isOk());

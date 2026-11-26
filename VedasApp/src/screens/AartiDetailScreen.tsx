@@ -1,7 +1,7 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import type {RouteProp} from '@react-navigation/native';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   FlatList,
   Pressable,
@@ -26,22 +26,46 @@ import {borderRadius, colors, shadows, spacing, typography} from '../theme/color
 import {flatListPerfProps} from '../utils/listPerf';
 import {normalizeAartiDetail} from '../utils/normalizeAarti';
 import {formatDuration} from '../utils/formatTime';
+import {onSpeechFinish, speakAnswerText, stopSpeech} from '../utils/speech';
 
 function AartiLineCard({
   line,
   index,
   sanskritFontSize,
   translationFontSize,
+  isPlaying,
+  isHi,
+  onPress,
 }: {
   line: AartiLine;
   index: number;
   sanskritFontSize: number;
   translationFontSize: number;
+  isPlaying: boolean;
+  isHi: boolean;
+  onPress: () => void;
 }) {
   return (
-    <View style={styles.lineCard}>
-      <View style={styles.lineBadge}>
-        <Text style={styles.lineNumber}>{index + 1}</Text>
+    <Pressable
+      onPress={onPress}
+      style={({pressed}) => [
+        styles.lineCard,
+        isPlaying && styles.lineCardActive,
+        pressed && styles.pressed,
+      ]}>
+      <View style={styles.lineTopRow}>
+        <View style={styles.lineBadge}>
+          <Text style={styles.lineNumber}>{index + 1}</Text>
+        </View>
+        <Text style={[styles.tapHintText, isPlaying && styles.tapHintActive]}>
+          {isPlaying
+            ? isHi
+              ? '🔊 सुन रहे हैं… (रोकें)'
+              : '🔊 Playing… (Tap to stop)'
+            : isHi
+              ? '🔊 सुनने के लिए टैप करें'
+              : '🔊 Tap to listen'}
+        </Text>
       </View>
       <SanskritText text={line.sanskrit} size={sanskritFontSize} style={styles.lineSanskrit} />
       <SelectableReadableText
@@ -52,7 +76,7 @@ function AartiLineCard({
         text={line.translation}
         style={[styles.lineTranslation, {fontSize: translationFontSize}]}
       />
-    </View>
+    </Pressable>
   );
 }
 
@@ -60,8 +84,11 @@ export function AartiDetailScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'AartiDetail'>>();
   const {language} = useLanguage();
+  const isHi = language === 'hi' || language === 'sa';
   const {playTrack} = useAudioPlayer();
   const {sanskritFontSize, translationFontSize, recordSadhanaPractice} = useUserPreferences();
+  const [activeLineIndex, setActiveLineIndex] = useState<number | null>(null);
+  const [speakingAll, setSpeakingAll] = useState(false);
   const fetchAarti = useCallback(async () => {
     const data = await api.getAarti(route.params.slug, language, true);
     return normalizeAartiDetail(data);
@@ -78,6 +105,49 @@ export function AartiDetailScreen() {
       recordSadhanaPractice().catch(() => undefined);
     }
   }, [aarti, recordSadhanaPractice]);
+
+  useEffect(() => {
+    const unsub = onSpeechFinish(() => {
+      setActiveLineIndex(null);
+      setSpeakingAll(false);
+    });
+    return () => {
+      unsub();
+      stopSpeech().catch(() => undefined);
+    };
+  }, []);
+
+  const toggleSpeakLine = async (line: AartiLine, index: number) => {
+    if (activeLineIndex === index) {
+      await stopSpeech();
+      setActiveLineIndex(null);
+      return;
+    }
+    setSpeakingAll(false);
+    setActiveLineIndex(index);
+    try {
+      await speakAnswerText(line.sanskrit, 'hi');
+    } catch {
+      setActiveLineIndex(null);
+    }
+  };
+
+  const toggleSpeakAll = async () => {
+    if (!aarti?.lines?.length) return;
+    if (speakingAll) {
+      await stopSpeech();
+      setSpeakingAll(false);
+      return;
+    }
+    setActiveLineIndex(null);
+    setSpeakingAll(true);
+    try {
+      const fullText = aarti.lines.map(l => l.sanskrit).join(' ');
+      await speakAnswerText(fullText, 'hi');
+    } catch {
+      setSpeakingAll(false);
+    }
+  };
 
   const shareAarti = async () => {
     if (!aarti) {
@@ -160,6 +230,9 @@ export function AartiDetailScreen() {
             index={index}
             sanskritFontSize={sanskritFontSize}
             translationFontSize={translationFontSize}
+            isPlaying={activeLineIndex === index}
+            isHi={isHi}
+            onPress={() => toggleSpeakLine(item, index)}
           />
         )}
         ListHeaderComponent={
@@ -174,6 +247,19 @@ export function AartiDetailScreen() {
                 <View style={styles.dividerLine} />
               </View>
               <View style={styles.mediaActions}>
+                <Pressable
+                  style={({pressed}) => [styles.mediaBtn, pressed && styles.pressed]}
+                  onPress={toggleSpeakAll}>
+                  <Text style={styles.mediaBtnText}>
+                    {speakingAll
+                      ? isHi
+                        ? '⏹ आरती वाचन रोकें'
+                        : '⏹ Stop Reading Aarti'
+                      : isHi
+                        ? '🔊 पूरी आरती सुनें (टैप करें)'
+                        : '🔊 Listen Full Aarti (Tap any stanza)'}
+                  </Text>
+                </Pressable>
                 {showPdf && (
                   <Pressable
                     style={({pressed}) => [styles.mediaBtn, styles.pdfBtn, pressed && styles.pressed]}
@@ -372,13 +458,30 @@ const styles = StyleSheet.create({
     borderColor: colors.borderLight,
     ...shadows.sm,
   },
+  lineCardActive: {
+    backgroundColor: colors.surfaceElevated,
+    borderColor: colors.primary,
+    borderWidth: 1.5,
+  },
+  lineTopRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.sm,
+  },
   lineBadge: {
-    alignSelf: 'flex-start',
     backgroundColor: colors.tabActive,
     borderRadius: borderRadius.full,
     paddingHorizontal: 10,
     paddingVertical: 4,
-    marginBottom: spacing.sm,
+  },
+  tapHintText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: colors.textMuted,
+  },
+  tapHintActive: {
+    color: colors.primary,
   },
   lineNumber: {
     fontSize: 12,
