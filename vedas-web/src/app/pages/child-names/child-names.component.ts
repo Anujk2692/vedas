@@ -311,7 +311,7 @@ const SHORTLIST_KEY = 'vedas_child_name_shortlist_v1';
     }
     .name-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
       gap: 1.15rem;
     }
     .name-card {
@@ -417,6 +417,16 @@ const SHORTLIST_KEY = 'vedas_child_name_shortlist_v1';
       font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
+    }
+    @media (max-width: 600px) {
+      .name-grid,
+      .astro-grid {
+        grid-template-columns: 1fr;
+      }
+      .search-box {
+        width: 100%;
+        min-width: 0;
+      }
     }
   `,
 })

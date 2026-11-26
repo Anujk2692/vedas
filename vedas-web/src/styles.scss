@@ -14,6 +14,7 @@ body {
   background: #faf6f0;
   color: #2c1810;
   line-height: 1.5;
+  overflow-x: hidden;
 }
 
 .container {
@@ -53,7 +54,7 @@ a {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
   gap: 1rem;
 }
 
@@ -127,9 +128,23 @@ a {
 }
 
 .btn-outline {
+  background: #fff3e6;
+  color: #7a3200;
+  border: 1px solid rgba(196, 92, 0, 0.3);
+
+  &:hover {
+    background: #ffe6cc;
+  }
+}
+
+.hero .btn-outline {
   background: rgba(255, 255, 255, 0.15);
   color: #fff8f0;
   border: 1px solid rgba(255, 255, 255, 0.35);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
 }
 
 .loading,
