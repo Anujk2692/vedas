@@ -6,6 +6,7 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {
   FlatList,
   RefreshControl,
+  SafeAreaView,
   StatusBar,
   StyleSheet,
   View,
@@ -104,7 +105,7 @@ export function HomeScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {error && <ErrorBanner message={error} onRetry={refresh} />}
 
       <FlatList
@@ -199,7 +200,7 @@ export function HomeScreen() {
       />
 
       <LanguagePicker visible={showLanguagePicker} onClose={() => setShowLanguagePicker(false)} />
-    </View>
+    </SafeAreaView>
   );
 }
 

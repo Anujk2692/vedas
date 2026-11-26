@@ -30,7 +30,9 @@ export function QuickActionChip({icon, label, onPress, accent}: Props) {
 
 const styles = StyleSheet.create({
   chip: {
-    flex: 1,
+    flexGrow: 1,
+    flexBasis: '30%',
+    minWidth: 96,
     backgroundColor: colors.surface,
     borderRadius: borderRadius.lg,
     paddingVertical: spacing.md,
