@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { LanguageService } from '../../core/services/language.service';
+import { ThemeService } from '../../core/services/theme.service';
 
 @Component({
   selector: 'app-shell',
@@ -12,7 +13,10 @@ import { LanguageService } from '../../core/services/language.service';
 export class ShellComponent {
   readonly year = new Date().getFullYear();
 
-  constructor(readonly langService: LanguageService) {}
+  constructor(
+    readonly langService: LanguageService,
+    readonly themeService: ThemeService,
+  ) {}
 
   setLang(code: string): void {
     this.langService.setLang(code);

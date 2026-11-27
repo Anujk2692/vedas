@@ -95,12 +95,20 @@ import { YogaPoseSvgComponent } from './yoga-pose-svg.component';
 
             <div class="two-col">
               <div class="panel">
-                <h3>{{ isHi ? '📋 करने की विधि (Steps)' : '📋 Step-by-Step Instructions' }}</h3>
-                <ol>
-                  @for (step of (isHi ? selected.stepsHi : selected.stepsEn); track step) {
-                    <li>{{ step }}</li>
+                <h3>{{ isHi ? '📋 करने की विधि (चित्र सहित)' : '📋 Step-by-Step Visual Guide' }}</h3>
+                <div class="steps-visual">
+                  @for (step of (isHi ? selected.stepsHi : selected.stepsEn); track step; let i = $index) {
+                    <div class="step-card">
+                      <div class="step-svg">
+                        <app-yoga-pose-svg [poseId]="selected.stepGraphics[i] || selected.id" [size]="110" />
+                      </div>
+                      <div class="step-text">
+                        <span class="step-num">{{ isHi ? 'चरण ' + (i + 1) : 'Step ' + (i + 1) }}</span>
+                        <p>{{ step }}</p>
+                      </div>
+                    </div>
                   }
-                </ol>
+                </div>
               </div>
               <div class="panel benefits-panel">
                 <h3>{{ isHi ? '✨ मुख्य लाभ (Benefits)' : '✨ Key Benefits' }}</h3>
@@ -188,6 +196,12 @@ import { YogaPoseSvgComponent } from './yoga-pose-svg.component';
     .panel { background: #fffaf3; border: 1px solid rgba(196,92,0,0.14); border-radius: 14px; padding: 1rem 1.25rem; }
     .panel h3 { margin-top: 0; color: #7a3200; }
     .panel ol, .panel ul { padding-left: 1.2rem; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; color: #3d2717; }
+    .steps-visual { display: flex; flex-direction: column; gap: 0.75rem; }
+    .step-card { display: flex; gap: 0.85rem; align-items: center; background: #fff; border: 1px solid rgba(196,92,0,0.14); border-radius: 12px; padding: 0.6rem 0.75rem; }
+    .step-svg { flex-shrink: 0; background: #fff8f0; border-radius: 10px; padding: 0.25rem; }
+    .step-text { flex: 1; }
+    .step-num { display: inline-block; font-size: 0.72rem; font-weight: 800; color: #c45c00; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.2rem; }
+    .step-text p { margin: 0; font-size: 0.92rem; line-height: 1.45; color: #3d2717; }
     .benefits-panel ul { list-style: none; padding-left: 0; }
     .caution { margin-top: 0.85rem; font-size: 0.85rem; color: #9a3412; background: #ffedd5; padding: 0.55rem 0.75rem; border-radius: 8px; }
   `,
@@ -208,7 +222,7 @@ export class MeditationComponent {
   selected: YogaAsana | null = null;
   selectedCategory = 'All';
   categories = [
-    { key: 'All', en: 'All (12)', hi: 'सभी (12)' },
+    { key: 'All', en: 'All (24)', hi: 'सभी (24)' },
     { key: 'Standing', en: 'Standing', hi: 'खड़े होकर' },
     { key: 'Seated', en: 'Seated', hi: 'बैठकर' },
     { key: 'Backbend', en: 'Backbend', hi: 'पीछे झुकने वाले' },

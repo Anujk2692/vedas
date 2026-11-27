@@ -67,15 +67,13 @@ function AartiLineCard({
               : '🔊 Tap to listen'}
         </Text>
       </View>
-      <SanskritText text={line.sanskrit} size={sanskritFontSize} style={styles.lineSanskrit} />
-      <SelectableReadableText
-        text={line.transliteration}
-        style={styles.lineTransliteration}
-      />
-      <SelectableReadableText
-        text={line.translation}
-        style={[styles.lineTranslation, {fontSize: translationFontSize}]}
-      />
+      <SanskritText text={line.sanskrit} size={sanskritFontSize} selectable={false} style={styles.lineSanskrit} />
+      {line.transliteration ? (
+        <Text style={styles.lineTransliteration}>{line.transliteration}</Text>
+      ) : null}
+      {line.translation && line.translation !== line.sanskrit && line.translation !== line.transliteration ? (
+        <Text style={[styles.lineTranslation, {fontSize: translationFontSize}]}>{line.translation}</Text>
+      ) : null}
     </Pressable>
   );
 }
@@ -86,7 +84,7 @@ export function AartiDetailScreen() {
   const {language} = useLanguage();
   const isHi = language === 'hi' || language === 'sa';
   const {playTrack} = useAudioPlayer();
-  const {sanskritFontSize, translationFontSize, recordSadhanaPractice} = useUserPreferences();
+  const {sanskritFontSize, translationFontSize, recordSadhanaPractice, themeColors} = useUserPreferences();
   const [activeLineIndex, setActiveLineIndex] = useState<number | null>(null);
   const [speakingAll, setSpeakingAll] = useState(false);
   const fetchAarti = useCallback(async () => {
@@ -190,7 +188,7 @@ export function AartiDetailScreen() {
 
   if (loading && !aarti) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {backgroundColor: themeColors.background}]}>
         <ScreenLoader variant="cards" count={2} />
       </View>
     );
@@ -198,7 +196,7 @@ export function AartiDetailScreen() {
 
   if (!aarti && error) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {backgroundColor: themeColors.background}]}>
         <ErrorBanner message={error} onRetry={refresh} />
         <EmptyState
           icon="🪔"
@@ -217,7 +215,7 @@ export function AartiDetailScreen() {
   const videoRecordings = recordings.filter(r => r.type === 'VIDEO');
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: themeColors.background}]}>
       {error && <ErrorBanner message={error} onRetry={refresh} />}
       <FlatList
         data={aarti?.lines ?? []}

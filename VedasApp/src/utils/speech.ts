@@ -86,12 +86,20 @@ export async function speakTranslatedText(text: string, appLanguage: string): Pr
   await Tts.stop();
 
   const langCode = ttsLanguageCode(appLanguage);
-  await Tts.setDefaultLanguage(langCode);
+  try {
+    await Tts.setDefaultLanguage(langCode);
+  } catch {
+    // fallback to device default language if locale is unavailable
+  }
 
   const voiceKey = appLanguage === 'en' ? 'en' : 'hi';
   const voiceId = voiceByLanguage[voiceKey];
   if (voiceId) {
-    await Tts.setDefaultVoice(voiceId);
+    try {
+      await Tts.setDefaultVoice(voiceId);
+    } catch {
+      // ignore if voice id cannot be selected
+    }
   }
 
   await new Promise<void>((resolve, reject) => {

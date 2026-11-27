@@ -23,6 +23,11 @@
       <a routerLink="/meditation" routerLinkActive="active">{{ langService.ui().nav.meditate }}</a>
     </nav>
     <div class="lang-switch notranslate" translate="no">
+      <button type="button" [class.on]="themeService.mode() === 'light'" (click)="themeService.setMode('light')" title="Light theme">☀️</button>
+      <button type="button" [class.on]="themeService.mode() === 'sepia'" (click)="themeService.setMode('sepia')" title="Sepia reading theme">📜</button>
+      <button type="button" [class.on]="themeService.mode() === 'dark'" (click)="themeService.setMode('dark')" title="Dark night theme">🌙</button>
+    </div>
+    <div class="lang-switch notranslate" translate="no">
       <button type="button" [class.on]="langService.lang() === 'hi'" (click)="setLang('hi')">हिन्दी</button>
       <button type="button" [class.on]="langService.lang() === 'en'" (click)="setLang('en')">EN</button>
     </div>

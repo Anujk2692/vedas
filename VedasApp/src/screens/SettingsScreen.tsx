@@ -30,7 +30,13 @@ import {
   type ReadingFontScale,
 } from '../context/UserPreferencesContext';
 import type {RootStackParamList, TabParamList} from '../navigation/types';
-import {borderRadius, colors, shadows, spacing, typography} from '../theme/colors';
+import {borderRadius, colors, shadows, spacing, typography, type ThemeMode} from '../theme/colors';
+
+const THEME_OPTIONS: {key: ThemeMode; label: string}[] = [
+  {key: 'light', label: '☀️ Light'},
+  {key: 'sepia', label: '📜 Sepia'},
+  {key: 'dark', label: '🌙 Dark'},
+];
 
 const FONT_OPTIONS: {key: ReadingFontScale; label: string}[] = [
   {key: 'normal', label: 'Normal'},
@@ -68,6 +74,9 @@ export function SettingsScreen() {
     setReadingFontScale,
     playbackRate,
     setPlaybackRate,
+    themeMode,
+    setThemeMode,
+    themeColors,
     syncBookmarksFromCloud,
   } = useUserPreferences();
   const [dailyReminder, setDailyReminder] = useState(false);
@@ -107,7 +116,9 @@ export function SettingsScreen() {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView
+      style={[styles.container, {backgroundColor: themeColors.background}]}
+      contentContainerStyle={styles.content}>
       <SettingsSection title="Reading">
         <View style={styles.card}>
           <Text style={styles.label}>Text Size</Text>
@@ -132,6 +143,31 @@ export function SettingsScreen() {
             Select any verse, aarti line, or description while reading. Tap Translate & Listen to
             hear it in your chosen app language.
           </Text>
+        </View>
+      </SettingsSection>
+
+      <SettingsSection title="Reading Theme">
+        <View style={[styles.card, {backgroundColor: themeColors.surface, borderColor: themeColors.border}]}>
+          <Text style={[styles.label, {color: themeColors.text}]}>App & Reading Appearance</Text>
+          <Text style={[styles.hint, {color: themeColors.textMuted}]}>
+            Choose Light (ivory), Sepia (warm parchment), or Dark (night reading)
+          </Text>
+          <View style={styles.optionRow}>
+            {THEME_OPTIONS.map(opt => (
+              <Pressable
+                key={opt.key}
+                style={[styles.optionBtn, themeMode === opt.key && styles.optionBtnActive]}
+                onPress={() => setThemeMode(opt.key)}>
+                <Text
+                  style={[
+                    styles.optionBtnText,
+                    themeMode === opt.key && styles.optionBtnTextActive,
+                  ]}>
+                  {opt.label}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
         </View>
       </SettingsSection>
 

@@ -12,6 +12,7 @@ import {TextTranslateBar} from '../components/TextTranslateBar';
 import {ScreenHeader, StackScreenHeader, TAB_HEADER_META} from '../components/ui/ScreenHeader';
 import {VedasTabBar} from '../components/ui/VedasTabBar';
 import {useAudioPlayer} from '../context/AudioPlayerContext';
+import {useUserPreferences} from '../context/UserPreferencesContext';
 import {AiGuruScreen} from '../screens/AiGuruScreen';
 import {AartiDetailScreen} from '../screens/AartiDetailScreen';
 import {AartiListScreen} from '../screens/AartiListScreen';
@@ -148,6 +149,7 @@ function MainTabs() {
 
 export function AppNavigator() {
   const [activeRoute, setActiveRoute] = useState('MainTabs');
+  const {themeColors} = useUserPreferences();
 
   return (
     <NavigationContainer
@@ -159,11 +161,11 @@ export function AppNavigator() {
         const route = navigationRef.getCurrentRoute();
         setActiveRoute(route?.name ?? 'MainTabs');
       }}>
-      <View style={styles.root}>
+      <View style={[styles.root, {backgroundColor: themeColors.background}]}>
         <Stack.Navigator
           screenOptions={{
             headerShadowVisible: false,
-            contentStyle: {backgroundColor: colors.background},
+            contentStyle: {backgroundColor: themeColors.background},
           }}>
           <Stack.Screen
             name="MainTabs"

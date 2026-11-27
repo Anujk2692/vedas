@@ -30,7 +30,7 @@ const CATEGORIES = [
 ];
 
 export function MeditationTimerScreen() {
-  const {recordSadhanaPractice} = useUserPreferences();
+  const {recordSadhanaPractice, themeColors} = useUserPreferences();
   const {language} = useLanguage();
   const isHi = language === 'hi' || language === 'sa';
 
@@ -91,7 +91,7 @@ export function MeditationTimerScreen() {
   const displaySec = secondsLeft % 60;
 
   return (
-    <SafeAreaView style={styles.root}>
+    <SafeAreaView style={[styles.root, {backgroundColor: themeColors.background}]}>
       <View style={styles.tabBar}>
         <Pressable
           style={[styles.tabBtn, tab === 'timer' && styles.tabBtnActive]}
@@ -104,7 +104,7 @@ export function MeditationTimerScreen() {
           style={[styles.tabBtn, tab === 'yoga' && styles.tabBtnActive]}
           onPress={() => setTab('yoga')}>
           <Text style={[styles.tabText, tab === 'yoga' && styles.tabTextActive]}>
-            {isHi ? '🤸 योग आसन (12)' : '🤸 Yoga Asanas (12)'}
+            {isHi ? '🤸 योग आसन (24)' : '🤸 Yoga Asanas (24)'}
           </Text>
         </Pressable>
       </View>
@@ -272,12 +272,21 @@ export function MeditationTimerScreen() {
 
               <View style={styles.panel}>
                 <Text style={styles.sectionTitle}>
-                  {isHi ? '📋 करने की विधि' : '📋 Step-by-Step Instructions'}
+                  {isHi ? '📋 करने की विधि (चित्र सहित)' : '📋 Step-by-Step Visual Guide'}
                 </Text>
                 {(isHi ? selectedAsana.stepsHi : selectedAsana.stepsEn).map((step, i) => (
-                  <Text key={i} style={styles.listItem}>
-                    {i + 1}. {step}
-                  </Text>
+                  <View key={i} style={styles.stepRow}>
+                    <YogaPoseGraphic
+                      poseId={selectedAsana.stepGraphics[i] ?? selectedAsana.id}
+                      size={84}
+                    />
+                    <View style={styles.stepBody}>
+                      <Text style={styles.stepBadge}>
+                        {isHi ? `चरण ${i + 1}` : `Step ${i + 1}`}
+                      </Text>
+                      <Text style={styles.listItem}>{step}</Text>
+                    </View>
+                  </View>
                 ))}
               </View>
 
@@ -451,6 +460,18 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   sectionTitle: {fontSize: 16, fontWeight: '800', color: colors.primaryDark},
+  stepRow: {
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
+    backgroundColor: '#fffaf3',
+    borderRadius: 12,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
+  },
+  stepBody: {flex: 1, gap: 2},
+  stepBadge: {fontSize: 11, fontWeight: '800', color: colors.primary, textTransform: 'uppercase'},
   listItem: {fontSize: 14, color: colors.text, lineHeight: 20},
   cautionBox: {
     marginTop: 4,

@@ -30,6 +30,42 @@ export const colors = {
   white: '#FFFFFF',
 };
 
+export type ThemeMode = 'light' | 'sepia' | 'dark';
+
+export const THEMES: Record<ThemeMode, typeof colors> = {
+  light: colors,
+  sepia: {
+    ...colors,
+    background: '#F4EAD5',
+    backgroundAlt: '#EADBC0',
+    surface: '#FDF6E7',
+    surfaceElevated: '#FFF9EC',
+    surfaceMuted: '#EFE2C9',
+    text: '#3A2416',
+    textSecondary: '#5D402C',
+    textMuted: '#8D6E58',
+    tabActive: '#F5E1BE',
+  },
+  dark: {
+    ...colors,
+    primary: '#E8922A',
+    primaryDark: '#F0A854',
+    primaryLight: '#F5B870',
+    background: '#121212',
+    backgroundAlt: '#1A1A1A',
+    surface: '#1E1E1E',
+    surfaceElevated: '#262626',
+    surfaceMuted: '#2A2A2A',
+    text: '#EAE4DC',
+    textSecondary: '#C2B8AE',
+    textMuted: '#8E857D',
+    border: 'rgba(255, 255, 255, 0.12)',
+    borderLight: 'rgba(255, 255, 255, 0.08)',
+    cardShadow: 'rgba(0, 0, 0, 0.45)',
+    tabActive: '#2B2017',
+  },
+};
+
 export const spacing = {
   xs: 4,
   sm: 8,

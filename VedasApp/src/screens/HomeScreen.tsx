@@ -32,6 +32,7 @@ import {ScreenLoader} from '../components/ui/ScreenLoader';
 import {SectionHeader} from '../components/ui/SectionHeader';
 import {useCachedFetch} from '../hooks/useCachedFetch';
 import {useLanguage} from '../context/LanguageContext';
+import {useUserPreferences} from '../context/UserPreferencesContext';
 import type {RootStackParamList, TabParamList} from '../navigation/types';
 import {colors, spacing} from '../theme/colors';
 import {flatListPerfProps} from '../utils/listPerf';
@@ -51,6 +52,7 @@ type ListRow =
   | {kind: 'veda'; key: string; veda: Veda};
 
 export function HomeScreen() {
+  const {themeColors, themeMode} = useUserPreferences();
   const navigation = useNavigation<
     CompositeNavigationProp<
       BottomTabNavigationProp<TabParamList, 'Home'>,
@@ -105,7 +107,8 @@ export function HomeScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, {backgroundColor: themeColors.background}]}>
+      <StatusBar barStyle={themeMode === 'dark' ? 'light-content' : 'dark-content'} />
       {error && <ErrorBanner message={error} onRetry={refresh} />}
 
       <FlatList

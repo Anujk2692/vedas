@@ -10,6 +10,7 @@ export interface YogaAsana {
   duration: string;
   breathEn: string;
   breathHi: string;
+  stepGraphics: string[];
   stepsEn: string[];
   stepsHi: string[];
   benefitsEn: string[];
@@ -21,465 +22,1065 @@ export interface YogaAsana {
 
 export const YOGA_ASANAS: YogaAsana[] = [
   {
-    id: 'surya-namaskar',
-    sanskrit: 'सूर्य नमस्कार',
-    titleEn: 'Surya Namaskar (Sun Salutation)',
-    titleHi: 'सूर्य नमस्कार (12 आसन क्रम)',
-    category: 'Standing',
-    categoryHi: 'खड़े होकर / प्रवाह',
-    difficultyEn: 'Beginner',
-    difficultyHi: 'शुरुआती',
-    duration: '5–10 min',
-    breathEn: 'Synchronize each of the 12 transitions with slow nasal inhales and exhales.',
-    breathHi: 'सभी 12 स्थितियों को धीमी नासिका श्वास (पूरक-रेचक) के साथ जोड़ें।',
-    stepsEn: [
-      'Stand tall at the front of the mat in Pranamasana (palms together at heart).',
-      'Inhale: sweep arms overhead and gently arch back (Hasta Uttanasana).',
-      'Exhale: hinge from the hips and fold forward toward your feet (Padahastasana).',
-      'Inhale: step right leg back, drop knee, and lift chest (Ashwa Sanchalanasana).',
-      'Hold breath / exhale: step back into Plank, lower knees-chest-chin (Ashtanga Namaskara).',
-      'Inhale into Cobra (Bhujangasana), exhale to Downward Dog (Parvatasana), then step forward and rise.',
+    "id": "surya-namaskar",
+    "sanskrit": "सूर्य नमस्कार",
+    "titleEn": "Surya Namaskar (Sun Salutation)",
+    "titleHi": "सूर्य नमस्कार (12 आसन क्रम)",
+    "category": "Standing",
+    "categoryHi": "खड़े होकर / प्रवाह",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "5–10 min",
+    "breathEn": "Synchronize each of the 12 transitions with slow nasal inhales and exhales.",
+    "breathHi": "सभी 12 स्थितियों को धीमी नासिका श्वास के साथ जोड़ें।",
+    "stepGraphics": [
+      "stand-namaste",
+      "arms-overhead",
+      "forward-fold",
+      "lunge-pose",
+      "plank-lower",
+      "surya-namaskar"
     ],
-    stepsHi: [
-      'मैट के आगे सीधे खड़े होकर हृदय के सामने प्रणामासन में हाथ जोड़ें।',
-      'श्वास भरते हुए दोनों भुजाएं ऊपर उठाएं और हल्का पीछे झुकें (हस्त उत्तानासन)।',
-      'श्वास छोड़ते हुए कमर से आगे झुकें और हथेलियां पंजों के पास रखें (पादहस्तासन)।',
-      'श्वास भरते हुए दायां पैर पीछे ले जाएं और छाती ऊपर उठाएं (अश्व संचालनासन)।',
-      'दंडासन से घुटने-छाती-ठोड़ी ज़मीन पर टिकाएं (अष्टांग नमस्कार)।',
-      'श्वास भरते हुए भुजंगासन, फिर पर्वतासन में आएं और क्रमशः वापस प्रणामासन में लौटें।',
+    "stepsEn": [
+      "Stand tall at the front of the mat in Pranamasana (palms together at heart).",
+      "Inhale: sweep arms overhead and gently arch back (Hasta Uttanasana).",
+      "Exhale: hinge from the hips and fold forward toward your feet (Padahastasana).",
+      "Inhale: step right leg back, drop knee, and lift chest (Ashwa Sanchalanasana).",
+      "Lower knees-chest-chin (Ashtanga Namaskara), inhale into Cobra, exhale to Downward Dog.",
+      "Step forward into forward fold, rise with arms overhead, and return to Pranamasana."
     ],
-    benefitsEn: [
-      'Warms up and stretches all major muscle groups and spinal joints.',
-      'Boosts cardiovascular circulation, metabolism, and morning vitality.',
-      'Calms the nervous system and prepares body and mind for meditation.',
+    "stepsHi": [
+      "मैट के आगे सीधे खड़े होकर हृदय के सामने प्रणामासन में हाथ जोड़ें।",
+      "श्वास भरते हुए दोनों भुजाएं ऊपर उठाएं और हल्का पीछे झुकें (हस्त उत्तानासन)।",
+      "श्वास छोड़ते हुए कमर से आगे झुकें और हथेलियां पंजों के पास रखें (पादहस्तासन)।",
+      "श्वास भरते हुए दायां पैर पीछे ले जाएं और छाती ऊपर उठाएं (अश्व संचालनासन)।",
+      "अष्टांग नमस्कार से भुजंगासन व अधोमुख श्वानासन में आएं।",
+      "आगे आकर श्वास भरते हुए ऊपर उठें और प्रणामासन में लौटें।"
     ],
-    benefitsHi: [
-      'पूरे शरीर की मांसपेशियों और रीढ़ की हड्डी को लचीला व ऊर्जावान बनाता है।',
-      'रक्त संचार, पाचन और प्रातःकालीन स्फूर्ति को बढ़ाता है।',
-      'मन को शांत कर ध्यान (मेडिटेशन) के लिए तैयार करता है।',
+    "benefitsEn": [
+      "Warms up and stretches all major muscle groups and spinal joints.",
+      "Boosts cardiovascular circulation, metabolism, and morning vitality.",
+      "Calms the nervous system and prepares body and mind for meditation."
     ],
-    cautionEn: 'Move gently if you have high blood pressure, back pain, or knee injury.',
-    cautionHi: 'उच्च रक्तचाप, कमर दर्द या घुटने की चोट होने पर धीरे व सावधानी से करें।',
-    videoId: '1xRX1MuoImw',
+    "benefitsHi": [
+      "पूरे शरीर की मांसपेशियों और रीढ़ की हड्डी को लचीला व ऊर्जावान बनाता है।",
+      "रक्त संचार, पाचन और प्रातःकालीन स्फूर्ति को बढ़ाता है।",
+      "मन को शांत कर ध्यान के लिए तैयार करता है।"
+    ],
+    "cautionEn": "Move gently if you have high blood pressure, back pain, or knee injury.",
+    "cautionHi": "उच्च रक्तचाप, कमर दर्द या घुटने की चोट होने पर धीरे व सावधानी से करें।",
+    "videoId": "1xRX1MuoImw"
   },
   {
-    id: 'tadasana',
-    sanskrit: 'ताड़ासन',
-    titleEn: 'Tadasana (Mountain Pose)',
-    titleHi: 'ताड़ासन (पर्वत मुद्रा)',
-    category: 'Standing',
-    categoryHi: 'खड़े होकर',
-    difficultyEn: 'Beginner',
-    difficultyHi: 'शुरुआती',
-    duration: '30–60 sec',
-    breathEn: 'Inhale deeply while lifting heels and arms; breathe steadily at the top.',
-    breathHi: 'एड़ियां और भुजाएं ऊपर उठाते समय गहरा श्वास लें और ऊपर स्थिर श्वास रखें।',
-    stepsEn: [
-      'Stand with feet together or hip-width apart, weight balanced evenly.',
-      'Interlace fingers, turn palms upward, and stretch both arms overhead.',
-      'Inhale and gently rise onto your toes, lengthening the entire spine.',
-      'Keep gaze fixed on a steady point ahead and hold for 20–40 seconds.',
-      'Exhale slowly and lower heels and arms with control.',
+    "id": "tadasana",
+    "sanskrit": "ताड़ासन",
+    "titleEn": "Tadasana (Mountain Pose)",
+    "titleHi": "ताड़ासन (पर्वत मुद्रा)",
+    "category": "Standing",
+    "categoryHi": "खड़े होकर",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "30–60 sec",
+    "breathEn": "Inhale deeply while lifting heels and arms; breathe steadily at the top.",
+    "breathHi": "एड़ियां और भुजाएं ऊपर उठाते समय गहरा श्वास लें।",
+    "stepGraphics": [
+      "stand-namaste",
+      "arms-overhead",
+      "tadasana",
+      "stand-namaste"
     ],
-    stepsHi: [
-      'दोनों पैरों को मिलाकर या हल्का अंतर रखकर सीधे खड़े हों।',
-      'अंगुलियां आपस में फंसाकर हथेलियां ऊपर की ओर मोड़ें और भुजाएं सिर के ऊपर तानें।',
-      'श्वास भरते हुए धीरे-धीरे पंजों के बल ऊपर उठें और रीढ़ को ऊपर की ओर खींचें।',
-      'सामने एक बिंदु पर दृष्टि स्थिर रखें और 20–40 सेकंड रुकें।',
-      'धीरे-धीरे श्वास छोड़ते हुए एड़ियां और हाथ नीचे लाएं।',
+    "stepsEn": [
+      "Stand with feet together or hip-width apart, weight balanced evenly.",
+      "Interlace fingers, turn palms upward, and stretch both arms overhead.",
+      "Inhale and gently rise onto your toes, lengthening the entire spine.",
+      "Hold 20–40 seconds with steady gaze, then exhale slowly down."
     ],
-    benefitsEn: [
-      'Improves posture, spinal alignment, and body balance.',
-      'Strengthens thighs, ankles, knees, and core stability.',
-      'Relieves mild sciatica tension and awakens mental alertness.',
+    "stepsHi": [
+      "दोनों पैरों को मिलाकर या हल्का अंतर रखकर सीधे खड़े हों।",
+      "अंगुलियां फंसाकर हथेलियां ऊपर मोड़ें और भुजाएं सिर के ऊपर तानें।",
+      "श्वास भरते हुए पंजों के बल ऊपर उठें और रीढ़ को ऊपर खींचें।",
+      "20–40 सेकंड रुकें, फिर धीरे-धीरे एड़ियां और हाथ नीचे लाएं।"
     ],
-    benefitsHi: [
-      'शरीर की मुद्रा (Posture), रीढ़ के संरेखण और संतुलन को सुधारता है।',
-      'जांघों, टखनों, घुटनों और कोर मांसपेशियों को मजबूत बनाता है।',
-      'शरीर में खिंचाव लाकर आलस्य दूर करता है और एकाग्रता बढ़ाता है।',
+    "benefitsEn": [
+      "Improves posture, spinal alignment, and body balance.",
+      "Strengthens thighs, ankles, knees, and core stability.",
+      "Awakens mental alertness and relieves mild stiffness."
     ],
-    cautionEn: 'Keep heels down on the mat if you feel dizzy or have low blood pressure.',
-    cautionHi: 'चक्कर आने या कम रक्तचाप की स्थिति में एड़ियां ज़मीन पर ही रखें।',
-    videoId: '5NxDs-ovJU8',
+    "benefitsHi": [
+      "शरीर की मुद्रा, रीढ़ के संरेखण और संतुलन को सुधारता है।",
+      "जांघों, टखनों और घुटनों को मजबूत बनाता है।",
+      "आलस्य दूर कर एकाग्रता बढ़ाता है।"
+    ],
+    "cautionEn": "Keep heels down on the mat if you feel dizzy.",
+    "cautionHi": "चक्कर आने की स्थिति में एड़ियां ज़मीन पर ही रखें।",
+    "videoId": "5NxDs-ovJU8"
   },
   {
-    id: 'vrikshasana',
-    sanskrit: 'वृक्षासन',
-    titleEn: 'Vrikshasana (Tree Pose)',
-    titleHi: 'वृक्षासन (संतुलन आसन)',
-    category: 'Standing',
-    categoryHi: 'खड़े होकर',
-    difficultyEn: 'Beginner',
-    difficultyHi: 'शुरुआती',
-    duration: '30–60 sec / side',
-    breathEn: 'Maintain smooth, rhythmic breathing while holding your drishti (gaze).',
-    breathHi: 'एक बिंदु पर दृष्टि टिकाकर सहज और लयबद्ध श्वास बनाए रखें।',
-    stepsEn: [
-      'Stand upright in Tadasana and shift weight onto your left leg.',
-      'Bend your right knee and place the right sole against your inner left thigh or calf (avoid the knee joint).',
-      'Bring palms together at the heart center or raise arms overhead in Namaste.',
-      'Hold for 30 seconds, then gently release and repeat on the other leg.',
+    "id": "vrikshasana",
+    "sanskrit": "वृक्षासन",
+    "titleEn": "Vrikshasana (Tree Pose)",
+    "titleHi": "वृक्षासन (संतुलन आसन)",
+    "category": "Standing",
+    "categoryHi": "खड़े होकर",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "30–60 sec / side",
+    "breathEn": "Maintain smooth, rhythmic breathing while holding your gaze.",
+    "breathHi": "एक बिंदु पर दृष्टि टिकाकर सहज श्वास बनाए रखें।",
+    "stepGraphics": [
+      "stand-namaste",
+      "vrikshasana",
+      "arms-overhead",
+      "vrikshasana"
     ],
-    stepsHi: [
-      'सीधे खड़े होकर पूरे शरीर का भार बाएं पैर पर लाएं।',
-      'दायां घुटना मोड़कर दायां तलवा बाईं जांघ के अंदरूनी हिस्से या पिंडली पर रखें (घुटने पर दबाव न दें)।',
-      'दोनों हथेलियों को हृदय के पास या सिर के ऊपर नमस्कार मुद्रा में जोड़ें।',
-      '30 सेकंड संतुलन बनाकर रखें, फिर दूसरे पैर से दोहराएं।',
+    "stepsEn": [
+      "Stand upright and shift weight steadily onto your left leg.",
+      "Bend right knee and place right sole against inner left thigh or calf (avoid the knee).",
+      "Bring palms together at heart center or raise arms overhead in Namaste.",
+      "Hold 30 seconds with calm breath, then repeat on the other leg."
     ],
-    benefitsEn: [
-      'Builds neuromuscular balance, leg strength, and ankle stability.',
-      'Opens the hips and lengthens the spine.',
-      'Sharpens concentration and steadies a restless mind.',
+    "stepsHi": [
+      "सीधे खड़े होकर शरीर का भार बाएं पैर पर लाएं।",
+      "दायां तलवा बाईं जांघ के अंदर या पिंडली पर रखें (घुटने पर न रखें)।",
+      "हथेलियां हृदय के पास या सिर के ऊपर नमस्कार मुद्रा में जोड़ें।",
+      "30 सेकंड रुकें, फिर दूसरे पैर से दोहराएं।"
     ],
-    benefitsHi: [
-      'शारीरिक संतुलन, पैरों की शक्ति और टखनों की स्थिरता बढ़ाता है।',
-      'कूल्हों को खोलता है और रीढ़ को सीधा रखता है।',
-      'मन की चंचलता कम कर एकाग्रता और आत्मविश्वास बढ़ाता है।',
+    "benefitsEn": [
+      "Builds neuromuscular balance, leg strength, and ankle stability.",
+      "Opens the hips and lengthens the spine.",
+      "Sharpens concentration and steadies a restless mind."
     ],
-    cautionEn: 'Stand near a wall for support if balancing feels unsteady.',
-    cautionHi: 'संतुलन बनाने में कठिनाई हो तो दीवार का हल्का सहारा लें।',
-    videoId: '0g3lN6XpWrQ',
+    "benefitsHi": [
+      "शारीरिक संतुलन और पैरों की शक्ति बढ़ाता है।",
+      "कूल्हों को खोलता है और रीढ़ को सीधा रखता है।",
+      "एकाग्रता और आत्मविश्वास बढ़ाता है।"
+    ],
+    "cautionEn": "Stand near a wall for support if balancing feels unsteady.",
+    "cautionHi": "संतुलन में कठिनाई हो तो दीवार का हल्का सहारा लें।",
+    "videoId": "0g3lN6XpWrQ"
   },
   {
-    id: 'trikonasana',
-    sanskrit: 'त्रिकोणासन',
-    titleEn: 'Trikonasana (Triangle Pose)',
-    titleHi: 'त्रिकोणासन',
-    category: 'Standing',
-    categoryHi: 'खड़े होकर',
-    difficultyEn: 'Beginner',
-    difficultyHi: 'शुरुआती',
-    duration: '30–45 sec / side',
-    breathEn: 'Exhale as you bend sideways; inhale to lengthen the chest.',
-    breathHi: 'बगल में झुकते समय श्वास छोड़ें और ऊपर की ओर खुलते समय श्वास लें।',
-    stepsEn: [
-      'Step feet wide apart (about 3.5–4 feet) and turn your right foot out 90 degrees.',
-      'Inhale and extend both arms out to shoulder height.',
-      'Exhale and reach right hand down to your shin, ankle, or mat while lifting the left arm straight up.',
-      'Keep chest open and gaze softly toward the upper thumb; hold 20–30 seconds per side.',
+    "id": "trikonasana",
+    "sanskrit": "त्रिकोणासन",
+    "titleEn": "Trikonasana (Triangle Pose)",
+    "titleHi": "त्रिकोणासन",
+    "category": "Standing",
+    "categoryHi": "खड़े होकर",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "30–45 sec / side",
+    "breathEn": "Exhale as you bend sideways; inhale to lengthen the chest.",
+    "breathHi": "बगल में झुकते समय श्वास छोड़ें और छाती खोलें।",
+    "stepGraphics": [
+      "stand-namaste",
+      "virabhadrasana",
+      "trikonasana",
+      "trikonasana"
     ],
-    stepsHi: [
-      'दोनों पैरों के बीच लगभग 3.5–4 फीट की दूरी रखें और दायां पंजा 90° बाहर मोड़ें।',
-      'श्वास भरते हुए दोनों भुजाएं कंधों की सीध में फैलाएं।',
-      'श्वास छोड़ते हुए दाईं ओर झुकें और दायां हाथ पिंडली या टखने पर रखें; बायां हाथ सीधा ऊपर उठाएं।',
-      'छाती खुली रखें और ऊपर के हाथ की ओर देखें; दोनों तरफ 20–30 सेकंड करें।',
+    "stepsEn": [
+      "Step feet wide apart (3.5–4 feet) and turn right foot out 90 degrees.",
+      "Inhale and extend both arms out to shoulder height.",
+      "Exhale and reach right hand to shin or ankle while lifting left arm straight up.",
+      "Keep chest open and hold 20–30 seconds per side."
     ],
-    benefitsEn: [
-      'Stretches hamstrings, hips, groin, shoulders, and side waist.',
-      'Stimulates abdominal organs and aids healthy digestion.',
-      'Relieves stiffness in the neck, back, and shoulders.',
+    "stepsHi": [
+      "पैरों के बीच लगभग 3.5 फीट की दूरी रखें और दायां पंजा 90° मोड़ें।",
+      "श्वास भरकर दोनों भुजाएं कंधों की सीध में फैलाएं।",
+      "श्वास छोड़ते हुए दाईं ओर झुकें और बायां हाथ सीधा ऊपर उठाएं।",
+      "दोनों तरफ 20–30 सेकंड अभ्यास करें।"
     ],
-    benefitsHi: [
-      'हैमस्ट्रिंग, कूल्हों, कमर और कंधों में गहरा लचीलापन लाता है।',
-      'पाचन तंत्र को सक्रिय कर पेट की चर्बी कम करने में सहायक है।',
-      'कमर और गर्दन की जकड़न को दूर करता है।',
+    "benefitsEn": [
+      "Stretches hamstrings, hips, shoulders, and side waist.",
+      "Stimulates abdominal organs and aids healthy digestion.",
+      "Relieves stiffness in the neck and back."
     ],
-    cautionEn: 'Keep neck neutral and look down if looking up strains your neck.',
-    cautionHi: 'गर्दन में दर्द हो तो ऊपर देखने के बजाय सामने या नीचे देखें।',
-    videoId: 'h60lC7mCaFA',
+    "benefitsHi": [
+      "हैमस्ट्रिंग, कूल्हों और कमर में गहरा लचीलापन लाता है।",
+      "पाचन तंत्र को सक्रिय रखने में सहायक है।",
+      "कमर और गर्दन की जकड़न दूर करता है।"
+    ],
+    "cautionEn": "Look straight ahead or down if looking up strains your neck.",
+    "cautionHi": "गर्दन में दर्द हो तो ऊपर देखने के बजाय नीचे देखें।",
+    "videoId": "h60lC7mCaFA"
   },
   {
-    id: 'padmasana',
-    sanskrit: 'पद्मासन',
-    titleEn: 'Padmasana (Lotus Pose)',
-    titleHi: 'पद्मासन (कमल मुद्रा)',
-    category: 'Seated',
-    categoryHi: 'बैठकर',
-    difficultyEn: 'Intermediate',
-    difficultyHi: 'मध्यम',
-    duration: '5–15 min',
-    breathEn: 'Breathe slowly and effortlessly from the diaphragm.',
-    breathHi: 'पेट से धीमा, गहरा और सहज श्वास-प्रश्वास बनाए रखें।',
-    stepsEn: [
-      'Sit on a mat with legs stretched forward and spine upright.',
-      'Gently bend the right knee and place the right foot onto the left upper thigh.',
-      'Bend the left knee and place the left foot onto the right upper thigh.',
-      'Rest hands on knees in Chin Mudra (thumb and index finger touching) and close your eyes.',
+    "id": "virabhadrasana",
+    "sanskrit": "वीरभद्रासन",
+    "titleEn": "Virabhadrasana (Warrior Pose)",
+    "titleHi": "वीरभद्रासन (योद्धा मुद्रा)",
+    "category": "Standing",
+    "categoryHi": "खड़े होकर",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "30–45 sec / side",
+    "breathEn": "Inhale to raise arms and open chest; exhale to sink into the front knee.",
+    "breathHi": "श्वास भरकर भुजाएं उठाएं; श्वास छोड़ते हुए आगे का घुटना मोड़ें।",
+    "stepGraphics": [
+      "stand-namaste",
+      "lunge-pose",
+      "virabhadrasana",
+      "arms-overhead"
     ],
-    stepsHi: [
-      'मैट पर दोनों पैर सामने फैलाकर रीढ़ सीधी रखते हुए बैठें।',
-      'दायां घुटना मोड़कर दायां पैर बाईं जांघ के ऊपरी हिस्से पर रखें।',
-      'बायां घुटना मोड़कर बायां पैर दाईं जांघ के ऊपरी हिस्से पर रखें।',
-      'दोनों हाथ घुटनों पर चिन मुद्रा में रखें, आंखें बंद करें और ध्यान लगाएं।',
+    "stepsEn": [
+      "Step feet wide apart (about 4 feet) and turn right foot out 90 degrees.",
+      "Bend your right knee over the ankle so the thigh is parallel to the floor.",
+      "Extend both arms strongly at shoulder level (Warrior II) or overhead (Warrior I).",
+      "Gaze over your front fingertips, hold 30 seconds, then switch sides."
     ],
-    benefitsEn: [
-      'Ideal classical posture for deep meditation and pranayama.',
-      'Keeps the spine naturally erect and calms brain activity.',
-      'Opens hips and improves pelvic circulation.',
+    "stepsHi": [
+      "दोनों पैरों में 4 फीट की दूरी रखकर दायां पंजा 90° बाहर मोड़ें।",
+      "दायां घुटना मोड़कर जांघ को ज़मीन के समानांतर लाएं।",
+      "दोनों भुजाएं कंधों की सीध में फैलाएं या सिर के ऊपर उठाएं।",
+      "30 सेकंड स्थिर रहें, फिर दूसरी तरफ से दोहराएं।"
     ],
-    benefitsHi: [
-      'ध्यान (मेडिटेशन) और प्राणायाम के लिए सर्वश्रेष्ठ पारंपरिक आसन।',
-      'रीढ़ को स्वाभाविक रूप से सीधा रखकर मानसिक शांति प्रदान करता है।',
-      'कूल्हों और घुटनों के जोड़ों में लचीलापन बढ़ाता है।',
+    "benefitsEn": [
+      "Builds stamina, leg power, and strong hip/shoulder stability.",
+      "Opens chest and lungs for deeper breathing.",
+      "Cultivates courage, focus, and upright posture."
     ],
-    cautionEn: 'Do not force knees; choose Sukhasana or Half-Lotus if knees feel tight.',
-    cautionHi: 'घुटनों पर जोर न डालें; कठिनाई होने पर अर्ध-पद्मासन या सुखासन में बैठें।',
-    videoId: 'lvhInadPnC0',
+    "benefitsHi": [
+      "पैरों, जांघों और कंधों की शक्ति व सहनशक्ति बढ़ाता है।",
+      "छाती और फेफड़ों को खोलकर श्वास क्षमता सुधारता है।",
+      "एकाग्रता, ऊर्जा और आत्मबल बढ़ाता है।"
+    ],
+    "cautionEn": "Keep front knee aligned over ankle, not past the toes.",
+    "cautionHi": "आगे का घुटना टखने की सीध में रखें, पंजों से आगे न जाने दें।",
+    "videoId": "m-CHztlyh0U"
   },
   {
-    id: 'sukhasana',
-    sanskrit: 'सुखासन',
-    titleEn: 'Sukhasana (Easy Pose)',
-    titleHi: 'सुखासन (सरल ध्यान मुद्रा)',
-    category: 'Seated',
-    categoryHi: 'बैठकर',
-    difficultyEn: 'Beginner',
-    difficultyHi: 'शुरुआती',
-    duration: '5–20 min',
-    breathEn: 'Slow, even inhales and exhales to anchor awareness.',
-    breathHi: 'समान और शांत श्वास लेकर मन को वर्तमान में स्थिर करें।',
-    stepsEn: [
-      'Sit comfortably on a folded blanket or mat with legs crossed at the shins.',
-      'Keep your knees lower than or level with your hips; relax shoulders down.',
-      'Lengthen the crown of your head upward so the spine stays tall without tension.',
-      'Place hands on thighs or in Dhyana Mudra in your lap.',
+    "id": "adho-mukha-svanasana",
+    "sanskrit": "अधोमुख श्वानासन",
+    "titleEn": "Adho Mukha Svanasana (Downward Dog)",
+    "titleHi": "अधोमुख श्वानासन",
+    "category": "Standing",
+    "categoryHi": "खड़े होकर / प्रवाह",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "30–60 sec",
+    "breathEn": "Exhale as you lift hips into an inverted V; breathe deeply.",
+    "breathHi": "कमर ऊपर उठाते समय श्वास छोड़ें और सहज श्वास लें।",
+    "stepGraphics": [
+      "plank-lower",
+      "adho-mukha-svanasana",
+      "forward-fold",
+      "balasana"
     ],
-    stepsHi: [
-      'मैट या मोटे आसन पर आराम से पालथी मारकर बैठें।',
-      'कंधों को ढीला छोड़ें और रीढ़ की हड्डी को बिना तनाव के सीधा रखें।',
-      'सिर को सीधा रखें और ठोड़ी को ज़मीन के समानांतर रखें।',
-      'हाथों को घुटनों पर या गोद में ध्यान मुद्रा में रखें।',
+    "stepsEn": [
+      "Start on hands and knees in a tabletop position, palms shoulder-width apart.",
+      "Tuck toes, exhale, and lift hips high toward the ceiling forming an inverted V.",
+      "Press palms firmly into the mat and gently lengthen heels toward the floor.",
+      "Hold for 5 deep breaths, then bend knees to rest in Child's Pose."
     ],
-    benefitsEn: [
-      'Accessible meditation posture for all ages and flexibility levels.',
-      'Reduces stress, fatigue, and mental restlessness.',
-      'Gently stretches ankles and knees while promoting grounded posture.',
+    "stepsHi": [
+      "हाथों और घुटनों के बल टेबल पोज़ में आएं।",
+      "पंजों को मोड़कर श्वास छोड़ते हुए कूल्हों को ऊपर उठाकर V आकार बनाएं।",
+      "हथेलियां मैट पर दबाएं और एड़ियों को धीरे-धीरे ज़मीन की ओर लाएं।",
+      "5 गहरे श्वास लें, फिर घुटने मोड़कर बालासन में विश्राम करें।"
     ],
-    benefitsHi: [
-      'सभी आयु वर्ग के लिए सबसे सरल और सुरक्षित ध्यान आसन।',
-      'तनाव, थकान और चिंता को कम कर मन को स्थिर करता है।',
-      'कमर और बैठने की मुद्रा को आरामदायक व संतुलित बनाता है।',
+    "benefitsEn": [
+      "Rejuvenates the whole body, lengthening spine, calves, and hamstrings.",
+      "Strengthens arms, shoulders, and wrists.",
+      "Relieves fatigue and boosts blood flow to the brain."
     ],
-    cautionEn: 'Sit on a cushion if your lower back rounds.',
-    cautionHi: 'कमर झुकती हो तो नितंबों के नीचे पतला तकिया या गद्दी रखें।',
-    videoId: 'GEaRcmyCL2Y',
+    "benefitsHi": [
+      "पूरी रीढ़, कंधों और पैरों की मांसपेशियों को तरोताजा करता है।",
+      "भुजाओं, कंधों और कलाइयों को मजबूत बनाता है।",
+      "थकान दूर कर मस्तिष्क में रक्त संचार बढ़ाता है।"
+    ],
+    "cautionEn": "Bend knees slightly if hamstrings are tight; avoid with severe wrist pain.",
+    "cautionHi": "जांघों में खिंचाव हो तो घुटने हल्के मोड़ लें; कलाई दर्द में सावधानी रखें।",
+    "videoId": "RMBQR0BKbuE"
   },
   {
-    id: 'bhujangasana',
-    sanskrit: 'भुजंगासन',
-    titleEn: 'Bhujangasana (Cobra Pose)',
-    titleHi: 'भुजंगासन (सर्प मुद्रा)',
-    category: 'Backbend',
-    categoryHi: 'पीछे झुकने वाले',
-    difficultyEn: 'Beginner',
-    difficultyHi: 'शुरुआती',
-    duration: '20–30 sec',
-    breathEn: 'Inhale as you lift the chest; exhale gently as you lower down.',
-    breathHi: 'छाती ऊपर उठाते समय श्वास भरें और नीचे आते समय श्वास छोड़ें।',
-    stepsEn: [
-      'Lie flat on your stomach with legs extended and tops of feet pressing the mat.',
-      'Place palms under your shoulders with elbows tucked close to your ribs.',
-      'Inhale and gently lift your head, chest, and upper ribs using back strength.',
-      'Keep shoulders away from ears and elbows slightly bent; hold 15–30 seconds.',
+    "id": "padmasana",
+    "sanskrit": "पद्मासन",
+    "titleEn": "Padmasana (Lotus Pose)",
+    "titleHi": "पद्मासन (कमल मुद्रा)",
+    "category": "Seated",
+    "categoryHi": "बैठकर",
+    "difficultyEn": "Intermediate",
+    "difficultyHi": "मध्यम",
+    "duration": "5–15 min",
+    "breathEn": "Breathe slowly and effortlessly from the diaphragm.",
+    "breathHi": "पेट से धीमा, गहरा और सहज श्वास बनाए रखें।",
+    "stepGraphics": [
+      "sit-dandasana",
+      "sit-cross",
+      "padmasana",
+      "mudra-breath"
     ],
-    stepsHi: [
-      'पेट के बल लेट जाएं, दोनों पैर सीधे और पंजे पीछे की ओर तने रखें।',
-      'हथेलियों को कंधों के नीचे रखें और कोहनियों को शरीर के पास सटाएं।',
-      'श्वास भरते हुए पीठ के बल से सिर और छाती को धीरे-धीरे ऊपर उठाएं।',
-      'कंधों को कानों से दूर रखें और 15–30 सेकंड इस स्थिति में रहें।',
+    "stepsEn": [
+      "Sit with legs stretched forward and spine upright (Dandasana).",
+      "Gently place right foot onto the left upper thigh.",
+      "Place left foot onto the right upper thigh.",
+      "Rest hands on knees in Chin Mudra and close your eyes in meditation."
     ],
-    benefitsEn: [
-      'Strengthens the spine, lower back muscles, and shoulders.',
-      'Opens the chest and lungs, improving breathing capacity.',
-      'Helps relieve stiffness from prolonged desk sitting.',
+    "stepsHi": [
+      "मैट पर पैर फैलाकर रीढ़ सीधी रखते हुए बैठें।",
+      "दायां पैर बाईं जांघ के ऊपरी हिस्से पर रखें।",
+      "बायां पैर दाईं जांघ के ऊपरी हिस्से पर रखें।",
+      "हाथ चिन मुद्रा में घुटनों पर रखें और आंखें बंद कर ध्यान करें।"
     ],
-    benefitsHi: [
-      'रीढ़ की हड्डी, कमर की मांसपेशियों और कंधों को मजबूत करता है।',
-      'फेफड़ों और छाती को खोलकर श्वास क्षमता को बढ़ाता है।',
-      'लंबे समय तक बैठने से होने वाली पीठ की जकड़न दूर करता है।',
+    "benefitsEn": [
+      "Ideal classical posture for deep meditation and pranayama.",
+      "Keeps the spine naturally erect and calms brain activity.",
+      "Opens hips and improves pelvic circulation."
     ],
-    cautionEn: 'Avoid deep backbends during pregnancy or acute lower-back disc injury.',
-    cautionHi: 'गर्भावस्था या गंभीर स्लिप डिस्क की समस्या में इसे न करें।',
-    videoId: 'QxQWFSJ7MwI',
+    "benefitsHi": [
+      "ध्यान और प्राणायाम के लिए सर्वश्रेष्ठ पारंपरिक आसन।",
+      "रीढ़ को सीधा रखकर मानसिक शांति प्रदान करता है।",
+      "कूल्हों और जोड़ों में लचीलापन बढ़ाता है।"
+    ],
+    "cautionEn": "Do not force knees; use Sukhasana if knees feel tight.",
+    "cautionHi": "घुटनों पर जोर न डालें; कठिनाई में सुखासन चुनें।",
+    "videoId": "lvhInadPnC0"
   },
   {
-    id: 'dhanurasana',
-    sanskrit: 'धनुरासन',
-    titleEn: 'Dhanurasana (Bow Pose)',
-    titleHi: 'धनुरासन',
-    category: 'Backbend',
-    categoryHi: 'पीछे झुकने वाले',
-    difficultyEn: 'Intermediate',
-    difficultyHi: 'मध्यम',
-    duration: '15–30 sec',
-    breathEn: 'Inhale deeply as you kick legs back and lift chest.',
-    breathHi: 'पैरों को पीछे खींचते और छाती उठाते हुए गहरा श्वास लें।',
-    stepsEn: [
-      'Lie on your stomach, bend both knees, and hold your outer ankles.',
-      'Inhale and press your ankles back into your hands, lifting chest and thighs off the mat.',
-      'Keep gaze forward and balance on the abdomen like a drawn bow.',
-      'Hold for 15–25 seconds, then exhale gently to release.',
+    "id": "sukhasana",
+    "sanskrit": "सुखासन",
+    "titleEn": "Sukhasana (Easy Pose)",
+    "titleHi": "सुखासन (सरल ध्यान मुद्रा)",
+    "category": "Seated",
+    "categoryHi": "बैठकर",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "5–20 min",
+    "breathEn": "Slow, even inhales and exhales to anchor awareness.",
+    "breathHi": "समान और शांत श्वास लेकर मन को स्थिर करें।",
+    "stepGraphics": [
+      "sit-dandasana",
+      "sit-cross",
+      "sukhasana",
+      "mudra-breath"
     ],
-    stepsHi: [
-      'पेट के बल लेटकर दोनों घुटने मोड़ें और हाथों से दोनों टखने पकड़ें।',
-      'श्वास भरते हुए पैरों को पीछे की ओर खींचें जिससे छाती और जांघें ऊपर उठ जाएं।',
-      'शरीर को धनुष के आकार में संतुलित करें और सामने देखें।',
-      '15–25 सेकंड रुकें, फिर श्वास छोड़ते हुए धीरे-धीरे नीचे आएं।',
+    "stepsEn": [
+      "Sit comfortably with legs extended, then cross them at the shins.",
+      "Keep spine tall without tension and relax shoulders down.",
+      "Rest hands on thighs or in Dhyana Mudra and breathe peacefully.",
+      "Maintain gentle awareness for 5–20 minutes."
     ],
-    benefitsEn: [
-      'Deeply stretches the entire front body, chest, and hip flexors.',
-      'Strengthens back muscles and stimulates digestive vitality.',
-      'Boosts energy and improves spinal flexibility.',
+    "stepsHi": [
+      "मैट पर आराम से पालथी मारकर बैठें।",
+      "कंधों को ढीला छोड़ें और रीढ़ की हड्डी सीधी रखें।",
+      "हाथ घुटनों पर या गोद में ध्यान मुद्रा में रखें।",
+      "5–20 मिनट शांत सजगता में बैठें।"
     ],
-    benefitsHi: [
-      'छाती, कंधों, पेट और जांघों में संपूर्ण खिंचाव लाता है।',
-      'पीठ की मांसपेशियों को शक्ति देता है और पाचन सुधारता है।',
-      'शरीर में स्फूर्ति और रीढ़ में लचीलापन बढ़ाता है।',
+    "benefitsEn": [
+      "Accessible meditation posture for all ages.",
+      "Reduces stress, fatigue, and mental restlessness.",
+      "Promotes grounded, upright posture."
     ],
-    cautionEn: 'Avoid if you have abdominal surgery, hernia, or severe back pain.',
-    cautionHi: 'पेट की सर्जरी, हर्निया या तेज कमर दर्द होने पर यह आसन न करें।',
-    videoId: 'nO5VwMMF-ec',
+    "benefitsHi": [
+      "सभी आयु वर्ग के लिए सबसे सरल ध्यान आसन।",
+      "तनाव, थकान और चिंता कम करता है।",
+      "सही बैठने की मुद्रा को मजबूत करता है।"
+    ],
+    "cautionEn": "Sit on a cushion if your lower back rounds.",
+    "cautionHi": "कमर झुकती हो तो नितंबों के नीचे पतली गद्दी रखें।",
+    "videoId": "GEaRcmyCL2Y"
   },
   {
-    id: 'paschimottanasana',
-    sanskrit: 'पश्चिमोत्तानासन',
-    titleEn: 'Paschimottanasana (Seated Forward Bend)',
-    titleHi: 'पश्चिमोत्तानासन',
-    category: 'Seated',
-    categoryHi: 'बैठकर',
-    difficultyEn: 'Beginner',
-    difficultyHi: 'शुरुआती',
-    duration: '30–60 sec',
-    breathEn: 'Inhale to lengthen the spine upward; exhale to fold forward from the hips.',
-    breathHi: 'श्वास भरकर रीढ़ ऊपर खींचें और श्वास छोड़ते हुए कमर से आगे झुकें।',
-    stepsEn: [
-      'Sit with both legs extended straight ahead and toes flexed upward.',
-      'Inhale and raise both arms overhead, lengthening your waist.',
-      'Exhale, hinge from the hip crease, and reach for your shins, ankles, or toes.',
-      'Relax your neck and breathe steadily for 30–45 seconds.',
+    "id": "vajrasana",
+    "sanskrit": "वज्रासन",
+    "titleEn": "Vajrasana (Diamond Pose)",
+    "titleHi": "वज्रासन (पाचन व ध्यान मुद्रा)",
+    "category": "Seated",
+    "categoryHi": "बैठकर",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "5–10 min",
+    "breathEn": "Breathe slowly and deeply into the abdomen.",
+    "breathHi": "पेट में गहरा और शांत श्वास लें।",
+    "stepGraphics": [
+      "sit-dandasana",
+      "kneel-sit",
+      "vajrasana",
+      "mudra-breath"
     ],
-    stepsHi: [
-      'दोनों पैरों को सामने सीधा फैलाकर बैठें और पंजे अपनी ओर खींचें।',
-      'श्वास भरते हुए दोनों भुजाएं ऊपर उठाएं।',
-      'श्वास छोड़ते हुए कमर से आगे झुकें और हाथों से पिंडलियां, टखने या अंगूठे पकड़ें।',
-      'गर्दन को शांत रखें और 30–45 सेकंड सहज श्वास लेते रहें।',
+    "stepsEn": [
+      "Kneel on the yoga mat with knees together and big toes touching behind.",
+      "Slowly lower your hips to rest between your heels.",
+      "Place palms face down on your thighs and keep spine tall.",
+      "Sit calmly for 5–10 minutes (can be practiced even right after meals)."
     ],
-    benefitsEn: [
-      'Stretches the hamstrings, calves, and entire posterior spine.',
-      'Soothes the nervous system, helping ease anxiety and mild insomnia.',
-      'Massages abdominal organs and supports healthy digestion.',
+    "stepsHi": [
+      "मैट पर घुटनों के बल बैठें, दोनों घुटने मिलाएं और अंगूठे पीछे मिलाएं।",
+      "धीरे-धीरे नितंबों को दोनों एड़ियों के बीच टिकाएं।",
+      "हथेलियां जांघों पर रखें और रीढ़ व सिर सीधा रखें।",
+      "5–10 मिनट शांत बैठें (भोजन के बाद भी किया जा सकता है)।"
     ],
-    benefitsHi: [
-      'पैरों की पिछली मांसपेशियों (Hamstrings) और पूरी रीढ़ को लचीला बनाता है।',
-      'मन को शांत कर तनाव, क्रोध और अनिद्रा में राहत देता है।',
-      'पाचन क्रिया को सुधारने में अत्यंत लाभकारी है।',
+    "benefitsEn": [
+      "Best yoga posture to aid digestion even right after meals.",
+      "Strengthens pelvic muscles, thighs, and ankles.",
+      "Calms the mind and relieves mild acidity or bloating."
     ],
-    cautionEn: 'Bend knees slightly if hamstrings are tight; avoid rounding the lower back forcefully.',
-    cautionHi: 'जांघों में जकड़न हो तो घुटने हल्के मोड़ लें; कमर पर जबरदस्ती न करें।',
-    videoId: 'T8sgVyF4Ux4',
+    "benefitsHi": [
+      "पाचन के लिए सर्वश्रेष्ठ आसन (भोजन के तुरंत बाद भी लाभकारी)।",
+      "जांघों, टखनों और कमर की मांसपेशियों को मजबूत करता है।",
+      "गैस, अपच कम कर मन को स्थिर करता है।"
+    ],
+    "cautionEn": "Place a folded towel under ankles or avoid if you have severe knee pain.",
+    "cautionHi": "घुटनों में तेज दर्द हो तो न करें या टखनों के नीचे तौलिया रखें।",
+    "videoId": "qotNvwJigPE"
   },
   {
-    id: 'halasana',
-    sanskrit: 'हलासन',
-    titleEn: 'Halasana (Plow Pose)',
-    titleHi: 'हलासन',
-    category: 'Inversion',
-    categoryHi: 'उल्टे आसन',
-    difficultyEn: 'Intermediate',
-    difficultyHi: 'मध्यम',
-    duration: '30–60 sec',
-    breathEn: 'Breathe calmly through the nose without turning your head.',
-    breathHi: 'गर्दन को बिल्कुल न घुमाएं और नाक से शांत श्वास लेते रहें।',
-    stepsEn: [
-      'Lie on your back with arms alongside your body, palms facing down.',
-      'Inhale and lift both legs to 90 degrees, then support your lower back with your hands.',
-      'Exhale and slowly guide your toes overhead toward the floor behind you.',
-      'Keep neck still and hold 20–45 seconds before rolling down slowly.',
+    "id": "paschimottanasana",
+    "sanskrit": "पश्चिमोत्तानासन",
+    "titleEn": "Paschimottanasana (Seated Forward Bend)",
+    "titleHi": "पश्चिमोत्तानासन",
+    "category": "Seated",
+    "categoryHi": "बैठकर",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "30–60 sec",
+    "breathEn": "Inhale to lengthen spine; exhale to fold forward from the hips.",
+    "breathHi": "श्वास भरकर रीढ़ खींचें और छोड़ते हुए आगे झुकें।",
+    "stepGraphics": [
+      "sit-dandasana",
+      "arms-overhead",
+      "paschimottanasana",
+      "sit-dandasana"
     ],
-    stepsHi: [
-      'पीठ के बल लेट जाएं और दोनों हाथ शरीर के बगल में रखें।',
-      'श्वास भरते हुए दोनों पैर 90 डिग्री ऊपर उठाएं और कमर को हाथों से सहारा दें।',
-      'श्वास छोड़ते हुए पैरों को धीरे-धीरे सिर के पीछे ज़मीन की ओर ले जाएं।',
-      'गर्दन स्थिर रखें और 20–45 सेकंड रुककर धीरे से वापस आएं।',
+    "stepsEn": [
+      "Sit with legs extended straight ahead and toes flexed upward.",
+      "Inhale and lift both arms overhead to lengthen your spine.",
+      "Exhale and hinge forward from the hips to hold shins, ankles, or toes.",
+      "Relax neck and hold for 30–45 seconds before rising."
     ],
-    benefitsEn: [
-      'Deeply stretches the upper back, shoulders, and spine.',
-      'Stimulates thyroid balance and revitalizes circulation.',
-      'Calms the mind and relieves tension in the neck-shoulder region.',
+    "stepsHi": [
+      "दोनों पैर सामने सीधा फैलाकर बैठें।",
+      "श्वास भरकर दोनों हाथ ऊपर उठाएं और रीढ़ सीधी करें।",
+      "श्वास छोड़ते हुए कमर से आगे झुकें और पैर पकड़ें।",
+      "गर्दन शांत रखकर 30–45 सेकंड रुकें।"
     ],
-    benefitsHi: [
-      'पीठ के ऊपरी भाग, कंधों और रीढ़ में गहरा खिंचाव लाता है।',
-      'थायरॉइड ग्रंथि के संतुलन और रक्त संचार में सहायक है।',
-      'थकान कम कर मन को शांत करता है।',
+    "benefitsEn": [
+      "Stretches hamstrings, calves, and entire spine.",
+      "Calms the nervous system and eases stress and insomnia.",
+      "Supports healthy digestion and abdominal tone."
     ],
-    cautionEn: 'Avoid with neck injury, glaucoma, high blood pressure, or during menstruation.',
-    cautionHi: 'गर्दन की चोट, उच्च रक्तचाप या आँखों की समस्या में इसे न करें।',
-    videoId: 'mbXQj9_REPY',
+    "benefitsHi": [
+      "हैमस्ट्रिंग और पूरी रीढ़ को लचीला बनाता है।",
+      "तनाव, क्रोध और अनिद्रा में राहत देता है।",
+      "पाचन क्रिया और पेट के अंगों को सक्रिय करता है।"
+    ],
+    "cautionEn": "Bend knees slightly if hamstrings feel tight.",
+    "cautionHi": "जांघों में जकड़न हो तो घुटने हल्के मोड़ लें।",
+    "videoId": "T8sgVyF4Ux4"
   },
   {
-    id: 'shavasana',
-    sanskrit: 'शवासन',
-    titleEn: 'Shavasana (Corpse / Deep Relaxation Pose)',
-    titleHi: 'शवासन (विश्राम मुद्रा)',
-    category: 'Relaxation',
-    categoryHi: 'विश्राम',
-    difficultyEn: 'Beginner',
-    difficultyHi: 'शुरुआती',
-    duration: '5–10 min',
-    breathEn: 'Let the breath flow naturally; release tension on every exhale.',
-    breathHi: 'श्वास को स्वाभाविक चलने दें; प्रत्येक श्वास छोड़ने के साथ शरीर ढीला छोड़ें।',
-    stepsEn: [
-      'Lie comfortably on your back with feet separated mat-width apart.',
-      'Place arms slightly away from your sides with palms facing upward.',
-      'Close your eyes and consciously relax feet, legs, abdomen, shoulders, and face.',
-      'Rest in quiet awareness for 5–10 minutes, then roll to your right side to sit up.',
+    "id": "gomukhasana",
+    "sanskrit": "गोमुखासन",
+    "titleEn": "Gomukhasana (Cow Face Pose)",
+    "titleHi": "गोमुखासन",
+    "category": "Seated",
+    "categoryHi": "बैठकर",
+    "difficultyEn": "Intermediate",
+    "difficultyHi": "मध्यम",
+    "duration": "30–45 sec / side",
+    "breathEn": "Breathe deeply into the upper chest and shoulders.",
+    "breathHi": "ऊपरी छाती और कंधों में गहरा श्वास लें।",
+    "stepGraphics": [
+      "sit-dandasana",
+      "sit-cross",
+      "gomukhasana",
+      "gomukhasana"
     ],
-    stepsHi: [
-      'पीठ के बल आराम से लेट जाएं और दोनों पैरों के बीच हल्की दूरी रखें।',
-      'दोनों हाथ शरीर से थोड़ा दूर रखें और हथेलियां आकाश की ओर खुली रखें।',
-      'आंखें बंद करें और पैरों से लेकर सिर तक पूरे शरीर को पूर्णतः ढीला छोड़ दें।',
-      '5–10 मिनट शांत सजगता में विश्राम करें, फिर दाईं करवट लेकर उठें।',
+    "stepsEn": [
+      "Sit with legs extended, then cross right knee directly over left knee.",
+      "Raise right arm overhead, bend elbow, and reach down between shoulder blades.",
+      "Reach left arm behind your back from below to clasp fingers (or hold a strap).",
+      "Keep spine tall for 30 seconds, then repeat on the opposite side."
     ],
-    benefitsEn: [
-      'Integrates the benefits of yoga practice and lowers cortisol stress levels.',
-      'Helps regulate blood pressure, heart rate, and deep sleep quality.',
-      'Restores mental clarity and emotional stillness.',
+    "stepsHi": [
+      "दाएं घुटने को बाएं घुटने के ऊपर रखकर बैठें।",
+      "दायां हाथ सिर के ऊपर से पीछे ले जाएं और बायां हाथ नीचे से पीठ के पीछे लाएं।",
+      "दोनों हाथों की अंगुलियां आपस में फंसाएं (या रूमाल/पट्टी पकड़ें)।",
+      "30 सेकंड रीढ़ सीधी रखकर बैठें, फिर दूसरी तरफ दोहराएं।"
     ],
-    benefitsHi: [
-      'योगाभ्यास के बाद शरीर व मन की थकान दूर कर गहरी शांति देता है।',
-      'रक्तचाप, हृदय गति और नींद की गुणवत्ता सुधारने में सहायक है।',
-      'मानसिक तनाव व बेचैनी को शांत करता है।',
+    "benefitsEn": [
+      "Deeply opens tight shoulders, chest, and hips.",
+      "Relieves upper-back and neck tension from desk work.",
+      "Improves posture and lung expansion."
     ],
-    cautionEn: 'Place a bolster under your knees if your lower back feels sensitive.',
-    cautionHi: 'कमर में हल्का दर्द हो तो घुटनों के नीचे गोल तकिया रखें।',
-    videoId: 'Mc-38vuwE1Y',
+    "benefitsHi": [
+      "कंधों, छाती और कूल्हों की जकड़न को गहराई से खोलता है।",
+      "कंप्यूटर/डेस्क कार्य से होने वाला पीठ व गर्दन दर्द कम करता है।",
+      "शरीर की मुद्रा और श्वसन क्षमता सुधारता है।"
+    ],
+    "cautionEn": "Use a strap between hands if fingers do not meet comfortably.",
+    "cautionHi": "हाथ न मिलें तो जोर न लगाएं, बीच में तौलिया या बेल्ट पकड़ें।",
+    "videoId": "eSlfTsEYRag"
   },
   {
-    id: 'anulom-vilom',
-    sanskrit: 'अनुलोम-विलोम प्राणायाम',
-    titleEn: 'Anulom Vilom (Alternate Nostril Breathing)',
-    titleHi: 'अनुलोम-विलोम प्राणायाम',
-    category: 'Pranayama',
-    categoryHi: 'प्राणायाम',
-    difficultyEn: 'Beginner',
-    difficultyHi: 'शुरुआती',
-    duration: '5–10 min',
-    breathEn: 'Slow 4-second inhale through one nostril, gentle 4–6 second exhale through the other.',
-    breathHi: 'एक नासिका से 4 सेकंड धीमा पूरक (श्वास लेना) और दूसरी से 4–6 सेकंड रेचक (छोड़ना)।',
-    stepsEn: [
-      'Sit tall in Sukhasana or Padmasana with your left hand resting in Chin Mudra.',
-      'Use your right thumb to gently close the right nostril and inhale slowly through the left.',
-      'Close the left nostril with your ring finger, release the right thumb, and exhale smoothly.',
-      'Inhale through the right nostril, close it, and exhale through the left to complete one round.',
+    "id": "ardha-matsyendrasana",
+    "sanskrit": "अर्ध मत्स्येन्द्रासन",
+    "titleEn": "Ardha Matsyendrasana (Half Spinal Twist)",
+    "titleHi": "अर्ध मत्स्येन्द्रासन",
+    "category": "Seated",
+    "categoryHi": "बैठकर",
+    "difficultyEn": "Intermediate",
+    "difficultyHi": "मध्यम",
+    "duration": "30–45 sec / side",
+    "breathEn": "Inhale to lengthen spine upward; exhale to deepen the twist gently.",
+    "breathHi": "श्वास भरकर रीढ़ सीधी करें; श्वास छोड़ते हुए धीरे से कमर मोड़ें।",
+    "stepGraphics": [
+      "sit-dandasana",
+      "sit-cross",
+      "ardha-matsyendrasana",
+      "ardha-matsyendrasana"
     ],
-    stepsHi: [
-      'सुखासन या पद्मासन में रीढ़ सीधी रखकर बैठें और बायां हाथ चिन मुद्रा में रखें।',
-      'दाएं अंगूठे से दाईं नासिका बंद कर बाईं नासिका से धीरे-धीरे गहरा श्वास लें।',
-      'अनामिका उंगली से बाईं नासिका बंद कर दाईं नासिका से शांत श्वास छोड़ें।',
-      'अब दाईं नासिका से श्वास लें और बाईं से छोड़ें — यह एक चक्र पूरा हुआ।',
+    "stepsEn": [
+      "Sit with legs stretched, bend left leg under you, and step right foot outside left knee.",
+      "Inhale and lengthen your spine upward.",
+      "Exhale and twist torso to the right, hooking left elbow outside right knee.",
+      "Hold 20–30 seconds with steady breath, then twist to the left."
     ],
-    benefitsEn: [
-      'Balances left and right brain hemispheres and purifies nadis (energy channels).',
-      'Reduces anxiety, mental fog, and stress within minutes.',
-      'Improves lung capacity, oxygen flow, and focus for meditation.',
+    "stepsHi": [
+      "बायां पैर मोड़कर दायां पैर बाएं घुटने के बाहर रखें।",
+      "श्वास भरकर रीढ़ की हड्डी सीधी ऊपर खींचें।",
+      "श्वास छोड़ते हुए दाईं ओर मुड़ें और बाईं कोहनी दाएं घुटने के बाहर टिकाएं।",
+      "20–30 सेकंड रुकें, फिर दूसरी दिशा में करें।"
     ],
-    benefitsHi: [
-      'इड़ा और पिंगला नाड़ियों को संतुलित कर मन को अत्यंत शांत करता है।',
-      'तनाव, चिंता और सिरदर्द को कम कर एकाग्रता बढ़ाता है।',
-      'फेफड़ों की कार्यक्षमता और ऑक्सीजन स्तर को बेहतर बनाता है।',
+    "benefitsEn": [
+      "Restores spinal mobility and massages abdominal organs.",
+      "Aids digestion, detoxification, and blood sugar balance.",
+      "Relieves lower-back stiffness and shoulder tightness."
     ],
-    cautionEn: 'Never strain or force breath retention; keep breathing silent and smooth.',
-    cautionHi: 'श्वास को जबरदस्ती न रोकें; श्वास की गति बिल्कुल सहज और मधुर रखें।',
-    videoId: 'H7g1BMalpdw',
+    "benefitsHi": [
+      "रीढ़ की हड्डी को लचीला बनाता है और पेट के अंगों की मालिश करता है।",
+      "पाचन, मधुमेह संतुलन और विषहरण में सहायक है।",
+      "कमर की जकड़न दूर करता है।"
+    ],
+    "cautionEn": "Avoid deep twists during pregnancy or acute spinal disc issues.",
+    "cautionHi": "गर्भावस्था या गंभीर कमर की समस्या में गहरा मोड़ न दें।",
+    "videoId": "yYy6w8_hLTE"
   },
+  {
+    "id": "bhujangasana",
+    "sanskrit": "भुजंगासन",
+    "titleEn": "Bhujangasana (Cobra Pose)",
+    "titleHi": "भुजंगासन (सर्प मुद्रा)",
+    "category": "Backbend",
+    "categoryHi": "पीछे झुकने वाले",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "20–30 sec",
+    "breathEn": "Inhale as you lift the chest; exhale gently as you lower down.",
+    "breathHi": "छाती ऊपर उठाते समय श्वास भरें और नीचे आते समय छोड़ें।",
+    "stepGraphics": [
+      "lie-prone",
+      "bhujangasana",
+      "bhujangasana",
+      "lie-prone"
+    ],
+    "stepsEn": [
+      "Lie on your stomach with legs extended and palms under shoulders.",
+      "Inhale and gently lift head and chest using back strength.",
+      "Keep shoulders away from ears and elbows slightly tucked; hold 15–30 seconds.",
+      "Exhale slowly to lower forehead back to the mat."
+    ],
+    "stepsHi": [
+      "पेट के बल लेटकर हथेलियां कंधों के नीचे रखें।",
+      "श्वास भरते हुए पीठ के बल से सिर और छाती ऊपर उठाएं।",
+      "कंधे कानों से दूर रखें और 15–30 सेकंड रुकें।",
+      "श्वास छोड़ते हुए धीरे-धीरे नीचे आएं।"
+    ],
+    "benefitsEn": [
+      "Strengthens the spine, lower back, and shoulders.",
+      "Opens chest and lungs, improving breathing capacity.",
+      "Relieves stiffness from prolonged sitting."
+    ],
+    "benefitsHi": [
+      "रीढ़ की हड्डी, कमर और कंधों को मजबूत करता है।",
+      "फेफड़ों को खोलकर श्वास क्षमता बढ़ाता है।",
+      "लंबे समय तक बैठने की जकड़न दूर करता है।"
+    ],
+    "cautionEn": "Avoid deep backbends during pregnancy or acute disc injury.",
+    "cautionHi": "गर्भावस्था या गंभीर स्लिप डिस्क में न करें।",
+    "videoId": "QxQWFSJ7MwI"
+  },
+  {
+    "id": "dhanurasana",
+    "sanskrit": "धनुरासन",
+    "titleEn": "Dhanurasana (Bow Pose)",
+    "titleHi": "धनुरासन",
+    "category": "Backbend",
+    "categoryHi": "पीछे झुकने वाले",
+    "difficultyEn": "Intermediate",
+    "difficultyHi": "मध्यम",
+    "duration": "15–30 sec",
+    "breathEn": "Inhale deeply as you press ankles back and lift chest.",
+    "breathHi": "पैरों को पीछे खींचते हुए गहरा श्वास लें।",
+    "stepGraphics": [
+      "lie-prone",
+      "dhanurasana",
+      "dhanurasana",
+      "balasana"
+    ],
+    "stepsEn": [
+      "Lie on your stomach, bend knees, and hold outer ankles.",
+      "Inhale and press ankles back, lifting chest and thighs off the mat.",
+      "Balance steadily on your abdomen like a drawn bow for 15–25 seconds.",
+      "Exhale gently down and relax in Child's Pose."
+    ],
+    "stepsHi": [
+      "पेट के बल लेटकर घुटने मोड़ें और टखने पकड़ें।",
+      "श्वास भरते हुए पैर पीछे खींचें जिससे छाती और जांघें ऊपर उठें।",
+      "धनुष के आकार में 15–25 सेकंड संतुलित रहें।",
+      "श्वास छोड़ते हुए नीचे आएं और बालासन में विश्राम करें।"
+    ],
+    "benefitsEn": [
+      "Deeply stretches the entire front body and hip flexors.",
+      "Strengthens back muscles and aids digestion.",
+      "Boosts energy and spinal flexibility."
+    ],
+    "benefitsHi": [
+      "छाती, कंधों और जांघों में संपूर्ण खिंचाव लाता है।",
+      "पीठ को शक्ति देता है और पाचन सुधारता है।",
+      "रीढ़ में लचीलापन और स्फूर्ति बढ़ाता है।"
+    ],
+    "cautionEn": "Avoid with abdominal surgery, hernia, or severe back pain.",
+    "cautionHi": "पेट की सर्जरी, हर्निया या तेज कमर दर्द में न करें।",
+    "videoId": "nO5VwMMF-ec"
+  },
+  {
+    "id": "setu-bandhasana",
+    "sanskrit": "सेतु बंधासन",
+    "titleEn": "Setu Bandhasana (Bridge Pose)",
+    "titleHi": "सेतु बंधासन (पुल मुद्रा)",
+    "category": "Backbend",
+    "categoryHi": "पीछे झुकने वाले",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "30–45 sec",
+    "breathEn": "Inhale as you lift hips upward; breathe calmly while holding.",
+    "breathHi": "कमर ऊपर उठाते समय श्वास लें और ऊपर सहज श्वास रखें।",
+    "stepGraphics": [
+      "lie-supine",
+      "setu-bandhasana",
+      "setu-bandhasana",
+      "lie-supine"
+    ],
+    "stepsEn": [
+      "Lie on your back with knees bent and feet hip-width apart near your hips.",
+      "Press feet and arms into the mat, inhale, and lift your hips toward the ceiling.",
+      "Keep thighs parallel and chest gently lifting toward your chin for 30 seconds.",
+      "Exhale and slowly roll your spine back down to the mat."
+    ],
+    "stepsHi": [
+      "पीठ के बल लेटकर घुटने मोड़ें और पंजे कमर के पास रखें।",
+      "पैरों और हथेलियों को दबाते हुए श्वास भरें और कमर ऊपर उठाएं।",
+      "30 सेकंड तक पुल के आकार में स्थिर रहें।",
+      "श्वास छोड़ते हुए धीरे-धीरे पीठ नीचे लाएं।"
+    ],
+    "benefitsEn": [
+      "Strengthens lower back, glutes, and hamstrings.",
+      "Opens chest and calms mild stress or fatigue.",
+      "Supports thyroid circulation and spinal health."
+    ],
+    "benefitsHi": [
+      "कमर, नितंब और पैरों की मांसपेशियों को मजबूत बनाता है।",
+      "छाती खोलकर तनाव व थकान दूर करता है।",
+      "थायरॉइड और रीढ़ के स्वास्थ्य में लाभकारी है।"
+    ],
+    "cautionEn": "Keep neck neutral and do not turn head side-to-side while lifted.",
+    "cautionHi": "कमर ऊपर उठाते समय गर्दन को बिल्कुल न घुमाएं।",
+    "videoId": "Exyjk7hNs4c"
+  },
+  {
+    "id": "ustrasana",
+    "sanskrit": "उष्ट्रासन",
+    "titleEn": "Ustrasana (Camel Pose)",
+    "titleHi": "उष्ट्रासन (ऊँट मुद्रा)",
+    "category": "Backbend",
+    "categoryHi": "पीछे झुकने वाले",
+    "difficultyEn": "Intermediate",
+    "difficultyHi": "मध्यम",
+    "duration": "20–30 sec",
+    "breathEn": "Inhale to lift the heart upward; exhale as hands reach heels.",
+    "breathHi": "श्वास भरकर छाती ऊपर खोलें और छोड़ते हुए एड़ियां पकड़ें।",
+    "stepGraphics": [
+      "kneel-sit",
+      "ustrasana",
+      "ustrasana",
+      "balasana"
+    ],
+    "stepsEn": [
+      "Kneel upright on your mat with knees hip-width apart.",
+      "Place hands on lower back, lift chest, and gently arch backward.",
+      "Reach hands back onto your heels and press hips slightly forward.",
+      "Hold 15–25 seconds, rise slowly, and counter-stretch in Child's Pose."
+    ],
+    "stepsHi": [
+      "घुटनों के बल सीधे खड़े हों (जांघें सीधी रखें)।",
+      "हाथ कमर पर रखकर छाती ऊपर उठाएं और धीरे से पीछे झुकें।",
+      "दोनों हाथों से एड़ियां पकड़ें और 15–25 सेकंड रुकें।",
+      "धीरे-धीरे वापस आकर बालासन में विश्राम करें।"
+    ],
+    "benefitsEn": [
+      "Deeply opens chest, lungs, abdomen, and hip flexors.",
+      "Improves posture and counteracts rounded shoulders.",
+      "Boosts energy and relieves mild backache."
+    ],
+    "benefitsHi": [
+      "छाती, फेफड़ों और पेट में गहरा खिंचाव लाता है।",
+      "झुके हुए कंधों व खराब मुद्रा को सुधारता है।",
+      "ऊर्जा बढ़ाता है और कमर दर्द में राहत देता है।"
+    ],
+    "cautionEn": "Keep hands on lower back if reaching heels strains your spine.",
+    "cautionHi": "एड़ियां पकड़ने में कठिनाई हो तो हाथ कमर पर ही रखें।",
+    "videoId": "uywmLXQov_I"
+  },
+  {
+    "id": "chakrasana",
+    "sanskrit": "चक्रासन",
+    "titleEn": "Chakrasana (Wheel Pose)",
+    "titleHi": "चक्रासन",
+    "category": "Backbend",
+    "categoryHi": "पीछे झुकने वाले",
+    "difficultyEn": "Intermediate",
+    "difficultyHi": "मध्यम",
+    "duration": "15–30 sec",
+    "breathEn": "Inhale strongly as you press palms and feet to lift into the wheel.",
+    "breathHi": "हथेलियों व पंजों को दबाते हुए गहरा श्वास लेकर शरीर ऊपर उठाएं।",
+    "stepGraphics": [
+      "lie-supine",
+      "setu-bandhasana",
+      "chakrasana",
+      "lie-supine"
+    ],
+    "stepsEn": [
+      "Lie on your back, bend knees, and place palms beside ears with fingers toward shoulders.",
+      "Inhale and lift hips into Bridge, then press firmly into hands and feet.",
+      "Straighten arms and lift head and chest into a full arch (wheel).",
+      "Hold 10–20 seconds, tuck chin, and lower gently back to the mat."
+    ],
+    "stepsHi": [
+      "पीठ के बल लेटकर घुटने मोड़ें और हथेलियां कानों के पास कंधों की ओर रखकर टिकाएं।",
+      "श्वास भरकर पहले कमर उठाएं, फिर हाथों और पैरों पर जोर देकर पूरा शरीर ऊपर उठाएं।",
+      "10–20 सेकंड चक्र की मुद्रा में स्थिर रहें।",
+      "ठोड़ी अंदर मोड़कर धीरे-धीरे पीठ ज़मीन पर लाएं।"
+    ],
+    "benefitsEn": [
+      "Full-body backbend that strengthens arms, legs, and spine.",
+      "Expands lung capacity and energizes the entire nervous system.",
+      "Enhances core strength and spinal elasticity."
+    ],
+    "benefitsHi": [
+      "हाथों, पैरों और पूरी रीढ़ को असाधारण शक्ति व लचीलापन देता है।",
+      "फेफड़ों की क्षमता बढ़ाकर पूरे शरीर को ऊर्जावान बनाता है।",
+      "मेरुदंड को युवा और स्वस्थ रखता है।"
+    ],
+    "cautionEn": "Warm up with Bridge & Cobra first; avoid with wrist, shoulder, or severe back injury.",
+    "cautionHi": "पहले सेतु बंधासन से वार्म-अप करें; कलाई या गंभीर कमर चोट में न करें।",
+    "videoId": "cxjOB0Qls3c"
+  },
+  {
+    "id": "halasana",
+    "sanskrit": "हलासन",
+    "titleEn": "Halasana (Plow Pose)",
+    "titleHi": "हलासन",
+    "category": "Inversion",
+    "categoryHi": "उल्टे आसन",
+    "difficultyEn": "Intermediate",
+    "difficultyHi": "मध्यम",
+    "duration": "30–60 sec",
+    "breathEn": "Breathe calmly through the nose without turning your head.",
+    "breathHi": "गर्दन को बिना घुमाए नाक से शांत श्वास लें।",
+    "stepGraphics": [
+      "lie-supine",
+      "legs-90",
+      "halasana",
+      "shavasana"
+    ],
+    "stepsEn": [
+      "Lie on your back with arms alongside your body, palms down.",
+      "Inhale and lift both legs to 90 degrees, supporting lower back with hands.",
+      "Exhale and guide toes overhead toward the floor behind you.",
+      "Hold 20–45 seconds, then roll down slowly to Shavasana."
+    ],
+    "stepsHi": [
+      "पीठ के बल लेट जाएं और हाथ शरीर के बगल में रखें।",
+      "पैर 90 डिग्री उठाएं और कमर को हाथों से सहारा दें।",
+      "श्वास छोड़ते हुए पैरों को सिर के पीछे ज़मीन की ओर ले जाएं।",
+      "20–45 सेकंड रुककर धीरे-धीरे वापस आएं।"
+    ],
+    "benefitsEn": [
+      "Deeply stretches upper back, shoulders, and spine.",
+      "Stimulates thyroid balance and revitalizes circulation.",
+      "Calms the mind and relieves shoulder tension."
+    ],
+    "benefitsHi": [
+      "पीठ के ऊपरी भाग और कंधों में गहरा खिंचाव लाता है।",
+      "थायरॉइड संतुलन और रक्त संचार में सहायक है।",
+      "थकान कम कर मन को शांत करता है।"
+    ],
+    "cautionEn": "Avoid with neck injury or high blood pressure.",
+    "cautionHi": "गर्दन की चोट या उच्च रक्तचाप में इसे न करें।",
+    "videoId": "mbXQj9_REPY"
+  },
+  {
+    "id": "sarvangasana",
+    "sanskrit": "सर्वांगासन",
+    "titleEn": "Sarvangasana (Shoulder Stand)",
+    "titleHi": "सर्वांगासन (सभी अंगों का आसन)",
+    "category": "Inversion",
+    "categoryHi": "उल्टे आसन",
+    "difficultyEn": "Intermediate",
+    "difficultyHi": "मध्यम",
+    "duration": "30–60 sec",
+    "breathEn": "Breathe smoothly into the chest; never turn your neck.",
+    "breathHi": "छाती में सहज श्वास लें; गर्दन को बिल्कुल न हिलाएं।",
+    "stepGraphics": [
+      "lie-supine",
+      "legs-90",
+      "sarvangasana",
+      "shavasana"
+    ],
+    "stepsEn": [
+      "Lie flat on your back with arms beside your body.",
+      "Lift legs up to 90 degrees, then lift hips and support mid-back with both hands.",
+      "Extend legs straight upward in line with torso, resting weight on shoulders.",
+      "Hold 30–60 seconds, lower legs carefully, and rest in Shavasana."
+    ],
+    "stepsHi": [
+      "पीठ के बल सीधे लेट जाएं।",
+      "पैर 90 डिग्री उठाएं, फिर कमर ऊपर उठाकर हाथों से पीठ को सहारा दें।",
+      "पैरों व शरीर को एक सीधी रेखा में ऊपर तानें (भार कंधों पर रहे)।",
+      "30–60 सेकंड रुककर धीरे से नीचे आएं और शवासन करें।"
+    ],
+    "benefitsEn": [
+      "Known as the Queen of Asanas — nourishes thyroid and endocrine balance.",
+      "Improves venous return from legs and refreshes the brain.",
+      "Relieves stress, mild insomnia, and sluggish circulation."
+    ],
+    "benefitsHi": [
+      "सभी अंगों को स्वस्थ रखने वाला आसन — थायरॉइड व हार्मोन संतुलन में उत्तम।",
+      "पैरों की थकान और सूजन दूर कर मस्तिष्क को ताज़गी देता है।",
+      "तनाव व अनिद्रा कम करता है।"
+    ],
+    "cautionEn": "Avoid with neck pain, high blood pressure, or glaucoma.",
+    "cautionHi": "गर्दन दर्द, उच्च रक्तचाप या ग्लूकोमा में यह आसन न करें।",
+    "videoId": "v1pcMaUOtOk"
+  },
+  {
+    "id": "sirsasana",
+    "sanskrit": "शीर्षासन",
+    "titleEn": "Sirsasana (Headstand)",
+    "titleHi": "शीर्षासन (आसनों का राजा)",
+    "category": "Inversion",
+    "categoryHi": "उल्टे आसन",
+    "difficultyEn": "Intermediate",
+    "difficultyHi": "मध्यम",
+    "duration": "15–45 sec",
+    "breathEn": "Steady, controlled nasal breathing throughout.",
+    "breathHi": "पूरी स्थिति में शांत और नियंत्रित श्वास बनाए रखें।",
+    "stepGraphics": [
+      "balasana",
+      "kneel-sit",
+      "sirsasana",
+      "balasana"
+    ],
+    "stepsEn": [
+      "Kneel and interlace fingers on the mat, forming a supportive cup with forearms.",
+      "Place the crown of your head in the cupped hands, tuck toes, and lift hips.",
+      "Walk feet closer, tuck knees to chest, and slowly extend legs straight up.",
+      "Hold 15–45 seconds near a wall if learning, then descend to Child's Pose."
+    ],
+    "stepsHi": [
+      "कोहनियां मैट पर रखकर अंगुलियां आपस में फंसाएं और सिर का ऊपरी भाग हाथों में टिकाएं।",
+      "पंजों पर खड़े होकर कमर उठाएं और पैर धीरे-धीरे सिर के पास लाएं।",
+      "घुटने मोड़कर संतुलन बनाएं और धीरे-धीरे दोनों पैर सीधे ऊपर उठाएं।",
+      "15–45 सेकंड रुकें (शुरुआत में दीवार का सहारा लें), फिर बालासन में आएं।"
+    ],
+    "benefitsEn": [
+      "King of Asanas — boosts oxygenated blood flow to the brain and focus.",
+      "Strengthens core, shoulders, arms, and postural balance.",
+      "Rejuvenates memory, clarity, and vitality."
+    ],
+    "benefitsHi": [
+      "आसनों का राजा — मस्तिष्क में रक्त संचार, स्मरण शक्ति और एकाग्रता बढ़ाता है।",
+      "कंधों, भुजाओं और कोर मांसपेशियों को मजबूत करता है।",
+      "पूरे शरीर में नई स्फूर्ति व तेज लाता है।"
+    ],
+    "cautionEn": "Practice against a wall with guidance; avoid with neck injury, high BP, or heart issues.",
+    "cautionHi": "शुरुआत में दीवार के सहारे व मार्गदर्शन में करें; गर्दन चोट या उच्च रक्तचाप में न करें।",
+    "videoId": "L661-1n2LbA"
+  },
+  {
+    "id": "balasana",
+    "sanskrit": "बालासन",
+    "titleEn": "Balasana (Child's Pose)",
+    "titleHi": "बालासन (शिशु विश्राम मुद्रा)",
+    "category": "Relaxation",
+    "categoryHi": "विश्राम",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "1–3 min",
+    "breathEn": "Breathe slowly into your back ribs; soften shoulders on each exhale.",
+    "breathHi": "पीठ की ओर गहरा श्वास लें और कंधे ढीले छोड़ें।",
+    "stepGraphics": [
+      "kneel-sit",
+      "balasana",
+      "balasana",
+      "mudra-breath"
+    ],
+    "stepsEn": [
+      "Kneel on the mat with big toes touching and knees slightly apart.",
+      "Exhale and fold your torso forward over your thighs.",
+      "Rest forehead gently on the mat with arms extended forward or beside legs.",
+      "Breathe deeply for 1–3 minutes to release back and mind tension."
+    ],
+    "stepsHi": [
+      "मैट पर वज्रासन में बैठें और घुटनों में हल्का अंतर रखें।",
+      "श्वास छोड़ते हुए आगे झुकें और माथा ज़मीन पर टिकाएं।",
+      "हाथ सामने फैलाएं या पैरों के बगल में आराम से रखें।",
+      "1–3 मिनट गहरा व शांत श्वास लेकर विश्राम करें।"
+    ],
+    "benefitsEn": [
+      "Gently stretches lower back, hips, thighs, and ankles.",
+      "Instantly calms anxiety, fatigue, and mental overwhelm.",
+      "Ideal resting pose between intense yoga postures."
+    ],
+    "benefitsHi": [
+      "कमर, कूल्हों और जांघों को कोमलता से आराम देता है।",
+      "तनाव, थकान और घबराहट को तुरंत शांत करता है।",
+      "अन्य आसनों के बीच विश्राम के लिए उत्तम मुद्रा।"
+    ],
+    "cautionEn": "Place a cushion under your forehead or hips if knees feel tight.",
+    "cautionHi": "घुटनों में कष्ट हो तो नितंबों या माथे के नीचे तकिया रखें।",
+    "videoId": "QHTDpAMxj90"
+  },
+  {
+    "id": "shavasana",
+    "sanskrit": "शवासन",
+    "titleEn": "Shavasana (Deep Relaxation)",
+    "titleHi": "शवासन (विश्राम मुद्रा)",
+    "category": "Relaxation",
+    "categoryHi": "विश्राम",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "5–10 min",
+    "breathEn": "Let breath flow naturally; release tension on every exhale.",
+    "breathHi": "प्रत्येक श्वास छोड़ने के साथ शरीर को पूर्णतः ढीला छोड़ें।",
+    "stepGraphics": [
+      "lie-supine",
+      "shavasana",
+      "shavasana",
+      "sit-cross"
+    ],
+    "stepsEn": [
+      "Lie comfortably on your back with feet apart and palms facing upward.",
+      "Close your eyes and consciously relax every muscle from toes to crown.",
+      "Rest in quiet awareness for 5–10 minutes.",
+      "Wiggle fingers and roll gently to your right side before sitting up."
+    ],
+    "stepsHi": [
+      "पीठ के बल लेट जाएं, पैर अलग और हथेलियां ऊपर की ओर खुली रखें।",
+      "आंखें बंद कर पैरों से सिर तक पूरे शरीर को ढीला छोड़ दें।",
+      "5–10 मिनट शांत सजगता में विश्राम करें।",
+      "दाईं करवट लेकर धीरे से उठकर बैठें।"
+    ],
+    "benefitsEn": [
+      "Lowers stress hormones and integrates yoga practice.",
+      "Supports healthy blood pressure and deep sleep.",
+      "Restores mental clarity and inner stillness."
+    ],
+    "benefitsHi": [
+      "तनाव कम कर गहरी मानसिक शांति देता है।",
+      "रक्तचाप और नींद की गुणवत्ता सुधारता है।",
+      "मन की स्पष्टता और स्थिरता लौटाता है।"
+    ],
+    "cautionEn": "Place a pillow under knees if lower back feels sensitive.",
+    "cautionHi": "कमर में हल्का दर्द हो तो घुटनों के नीचे तकिया रखें।",
+    "videoId": "Mc-38vuwE1Y"
+  },
+  {
+    "id": "anulom-vilom",
+    "sanskrit": "अनुलोम-विलोम प्राणायाम",
+    "titleEn": "Anulom Vilom (Alternate Nostril)",
+    "titleHi": "अनुलोम-विलोम प्राणायाम",
+    "category": "Pranayama",
+    "categoryHi": "प्राणायाम",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "5–10 min",
+    "breathEn": "Slow 4s inhale through one nostril, gentle 4–6s exhale through the other.",
+    "breathHi": "एक नासिका से 4 सेकंड धीमा पूरक और दूसरी से 4–6 सेकंड रेचक।",
+    "stepGraphics": [
+      "sukhasana",
+      "anulom-vilom",
+      "mudra-breath",
+      "anulom-vilom"
+    ],
+    "stepsEn": [
+      "Sit tall in Sukhasana or Padmasana with left hand in Chin Mudra.",
+      "Close right nostril with thumb and inhale slowly through the left.",
+      "Close left nostril with ring finger and exhale smoothly through the right.",
+      "Inhale right, close, and exhale left to complete one round."
+    ],
+    "stepsHi": [
+      "सुखासन में रीढ़ सीधी रखकर बैठें।",
+      "दाएं अंगूठे से दाईं नासिका बंद कर बाईं से धीमा श्वास लें।",
+      "अनामिका से बाईं नासिका बंद कर दाईं से श्वास छोड़ें।",
+      "अब दाईं से श्वास लें और बाईं से छोड़ें।"
+    ],
+    "benefitsEn": [
+      "Balances left and right brain hemispheres and calms anxiety.",
+      "Improves lung capacity and oxygen flow.",
+      "Prepares the mind for deep meditation."
+    ],
+    "benefitsHi": [
+      "इड़ा-पिंगला नाड़ियों को संतुलित कर चिंता व तनाव दूर करता है।",
+      "फेफड़ों की कार्यक्षमता और ऑक्सीजन स्तर बढ़ाता है।",
+      "गहरे ध्यान के लिए एकाग्रता बढ़ाता है।"
+    ],
+    "cautionEn": "Never force breath retention; keep breathing smooth.",
+    "cautionHi": "श्वास को जबरदस्ती न रोकें; गति सहज रखें।",
+    "videoId": "H7g1BMalpdw"
+  },
+  {
+    "id": "kapalbhati",
+    "sanskrit": "कपालभाति प्राणायाम",
+    "titleEn": "Kapalbhati (Skull-Shining Breath)",
+    "titleHi": "कपालभाति प्राणायाम",
+    "category": "Pranayama",
+    "categoryHi": "प्राणायाम",
+    "difficultyEn": "Beginner",
+    "difficultyHi": "शुरुआती",
+    "duration": "3–5 min",
+    "breathEn": "Active, gentle nasal exhales with passive inhales (1 stroke/sec).",
+    "breathHi": "पेट अंदर खींचते हुए नाक से सहज झटके से श्वास छोड़ें; श्वास अपने आप अंदर आएगा।",
+    "stepGraphics": [
+      "sukhasana",
+      "kapalbhati",
+      "mudra-breath",
+      "kapalbhati"
+    ],
+    "stepsEn": [
+      "Sit upright in Sukhasana or Vajrasana with hands on knees in Chin Mudra.",
+      "Take a deep breath in, then exhale briskly through the nose by pulling navel inward.",
+      "Let inhalation happen passively and effortlessly between strokes.",
+      "Practice 20–30 strokes per round (2–3 rounds), resting calmly between rounds."
+    ],
+    "stepsHi": [
+      "सुखासन या वज्रासन में रीढ़ सीधी रखकर बैठें।",
+      "गहरा श्वास भरकर पेट को अंदर खींचते हुए नाक से श्वास बाहर छोड़ें।",
+      "अगले श्वास को स्वाभाविक रूप से अंदर आने दें।",
+      "एक चक्र में 20–30 बार करें और बीच में कुछ सेकंड शांत विश्राम लें।"
+    ],
+    "benefitsEn": [
+      "Energizes metabolism, digestion, and respiratory clarity.",
+      "Clears mental sluggishness and refreshes the mind.",
+      "Tones abdominal muscles naturally."
+    ],
+    "benefitsHi": [
+      "पाचन तंत्र, चयापचय (Metabolism) और श्वसन मार्ग को शुद्ध करता है।",
+      "आलस्य दूर कर मस्तिष्क में ताज़गी व तेज लाता है।",
+      "पेट की मांसपेशियों को टोन करता है।"
+    ],
+    "cautionEn": "Avoid during pregnancy, high blood pressure, hernia, or recent abdominal surgery.",
+    "cautionHi": "गर्भावस्था, उच्च रक्तचाप, हर्निया या पेट की सर्जरी में न करें।",
+    "videoId": "3Ic032L1aH8"
+  }
 ];

@@ -9,6 +9,7 @@ import React, {
   useState,
 } from 'react';
 import {api} from '../api/client';
+import {THEMES, colors, type ThemeMode} from '../theme/colors';
 import {getDeviceId} from '../utils/deviceId';
 
 export type ReadingFontScale = 'normal' | 'large' | 'xlarge';
@@ -64,6 +65,8 @@ interface UserPreferencesValue {
   sadhanaStreak: SadhanaStreak;
   readingFontScale: ReadingFontScale;
   playbackRate: PlaybackRate;
+  themeMode: ThemeMode;
+  themeColors: typeof colors;
   isFavorite: (id: string) => boolean;
   toggleFavorite: (item: Omit<SavedMantra, 'savedAt'>) => Promise<void>;
   removeFavorite: (id: string) => Promise<void>;
@@ -76,6 +79,7 @@ interface UserPreferencesValue {
   getStudyPathProgress: (pathSlug: string) => StudyPathProgress | undefined;
   setReadingFontScale: (scale: ReadingFontScale) => Promise<void>;
   setPlaybackRate: (rate: PlaybackRate) => Promise<void>;
+  setThemeMode: (mode: ThemeMode) => Promise<void>;
   syncBookmarksFromCloud: () => Promise<void>;
   sanskritFontSize: number;
   translationFontSize: number;
@@ -99,6 +103,7 @@ interface StoredPrefs {
   sadhanaStreak: SadhanaStreak;
   readingFontScale: ReadingFontScale;
   playbackRate: PlaybackRate;
+  themeMode?: ThemeMode;
 }
 
 const DEFAULT_STREAK: SadhanaStreak = {current: 0, longest: 0, lastDate: null};
@@ -121,6 +126,7 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
   const [sadhanaStreak, setSadhanaStreak] = useState<SadhanaStreak>(DEFAULT_STREAK);
   const [readingFontScale, setReadingFontScaleState] = useState<ReadingFontScale>('normal');
   const [playbackRate, setPlaybackRateState] = useState<PlaybackRate>(1);
+  const [themeMode, setThemeModeState] = useState<ThemeMode>('light');
   const [prefsLoaded, setPrefsLoaded] = useState(false);
   const didInitialSync = useRef(false);
 
@@ -139,6 +145,7 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
         setSadhanaStreak(parsed.sadhanaStreak ?? DEFAULT_STREAK);
         setReadingFontScaleState(parsed.readingFontScale ?? 'normal');
         setPlaybackRateState(parsed.playbackRate ?? 1);
+        setThemeModeState(parsed.themeMode ?? 'light');
         setPrefsLoaded(true);
       })
       .catch(() => setPrefsLoaded(true));
@@ -154,10 +161,11 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
         sadhanaStreak: next.sadhanaStreak ?? sadhanaStreak,
         readingFontScale: next.readingFontScale ?? readingFontScale,
         playbackRate: next.playbackRate ?? playbackRate,
+        themeMode: next.themeMode ?? themeMode,
       };
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
     },
-    [favorites, readingProgress, studyPathProgress, recentlyViewed, sadhanaStreak, readingFontScale, playbackRate],
+    [favorites, readingProgress, studyPathProgress, recentlyViewed, sadhanaStreak, readingFontScale, playbackRate, themeMode],
   );
 
   const isFavorite = useCallback((id: string) => favorites.some(f => f.id === id), [favorites]);
@@ -332,7 +340,16 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
     [persist],
   );
 
+  const setThemeMode = useCallback(
+    async (mode: ThemeMode) => {
+      setThemeModeState(mode);
+      await persist({themeMode: mode});
+    },
+    [persist],
+  );
+
   const fontSizes = FONT_SIZES[readingFontScale];
+  const themeColors = THEMES[themeMode];
 
   const value = useMemo(
     () => ({
@@ -343,6 +360,8 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
       sadhanaStreak,
       readingFontScale,
       playbackRate,
+      themeMode,
+      themeColors,
       isFavorite,
       toggleFavorite,
       removeFavorite,
@@ -355,6 +374,7 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
       getStudyPathProgress,
       setReadingFontScale,
       setPlaybackRate: setPlaybackRatePref,
+      setThemeMode,
       syncBookmarksFromCloud,
       sanskritFontSize: fontSizes.sanskrit,
       translationFontSize: fontSizes.translation,
@@ -367,6 +387,8 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
       sadhanaStreak,
       readingFontScale,
       playbackRate,
+      themeMode,
+      themeColors,
       isFavorite,
       toggleFavorite,
       removeFavorite,
@@ -379,6 +401,7 @@ export function UserPreferencesProvider({children}: {children: React.ReactNode})
       getStudyPathProgress,
       setReadingFontScale,
       setPlaybackRatePref,
+      setThemeMode,
       syncBookmarksFromCloud,
       fontSizes.sanskrit,
       fontSizes.translation,
