@@ -4,16 +4,20 @@ import {useUserPreferences} from '../context/UserPreferencesContext';
 import {borderRadius, colors, shadows, spacing} from '../theme/colors';
 
 export function SadhanaStreakCard() {
-  const {sadhanaStreak} = useUserPreferences();
+  const {sadhanaStreak, themeColors} = useUserPreferences();
   const current = sadhanaStreak.current;
 
   return (
-    <View style={styles.card}>
-      <Text style={styles.label}>Sadhana Streak</Text>
-      <Text style={styles.streak}>
+    <View
+      style={[
+        styles.card,
+        {backgroundColor: themeColors.surfaceElevated, borderColor: themeColors.borderLight},
+      ]}>
+      <Text style={[styles.label, {color: themeColors.primary}]}>Sadhana Streak</Text>
+      <Text style={[styles.streak, {color: themeColors.text}]}>
         {current > 0 ? `🔥 ${current} day${current === 1 ? '' : 's'}` : '🌱 Start today'}
       </Text>
-      <Text style={styles.hint}>
+      <Text style={[styles.hint, {color: themeColors.textMuted}]}>
         Meditate, finish aarti, or complete a quiz to keep your streak. Best: {sadhanaStreak.longest}
       </Text>
     </View>

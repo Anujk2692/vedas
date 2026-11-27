@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {useUserPreferences} from '../../context/UserPreferencesContext';
 import {borderRadius, colors, spacing} from '../../theme/colors';
 
 interface Props {
@@ -8,10 +9,16 @@ interface Props {
 }
 
 export function InfoBanner({icon = '✨', text}: Props) {
+  const {themeColors} = useUserPreferences();
+
   return (
-    <View style={styles.banner}>
+    <View
+      style={[
+        styles.banner,
+        {backgroundColor: themeColors.tabActive, borderColor: themeColors.borderLight},
+      ]}>
       <Text style={styles.icon}>{icon}</Text>
-      <Text style={styles.text}>{text}</Text>
+      <Text style={[styles.text, {color: themeColors.primaryDark}]}>{text}</Text>
     </View>
   );
 }

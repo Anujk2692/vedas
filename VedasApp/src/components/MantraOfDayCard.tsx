@@ -8,6 +8,7 @@ import {SelectableReadableText} from './SelectableReadableText';
 import {SanskritText} from './SanskritText';
 import {useCachedFetch} from '../hooks/useCachedFetch';
 import {useLanguage} from '../context/LanguageContext';
+import {useUserPreferences} from '../context/UserPreferencesContext';
 import type {RootStackParamList} from '../navigation/types';
 import {borderRadius, colors, shadows, spacing, typography} from '../theme/colors';
 import {getMantraOfDay} from '../utils/mantraOfDay';
@@ -15,6 +16,7 @@ import {getMantraOfDay} from '../utils/mantraOfDay';
 export function MantraOfDayCard() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {language} = useLanguage();
+  const {themeColors} = useUserPreferences();
   const fetchShlok = useCallback(() => api.getDailyShlok(language), [language]);
   const {data: remote} = useCachedFetch<DailyShlok>(
     '/sanatan/daily-shlok',
@@ -34,18 +36,18 @@ export function MantraOfDayCard() {
   };
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, {backgroundColor: themeColors.surface, borderColor: themeColors.border}]}>
       <View style={styles.decorCircle} />
       <View style={styles.header}>
-        <Text style={styles.label}>आज का श्लोक</Text>
-        <View style={styles.themePill}>
-          <Text style={styles.theme}>{shlok.theme}</Text>
+        <Text style={[styles.label, {color: themeColors.primary}]}>आज का श्लोक</Text>
+        <View style={[styles.themePill, {backgroundColor: themeColors.tabActive}]}>
+          <Text style={[styles.theme, {color: themeColors.primaryDark}]}>{shlok.theme}</Text>
         </View>
       </View>
-      <SanskritText text={shlok.sanskrit} style={styles.sanskrit} size={24} />
-      <SelectableReadableText text={shlok.transliteration} style={styles.transliteration} />
-      <SelectableReadableText text={shlok.translation} style={styles.translation} />
-      <Text style={styles.source}>{shlok.source}</Text>
+      <SanskritText text={shlok.sanskrit} style={[styles.sanskrit, {color: themeColors.text}]} size={24} />
+      <SelectableReadableText text={shlok.transliteration} style={[styles.transliteration, {color: themeColors.textMuted}]} />
+      <SelectableReadableText text={shlok.translation} style={[styles.translation, {color: themeColors.textSecondary}]} />
+      <Text style={[styles.source, {color: themeColors.textMuted}]}>{shlok.source}</Text>
       {shlok.scriptureSlug ? (
         <TouchableOpacity
           style={styles.btn}

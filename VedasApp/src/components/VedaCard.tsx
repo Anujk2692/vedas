@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import type {Veda} from '../api/types';
+import {useUserPreferences} from '../context/UserPreferencesContext';
 import {RemoteImage} from './ui/RemoteImage';
 import {SanskritText} from './SanskritText';
 import {borderRadius, colors, shadows, spacing, typography} from '../theme/colors';
@@ -13,10 +14,14 @@ interface Props {
 const VEDA_ACCENTS = ['#C45C00', '#8B4513', '#6B4226', '#A0522D'];
 
 export function VedaCard({veda, onPress}: Props) {
+  const {themeColors} = useUserPreferences();
   const accent = VEDA_ACCENTS[(veda.order - 1) % VEDA_ACCENTS.length];
 
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.92}>
+    <TouchableOpacity
+      style={[styles.card, {backgroundColor: themeColors.surface, borderColor: themeColors.borderLight}]}
+      onPress={onPress}
+      activeOpacity={0.92}>
       <View style={styles.imageWrap}>
         <RemoteImage uri={veda.coverImageUrl} style={styles.image} placeholderIcon="📿" />
         <View style={styles.imageOverlay} />
@@ -32,21 +37,21 @@ export function VedaCard({veda, onPress}: Props) {
         />
       </View>
       <View style={styles.content}>
-        <Text style={styles.title}>{veda.title}</Text>
-        <Text style={styles.description} numberOfLines={2}>
+        <Text style={[styles.title, {color: themeColors.text}]}>{veda.title}</Text>
+        <Text style={[styles.description, {color: themeColors.textSecondary}]} numberOfLines={2}>
           {veda.description}
         </Text>
         <View style={styles.metaRow}>
           {veda.scriptureType && veda.scriptureType !== 'VEDA' && (
-            <View style={styles.typePill}>
-              <Text style={styles.typeText}>{veda.scriptureType}</Text>
+            <View style={[styles.typePill, {backgroundColor: themeColors.tabActive}]}>
+              <Text style={[styles.typeText, {color: themeColors.primaryDark}]}>{veda.scriptureType}</Text>
             </View>
           )}
-          <View style={styles.metaPill}>
-            <Text style={styles.metaText}>{veda.chapterCount} chapters</Text>
+          <View style={[styles.metaPill, {backgroundColor: themeColors.surfaceMuted}]}>
+            <Text style={[styles.metaText, {color: themeColors.textSecondary}]}>{veda.chapterCount} chapters</Text>
           </View>
-          <View style={styles.metaPill}>
-            <Text style={styles.metaText}>{veda.verseCount}+ mantras</Text>
+          <View style={[styles.metaPill, {backgroundColor: themeColors.surfaceMuted}]}>
+            <Text style={[styles.metaText, {color: themeColors.textSecondary}]}>{veda.verseCount}+ mantras</Text>
           </View>
         </View>
       </View>

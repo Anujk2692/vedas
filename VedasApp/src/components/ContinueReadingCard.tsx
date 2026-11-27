@@ -8,14 +8,18 @@ import {borderRadius, colors, shadows, spacing, typography} from '../theme/color
 
 export function ContinueReadingCard() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const {readingProgress, clearReadingProgress} = useUserPreferences();
+  const {readingProgress, clearReadingProgress, themeColors} = useUserPreferences();
 
   if (!readingProgress) {
     return null;
   }
 
   return (
-    <View style={styles.card}>
+    <View
+      style={[
+        styles.card,
+        {backgroundColor: themeColors.surfaceElevated, borderColor: themeColors.border},
+      ]}>
       <Pressable
         style={({pressed}) => [styles.main, pressed && styles.cardPressed]}
         onPress={() =>
@@ -25,14 +29,14 @@ export function ContinueReadingCard() {
             vedaTitle: readingProgress.vedaTitle,
           })
         }>
-        <View style={styles.iconWrap}>
+        <View style={[styles.iconWrap, {backgroundColor: themeColors.tabActive}]}>
           <Text style={styles.icon}>📖</Text>
         </View>
         <View style={styles.content}>
-          <Text style={styles.label}>Continue Reading</Text>
-          <Text style={styles.title}>{readingProgress.title}</Text>
+          <Text style={[styles.label, {color: themeColors.primary}]}>Continue Reading</Text>
+          <Text style={[styles.title, {color: themeColors.text}]}>{readingProgress.title}</Text>
           {readingProgress.vedaTitle && (
-            <Text style={styles.subtitle}>{readingProgress.vedaTitle}</Text>
+            <Text style={[styles.subtitle, {color: themeColors.textMuted}]}>{readingProgress.vedaTitle}</Text>
           )}
         </View>
       </Pressable>

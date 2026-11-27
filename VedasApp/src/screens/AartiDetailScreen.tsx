@@ -26,7 +26,7 @@ import {borderRadius, colors, shadows, spacing, typography} from '../theme/color
 import {flatListPerfProps} from '../utils/listPerf';
 import {normalizeAartiDetail} from '../utils/normalizeAarti';
 import {formatDuration} from '../utils/formatTime';
-import {onSpeechFinish, speakAnswerText, stopSpeech} from '../utils/speech';
+import {onSpeechFinish, speakDevotionalText, stopSpeech} from '../utils/speech';
 
 function AartiLineCard({
   line,
@@ -124,7 +124,8 @@ export function AartiDetailScreen() {
     setSpeakingAll(false);
     setActiveLineIndex(index);
     try {
-      await speakAnswerText(line.sanskrit, 'hi');
+      await speakDevotionalText(line.sanskrit, line.transliteration, language);
+      setActiveLineIndex(prev => (prev === index ? null : prev));
     } catch {
       setActiveLineIndex(null);
     }
@@ -140,8 +141,12 @@ export function AartiDetailScreen() {
     setActiveLineIndex(null);
     setSpeakingAll(true);
     try {
-      const fullText = aarti.lines.map(l => l.sanskrit).join(' ');
-      await speakAnswerText(fullText, 'hi');
+      await speakDevotionalText(
+        aarti.lines.map(l => l.sanskrit).join(' '),
+        aarti.lines.map(l => l.transliteration).join(' '),
+        language,
+      );
+      setSpeakingAll(false);
     } catch {
       setSpeakingAll(false);
     }

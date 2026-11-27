@@ -12,7 +12,7 @@ import {borderRadius, colors, shadows, spacing} from '../theme/colors';
 export function ContinueLearningCard() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {language} = useLanguage();
-  const {studyPathProgress, getStudyPathProgress} = useUserPreferences();
+  const {studyPathProgress, getStudyPathProgress, themeColors} = useUserPreferences();
   const [path, setPath] = useState<StudyPath | null>(null);
 
   const load = useCallback(async () => {
@@ -44,17 +44,21 @@ export function ContinueLearningCard() {
 
   return (
     <Pressable
-      style={({pressed}) => [styles.card, pressed && styles.pressed]}
+      style={({pressed}) => [
+        styles.card,
+        {backgroundColor: themeColors.surfaceElevated, borderColor: themeColors.borderLight},
+        pressed && styles.pressed,
+      ]}
       onPress={() => navigation.navigate('StudyPathDetail', {slug: path.slug, title: path.title})}>
-      <Text style={styles.label}>Continue Learning</Text>
-      <Text style={styles.title}>
+      <Text style={[styles.label, {color: themeColors.primary}]}>Continue Learning</Text>
+      <Text style={[styles.title, {color: themeColors.text}]}>
         {path.icon} {path.title}
       </Text>
-      <Text style={styles.meta}>
+      <Text style={[styles.meta, {color: themeColors.textMuted}]}>
         {done}/{total} steps · {pct}%
       </Text>
-      <View style={styles.barTrack}>
-        <View style={[styles.barFill, {width: `${pct}%`}]} />
+      <View style={[styles.barTrack, {backgroundColor: themeColors.surfaceMuted}]}>
+        <View style={[styles.barFill, {width: `${pct}%`, backgroundColor: themeColors.primary}]} />
       </View>
     </Pressable>
   );

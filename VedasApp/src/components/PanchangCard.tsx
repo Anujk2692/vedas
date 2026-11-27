@@ -4,10 +4,12 @@ import {api} from '../api/client';
 import type {Panchang} from '../api/types';
 import {useCachedFetch} from '../hooks/useCachedFetch';
 import {useLanguage} from '../context/LanguageContext';
+import {useUserPreferences} from '../context/UserPreferencesContext';
 import {borderRadius, colors, shadows, spacing} from '../theme/colors';
 
 export function PanchangCard() {
   const {language} = useLanguage();
+  const {themeColors} = useUserPreferences();
   const fetchPanchang = useCallback(() => api.getPanchang(language), [language]);
   const {data} = useCachedFetch<Panchang>('/sanatan/panchang', language, fetchPanchang, [language]);
 
@@ -16,21 +18,25 @@ export function PanchangCard() {
   }
 
   return (
-    <View style={styles.card}>
+    <View
+      style={[
+        styles.card,
+        {backgroundColor: themeColors.surfaceElevated, borderColor: themeColors.borderLight},
+      ]}>
       <View style={styles.header}>
-        <Text style={styles.label}>आज का पंचांग</Text>
-        <Text style={styles.date}>{data.dateLabel}</Text>
+        <Text style={[styles.label, {color: themeColors.primary}]}>आज का पंचांग</Text>
+        <Text style={[styles.date, {color: themeColors.textMuted}]}>{data.dateLabel}</Text>
       </View>
-      <Text style={styles.weekday}>{data.weekday}</Text>
+      <Text style={[styles.weekday, {color: themeColors.text}]}>{data.weekday}</Text>
       <View style={styles.row}>
-        <Text style={styles.chip}>🌙 {data.tithi}</Text>
-        <Text style={styles.chip}>⭐ {data.nakshatra}</Text>
-        {data.yoga ? <Text style={styles.chip}>🧘 {data.yoga}</Text> : null}
+        <Text style={[styles.chip, {color: themeColors.textSecondary}]}>🌙 {data.tithi}</Text>
+        <Text style={[styles.chip, {color: themeColors.textSecondary}]}>⭐ {data.nakshatra}</Text>
+        {data.yoga ? <Text style={[styles.chip, {color: themeColors.textSecondary}]}>🧘 {data.yoga}</Text> : null}
       </View>
-      {data.festival ? <Text style={styles.festival}>🪔 {data.festival}</Text> : null}
-      {data.festivalWhy ? <Text style={styles.why}>{data.festivalWhy}</Text> : null}
-      {data.festivalRitual ? <Text style={styles.ritual}>Ritual: {data.festivalRitual}</Text> : null}
-      <Text style={styles.note}>{data.note}</Text>
+      {data.festival ? <Text style={[styles.festival, {color: themeColors.primaryDark}]}>🪔 {data.festival}</Text> : null}
+      {data.festivalWhy ? <Text style={[styles.why, {color: themeColors.textSecondary}]}>{data.festivalWhy}</Text> : null}
+      {data.festivalRitual ? <Text style={[styles.ritual, {color: themeColors.text}]}>Ritual: {data.festivalRitual}</Text> : null}
+      <Text style={[styles.note, {color: themeColors.textMuted}]}>{data.note}</Text>
     </View>
   );
 }

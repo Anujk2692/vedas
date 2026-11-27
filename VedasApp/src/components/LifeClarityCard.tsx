@@ -1,6 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useLanguage} from '../context/LanguageContext';
+import {useUserPreferences} from '../context/UserPreferencesContext';
 import {borderRadius, colors, shadows, spacing, typography} from '../theme/colors';
 
 interface ClarityTopic {
@@ -100,6 +101,7 @@ interface Props {
 
 export function LifeClarityCard({onAskGuru}: Props) {
   const {language} = useLanguage();
+  const {themeColors} = useUserPreferences();
   const isHi = language === 'hi' || language === 'sa';
   const [selectedId, setSelectedId] = useState<string>(CLARITY_TOPICS[0].id);
 
@@ -114,26 +116,26 @@ export function LifeClarityCard({onAskGuru}: Props) {
   );
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, {backgroundColor: themeColors.surface, borderColor: themeColors.border}]}>
       <View style={styles.topBadgeRow}>
-        <View style={styles.badge}>
-          <Text style={styles.badgeText}>
+        <View style={[styles.badge, {backgroundColor: themeColors.tabActive}]}>
+          <Text style={[styles.badgeText, {color: themeColors.primaryDark}]}>
             {isHi ? '✨ जीवन बोध · आज का चिंतन' : '✨ LIFE CLARITY · DAILY CONTEMPLATION'}
           </Text>
         </View>
       </View>
 
-      <Text style={styles.quote}>
+      <Text style={[styles.quote, {color: themeColors.text}]}>
         “{isHi ? contemplation.quoteHi : contemplation.quoteEn}”
       </Text>
-      <Text style={styles.takeaway}>
+      <Text style={[styles.takeaway, {color: themeColors.textSecondary}]}>
         {isHi ? contemplation.takeawayHi : contemplation.takeawayEn}
       </Text>
-      <Text style={styles.source}>{contemplation.source}</Text>
+      <Text style={[styles.source, {color: themeColors.textMuted}]}>{contemplation.source}</Text>
 
-      <View style={styles.divider} />
+      <View style={[styles.divider, {backgroundColor: themeColors.borderLight}]} />
 
-      <Text style={styles.sectionLabel}>
+      <Text style={[styles.sectionLabel, {color: themeColors.primaryDark}]}>
         {isHi ? 'जीवन के प्रश्न चुनें (तुरंत स्पष्टता):' : 'Choose a life question for instant clarity:'}
       </Text>
 
@@ -145,8 +147,18 @@ export function LifeClarityCard({onAskGuru}: Props) {
               key={topic.id}
               activeOpacity={0.8}
               onPress={() => setSelectedId(topic.id)}
-              style={[styles.chip, active && styles.chipActive]}>
-              <Text style={[styles.chipText, active && styles.chipTextActive]}>
+              style={[
+                styles.chip,
+                {
+                  backgroundColor: active ? themeColors.primary : themeColors.surfaceElevated,
+                  borderColor: active ? themeColors.primary : themeColors.border,
+                },
+              ]}>
+              <Text
+                style={[
+                  styles.chipText,
+                  {color: active ? colors.white : themeColors.textSecondary},
+                ]}>
                 {topic.icon} {isHi ? topic.titleHi : topic.titleEn}
               </Text>
             </TouchableOpacity>
@@ -154,16 +166,16 @@ export function LifeClarityCard({onAskGuru}: Props) {
         })}
       </View>
 
-      <View style={styles.clarityBox}>
-        <Text style={styles.doubtText}>
+      <View style={[styles.clarityBox, {backgroundColor: themeColors.surfaceElevated, borderColor: themeColors.borderLight}]}>
+        <Text style={[styles.doubtText, {color: themeColors.primaryDark}]}>
           {isHi ? activeTopic.doubtHi : activeTopic.doubtEn}
         </Text>
-        <Text style={styles.clarityText}>
+        <Text style={[styles.clarityText, {color: themeColors.text}]}>
           {isHi ? activeTopic.clarityHi : activeTopic.clarityEn}
         </Text>
         <View style={styles.clarityFooter}>
-          <Text style={styles.topicSource}>{activeTopic.source}</Text>
-          <TouchableOpacity activeOpacity={0.85} onPress={onAskGuru} style={styles.guruBtn}>
+          <Text style={[styles.topicSource, {color: themeColors.textMuted}]}>{activeTopic.source}</Text>
+          <TouchableOpacity activeOpacity={0.85} onPress={onAskGuru} style={[styles.guruBtn, {backgroundColor: themeColors.primary}]}>
             <Text style={styles.guruBtnText}>
               {isHi ? 'AI गुरु से और पूछें →' : 'Ask AI Guru Deeper →'}
             </Text>

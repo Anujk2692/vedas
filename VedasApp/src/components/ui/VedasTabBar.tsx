@@ -2,6 +2,7 @@ import type {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useUserPreferences} from '../../context/UserPreferencesContext';
 import {TAB_BAR_HEIGHT} from '../../utils/layout';
 import {borderRadius, colors, shadows, spacing} from '../../theme/colors';
 
@@ -19,9 +20,18 @@ const TAB_META: Record<string, {label: string; icon: string; activeIcon: string}
 
 export function VedasTabBar({state, descriptors, navigation}: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
+  const {themeColors} = useUserPreferences();
 
   return (
-    <View style={[styles.wrap, {paddingBottom: Math.max(insets.bottom, 10)}]}>
+    <View
+      style={[
+        styles.wrap,
+        {
+          paddingBottom: Math.max(insets.bottom, 10),
+          backgroundColor: themeColors.surface,
+          borderTopColor: themeColors.borderLight,
+        },
+      ]}>
       <View style={styles.bar}>
         {state.routes.map((route, index) => {
           const focused = state.index === index;
@@ -52,13 +62,19 @@ export function VedasTabBar({state, descriptors, navigation}: BottomTabBarProps)
               accessibilityRole="button"
               accessibilityState={{selected: focused}}
               accessibilityLabel={String(label)}>
-              {focused && <View style={styles.activeIndicator} />}
-              <View style={[styles.iconWrap, focused && styles.iconWrapActive]}>
-                <Text style={[styles.icon, focused && styles.iconActive]}>
+              {focused && <View style={[styles.activeIndicator, {backgroundColor: themeColors.primary}]} />}
+              <View style={[styles.iconWrap, focused && {backgroundColor: themeColors.tabActive}]}>
+                <Text style={[styles.icon, {color: focused ? themeColors.primaryDark : themeColors.textMuted}]}>
                   {focused ? meta.activeIcon : meta.icon}
                 </Text>
               </View>
-              <Text style={[styles.label, focused && styles.labelActive]} numberOfLines={1}>
+              <Text
+                style={[
+                  styles.label,
+                  {color: focused ? themeColors.primaryDark : themeColors.textMuted},
+                  focused && styles.labelActive,
+                ]}
+                numberOfLines={1}>
                 {String(label)}
               </Text>
             </Pressable>

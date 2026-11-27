@@ -15,7 +15,7 @@ import type {DevotionalItem, DevotionalLine} from '../api/types';
 import {useLanguage} from '../context/LanguageContext';
 import type {RootStackParamList} from '../navigation/types';
 import {borderRadius, colors, shadows, spacing, typography} from '../theme/colors';
-import {onSpeechFinish, speakAnswerText, stopSpeech} from '../utils/speech';
+import {onSpeechFinish, speakDevotionalText, stopSpeech} from '../utils/speech';
 
 export function DevotionalScreen() {
   const route = useRoute<RouteProp<RootStackParamList, 'Devotional'>>();
@@ -79,7 +79,8 @@ export function DevotionalScreen() {
     setSpeakingAll(false);
     setActiveIndex(index);
     try {
-      await speakAnswerText(line.sanskrit, 'hi');
+      await speakDevotionalText(line.sanskrit, line.transliteration, language);
+      setActiveIndex(prev => (prev === index ? null : prev));
     } catch {
       setActiveIndex(null);
     }
@@ -95,7 +96,12 @@ export function DevotionalScreen() {
     setActiveIndex(null);
     setSpeakingAll(true);
     try {
-      await speakAnswerText(selected.lines.map(l => l.sanskrit).join(' '), 'hi');
+      await speakDevotionalText(
+        selected.lines.map(l => l.sanskrit).join(' '),
+        selected.lines.map(l => l.transliteration).join(' '),
+        language,
+      );
+      setSpeakingAll(false);
     } catch {
       setSpeakingAll(false);
     }

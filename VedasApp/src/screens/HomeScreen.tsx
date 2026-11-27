@@ -6,7 +6,6 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {
   FlatList,
   RefreshControl,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   View,
@@ -52,7 +51,7 @@ type ListRow =
   | {kind: 'veda'; key: string; veda: Veda};
 
 export function HomeScreen() {
-  const {themeColors, themeMode} = useUserPreferences();
+  const {themeColors} = useUserPreferences();
   const navigation = useNavigation<
     CompositeNavigationProp<
       BottomTabNavigationProp<TabParamList, 'Home'>,
@@ -107,8 +106,8 @@ export function HomeScreen() {
   }
 
   return (
-    <SafeAreaView style={[styles.container, {backgroundColor: themeColors.background}]}>
-      <StatusBar barStyle={themeMode === 'dark' ? 'light-content' : 'dark-content'} />
+    <View style={[styles.container, {backgroundColor: themeColors.background}]}>
+      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
       {error && <ErrorBanner message={error} onRetry={refresh} />}
 
       <FlatList
@@ -226,7 +225,7 @@ export function HomeScreen() {
       />
 
       <LanguagePicker visible={showLanguagePicker} onClose={() => setShowLanguagePicker(false)} />
-    </SafeAreaView>
+    </View>
   );
 }
 

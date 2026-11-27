@@ -6,6 +6,7 @@ import {api} from '../api/client';
 import type {DailyShlok} from '../api/types';
 import {useCachedFetch} from '../hooks/useCachedFetch';
 import {useLanguage} from '../context/LanguageContext';
+import {useUserPreferences} from '../context/UserPreferencesContext';
 import type {RootStackParamList} from '../navigation/types';
 import {borderRadius, colors, shadows, spacing} from '../theme/colors';
 import {SanskritText} from './SanskritText';
@@ -13,6 +14,7 @@ import {SanskritText} from './SanskritText';
 export function GitaOfDayCard() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {language} = useLanguage();
+  const {themeColors} = useUserPreferences();
   const fetch = useCallback(() => api.getGitaOfDay(language), [language]);
   const {data} = useCachedFetch<DailyShlok>('/sanatan/gita-of-day', language, fetch, [language]);
 
@@ -22,15 +24,21 @@ export function GitaOfDayCard() {
 
   return (
     <Pressable
-      style={({pressed}) => [styles.card, pressed && styles.pressed]}
+      style={({pressed}) => [
+        styles.card,
+        {backgroundColor: themeColors.surfaceElevated, borderColor: themeColors.borderLight},
+        pressed && styles.pressed,
+      ]}
       onPress={() => navigation.navigate('VedaDetail', {vedaId: 'gita', title: 'Bhagavad Gita'})}>
       <View style={styles.header}>
-        <Text style={styles.label}>गीता ऑफ़ द डे</Text>
-        <Text style={styles.source}>{data.source}</Text>
+        <Text style={[styles.label, {color: themeColors.primary}]}>गीता ऑफ़ द डे</Text>
+        <Text style={[styles.source, {color: themeColors.textMuted}]}>{data.source}</Text>
       </View>
-      <SanskritText text={data.sanskrit} style={styles.sanskrit} />
-      {data.transliteration ? <Text style={styles.tr}>{data.transliteration}</Text> : null}
-      <Text style={styles.translation}>{data.translation}</Text>
+      <SanskritText text={data.sanskrit} style={[styles.sanskrit, {color: themeColors.text}]} />
+      {data.transliteration ? (
+        <Text style={[styles.tr, {color: themeColors.textMuted}]}>{data.transliteration}</Text>
+      ) : null}
+      <Text style={[styles.translation, {color: themeColors.textSecondary}]}>{data.translation}</Text>
     </Pressable>
   );
 }

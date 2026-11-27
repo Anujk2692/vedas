@@ -8,19 +8,27 @@ import {borderRadius, colors, shadows, spacing} from '../theme/colors';
 
 export function RecentlyViewedCard() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const {recentlyViewed} = useUserPreferences();
+  const {recentlyViewed, themeColors} = useUserPreferences();
 
   if (recentlyViewed.length === 0) {
     return null;
   }
 
   return (
-    <View style={styles.card}>
-      <Text style={styles.label}>Recently Viewed</Text>
+    <View
+      style={[
+        styles.card,
+        {backgroundColor: themeColors.surfaceElevated, borderColor: themeColors.borderLight},
+      ]}>
+      <Text style={[styles.label, {color: themeColors.primary}]}>Recently Viewed</Text>
       {recentlyViewed.map(item => (
         <Pressable
           key={`${item.kind}-${item.id}`}
-          style={({pressed}) => [styles.row, pressed && styles.pressed]}
+          style={({pressed}) => [
+            styles.row,
+            {borderTopColor: themeColors.borderLight},
+            pressed && styles.pressed,
+          ]}
           onPress={() => {
             if (item.kind === 'chapter') {
               navigation.navigate('ChapterReader', {
@@ -38,11 +46,11 @@ export function RecentlyViewedCard() {
             {item.kind === 'chapter' ? '📖' : item.kind === 'topic' ? '📚' : '🕉'}
           </Text>
           <View style={{flex: 1}}>
-            <Text style={styles.title} numberOfLines={1}>
+            <Text style={[styles.title, {color: themeColors.text}]} numberOfLines={1}>
               {item.title}
             </Text>
             {item.subtitle ? (
-              <Text style={styles.subtitle} numberOfLines={1}>
+              <Text style={[styles.subtitle, {color: themeColors.textMuted}]} numberOfLines={1}>
                 {item.subtitle}
               </Text>
             ) : null}

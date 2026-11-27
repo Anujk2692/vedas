@@ -1,5 +1,6 @@
 import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {useUserPreferences} from '../../context/UserPreferencesContext';
 import {borderRadius, colors, shadows, spacing} from '../../theme/colors';
 
 interface Props {
@@ -10,18 +11,32 @@ interface Props {
 }
 
 export function QuickActionChip({icon, label, onPress, accent}: Props) {
+  const {themeColors} = useUserPreferences();
+
   return (
     <Pressable
       style={({pressed}) => [
         styles.chip,
-        accent && styles.chipAccent,
+        {
+          backgroundColor: accent ? themeColors.surfaceElevated : themeColors.surface,
+          borderColor: accent ? themeColors.border : themeColors.borderLight,
+        },
         pressed && styles.chipPressed,
       ]}
       onPress={onPress}>
-      <View style={[styles.iconWrap, accent && styles.iconWrapAccent]}>
+      <View
+        style={[
+          styles.iconWrap,
+          {backgroundColor: accent ? 'rgba(232, 146, 42, 0.16)' : themeColors.surfaceMuted},
+        ]}>
         <Text style={styles.icon}>{icon}</Text>
       </View>
-      <Text style={[styles.label, accent && styles.labelAccent]} numberOfLines={1}>
+      <Text
+        style={[
+          styles.label,
+          {color: accent ? themeColors.primaryDark : themeColors.textSecondary},
+        ]}
+        numberOfLines={1}>
         {label}
       </Text>
     </Pressable>

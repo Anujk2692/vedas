@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {useUserPreferences} from '../../context/UserPreferencesContext';
 import {colors, spacing, typography} from '../../theme/colors';
 
 interface Props {
@@ -8,12 +9,16 @@ interface Props {
 }
 
 export function SectionHeader({title, subtitle}: Props) {
+  const {themeColors} = useUserPreferences();
+
   return (
     <View style={styles.wrap}>
-      <View style={styles.accent} />
+      <View style={[styles.accent, {backgroundColor: themeColors.primary}]} />
       <View>
-        <Text style={styles.title}>{title}</Text>
-        {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
+        <Text style={[styles.title, {color: themeColors.text}]}>{title}</Text>
+        {subtitle ? (
+          <Text style={[styles.subtitle, {color: themeColors.textMuted}]}>{subtitle}</Text>
+        ) : null}
       </View>
     </View>
   );
