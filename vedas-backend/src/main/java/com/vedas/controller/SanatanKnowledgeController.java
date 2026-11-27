@@ -77,7 +77,14 @@ public class SanatanKnowledgeController {
     @PostMapping("/ask")
     public AskResponseDto ask(@Valid @RequestBody AskRequestDto request) {
         String lang = request.getLang() != null ? request.getLang() : "hi";
-        return aiGuruService.ask(request.getQuestion(), lang);
+        return aiGuruService.ask(
+                request.getQuestion(),
+                lang,
+                request.getPersonName(),
+                request.getBirthDate(),
+                request.getBirthTime(),
+                request.getBirthPlace()
+        );
     }
 
     @GetMapping("/daily-shlok")

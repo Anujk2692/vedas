@@ -11,8 +11,28 @@ public class AskRequestDto {
     @Size(max = 10, message = "Language code is too long")
     private String lang;
 
+    @Size(max = 80)
+    private String personName;
+
+    @Size(max = 30)
+    private String birthDate;
+
+    @Size(max = 20)
+    private String birthTime;
+
+    @Size(max = 80)
+    private String birthPlace;
+
     public String getQuestion() { return question; }
     public void setQuestion(String question) { this.question = question; }
     public String getLang() { return lang; }
     public void setLang(String lang) { this.lang = lang; }
+    public String getPersonName() { return personName; }
+    public void setPersonName(String personName) { this.personName = personName; }
+    public String getBirthDate() { return birthDate; }
+    public void setBirthDate(String birthDate) { this.birthDate = birthDate; }
+    public String getBirthTime() { return birthTime; }
+    public void setBirthTime(String birthTime) { this.birthTime = birthTime; }
+    public String getBirthPlace() { return birthPlace; }
+    public void setBirthPlace(String birthPlace) { this.birthPlace = birthPlace; }
 }

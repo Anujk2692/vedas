@@ -158,8 +158,11 @@ export const api = {
   getFestivals: (lang: string) => request<FestivalGuide[]>('/sanatan/festivals', lang),
   getFestival: (slug: string, lang: string) =>
     request<FestivalGuide>(`/sanatan/festivals/${slug}`, lang),
-  askGuru: (question: string, lang: string) =>
-    postRequest<AskResponse>('/sanatan/ask', {question, lang}, 90000),
+  askGuru: (
+    question: string,
+    lang: string,
+    astro?: {personName?: string; birthDate?: string; birthTime?: string; birthPlace?: string},
+  ) => postRequest<AskResponse>('/sanatan/ask', {question, lang, ...astro}, 90000),
   suggestChildNames: (payload: ChildNameRequest) =>
     postRequest<ChildNameResponse>('/child-names/suggest', payload),
   getChalisas: (lang: string) => request<DevotionalItem[]>('/chalisas', lang),

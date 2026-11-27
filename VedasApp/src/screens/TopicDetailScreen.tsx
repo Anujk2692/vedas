@@ -1,7 +1,7 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import type {RouteProp} from '@react-navigation/native';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {FlatList, Linking, Pressable, StyleSheet, Text, View} from 'react-native';
 import {api} from '../api/client';
 import type {ExternalResource, Topic} from '../api/types';
@@ -20,6 +20,8 @@ export function TopicDetailScreen() {
   const route = useRoute<RouteProp<RootStackParamList, 'TopicDetail'>>();
   const {language} = useLanguage();
   const {addRecentItem} = useUserPreferences();
+  const addRecentRef = useRef(addRecentItem);
+  addRecentRef.current = addRecentItem;
   const fetchTopic = useCallback(
     () => api.getTopic(route.params.slug, language),
     [route.params.slug, language],
@@ -45,14 +47,14 @@ export function TopicDetailScreen() {
     if (!topic) {
       return;
     }
-    addRecentItem({
+    addRecentRef.current({
       id: topic.slug,
       kind: 'topic',
       title: topic.title,
       subtitle: 'Gyan topic',
       targetId: topic.slug,
     }).catch(() => undefined);
-  }, [topic, addRecentItem]);
+  }, [topic]);
 
   if (loading && !topic) {
     return (

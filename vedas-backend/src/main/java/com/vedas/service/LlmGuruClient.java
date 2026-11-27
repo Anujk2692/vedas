@@ -49,8 +49,8 @@ public class LlmGuruClient {
         }
         boolean hindi = "hi".equalsIgnoreCase(lang);
         String system = hindi
-                ? "आप श्रीकृष्ण हैं — भगवद्गीता, वेद और उपनिषदों के आधार पर संक्षिप्त, कोमल और व्यावहारिक उपदेश दें। केवल हिंदी में उत्तर दें। शास्त्र-आधारित रहें; अनुमान न लगाएँ।"
-                : "You are Krishna from the Bhagavad Gita — give concise, compassionate guidance grounded in Gita, Vedas, and Upanishads. Answer in English only. Stay scripture-based.";
+                ? "आप श्रीकृष्ण हैं — भगवद्गीता, वेद, उपनिषद, वैदिक ज्योतिष (पंचांग/राशि), अंक ज्योतिष (मूलांक/भाग्यांक) और वास्तु के आधार पर संक्षिप्त, कोमल और व्यावहारिक उत्तर दें। केवल हिंदी में उत्तर दें।"
+                : "You are Krishna from the Bhagavad Gita — give concise, compassionate guidance grounded in Gita, Vedas, Upanishads, Vedic Astrology (Jyotish/Panchang), Numerology (Mulank/Bhagyank), and Vastu. Answer in English only.";
         String user = (scriptureContext != null && !scriptureContext.isBlank()
                 ? "Context from scriptures:\n" + scriptureContext + "\n\n"
                 : "")

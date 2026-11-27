@@ -1,7 +1,7 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import type {RouteProp} from '@react-navigation/native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   Pressable,
@@ -31,6 +31,10 @@ export function ChapterReaderScreen() {
   const route = useRoute<RouteProp<RootStackParamList, 'ChapterReader'>>();
   const {language} = useLanguage();
   const {setReadingProgress, addRecentItem, sanskritFontSize, translationFontSize} = useUserPreferences();
+  const setProgressRef = useRef(setReadingProgress);
+  const addRecentRef = useRef(addRecentItem);
+  setProgressRef.current = setReadingProgress;
+  addRecentRef.current = addRecentItem;
   const {playQueue} = useAudioPlayer();
   const [chapter, setChapter] = useState<Chapter | null>(null);
   const [verses, setVerses] = useState<Verse[]>([]);
@@ -51,12 +55,12 @@ export function ChapterReaderScreen() {
 
       const versesData = await api.getVerses(route.params.chapterId, language);
       setVerses(versesData);
-      await setReadingProgress({
+      await setProgressRef.current({
         chapterId: route.params.chapterId,
         title: chapterData.title || route.params.title,
         vedaTitle: route.params.vedaTitle,
       });
-      await addRecentItem({
+      await addRecentRef.current({
         id: route.params.chapterId,
         kind: 'chapter',
         title: chapterData.title || route.params.title,
@@ -73,7 +77,7 @@ export function ChapterReaderScreen() {
       setLoadingChapter(false);
       setLoadingVerses(false);
     }
-  }, [route.params.chapterId, route.params.title, route.params.vedaTitle, language, setReadingProgress, addRecentItem]);
+  }, [route.params.chapterId, route.params.title, route.params.vedaTitle, language]);
 
   useEffect(() => {
     loadContent();

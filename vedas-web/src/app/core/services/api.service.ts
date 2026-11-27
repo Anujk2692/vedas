@@ -125,8 +125,12 @@ export class ApiService {
     return this.http.get<FestivalGuide>(this.withLang(lang, `/sanatan/festivals/${slug}`));
   }
 
-  askGuru(question: string, lang: string): Observable<AskResponse> {
-    return this.http.post<AskResponse>(`${this.base}/sanatan/ask`, { question, lang });
+  askGuru(
+    question: string,
+    lang: string,
+    astro?: { personName?: string; birthDate?: string; birthTime?: string; birthPlace?: string },
+  ): Observable<AskResponse> {
+    return this.http.post<AskResponse>(`${this.base}/sanatan/ask`, { question, lang, ...astro });
   }
 
   suggestChildNames(payload: ChildNameRequest): Observable<ChildNameResponse> {

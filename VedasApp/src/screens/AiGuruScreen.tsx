@@ -26,7 +26,12 @@ import {borderRadius, colors, shadows, spacing} from '../theme/colors';
 import {speakAnswerText, stopSpeech} from '../utils/speech';
 import {LIST_BOTTOM_INSET} from '../utils/layout';
 
-const SUGGESTIONS = ['कर्म योग क्या है?', 'मोक्ष का मार्ग', 'भगवद गीता का सार', 'What is dharma?'];
+const SUGGESTIONS = [
+  'मेरा मूलांक और भाग्यांक क्या कहते हैं?',
+  'करियर व धन के लिए ज्योतिष सलाह',
+  'What does numerology & astrology say for me?',
+  'कर्म योग क्या है?',
+];
 const HISTORY_KEY = '@sanatan_ai_guru_history';
 const AUTO_SPEAK_KEY = '@sanatan_ai_guru_auto_speak';
 
@@ -46,6 +51,11 @@ export function AiGuruScreen() {
   const [response, setResponse] = useState<AskResponse | null>(null);
   const [speaking, setSpeaking] = useState(false);
   const [autoSpeak, setAutoSpeak] = useState(true);
+  const [showAstro, setShowAstro] = useState(false);
+  const [personName, setPersonName] = useState('');
+  const [birthDate, setBirthDate] = useState('');
+  const [birthTime, setBirthTime] = useState('');
+  const [birthPlace, setBirthPlace] = useState('');
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const {
     listening,
@@ -130,7 +140,12 @@ export function AiGuruScreen() {
       setError(null);
       clearVoiceError();
       try {
-        const result = await api.askGuru(trimmed, language);
+        const result = await api.askGuru(trimmed, language, {
+          personName: personName.trim() || undefined,
+          birthDate: birthDate.trim() || undefined,
+          birthTime: birthTime.trim() || undefined,
+          birthPlace: birthPlace.trim() || undefined,
+        });
         setResponse(result);
         setQuestion(trimmed);
         await saveHistory(trimmed, result.answer);
@@ -150,7 +165,7 @@ export function AiGuruScreen() {
         setLoading(false);
       }
     },
-    [autoSpeak, clearVoiceError, language, saveHistory, stopListening],
+    [autoSpeak, birthDate, birthPlace, birthTime, clearVoiceError, language, personName, saveHistory, stopListening],
   );
 
   const onMicPress = async () => {
@@ -235,6 +250,47 @@ export function AiGuruScreen() {
           ))}
         </View>
 
+        <Pressable style={styles.astroToggle} onPress={() => setShowAstro(prev => !prev)}>
+          <Text style={styles.astroToggleText}>
+            {showAstro
+              ? '▾ जन्म विवरण छिपाएं (Jyotish & Numerology)'
+              : '🔮 जन्म तिथि व नाम जोड़ें (ज्योतिष + अंक ज्योतिष)'}
+          </Text>
+        </Pressable>
+
+        {showAstro ? (
+          <View style={styles.astroCard}>
+            <TextInput
+              style={styles.astroInput}
+              value={personName}
+              onChangeText={setPersonName}
+              placeholder="Name / नाम (optional)"
+              placeholderTextColor={colors.textMuted}
+            />
+            <TextInput
+              style={styles.astroInput}
+              value={birthDate}
+              onChangeText={setBirthDate}
+              placeholder="Birth Date (DD/MM/YYYY or YYYY-MM-DD)"
+              placeholderTextColor={colors.textMuted}
+            />
+            <TextInput
+              style={styles.astroInput}
+              value={birthTime}
+              onChangeText={setBirthTime}
+              placeholder="Birth Time (optional, e.g. 06:30)"
+              placeholderTextColor={colors.textMuted}
+            />
+            <TextInput
+              style={styles.astroInput}
+              value={birthPlace}
+              onChangeText={setBirthPlace}
+              placeholder="Birth Place (optional)"
+              placeholderTextColor={colors.textMuted}
+            />
+          </View>
+        ) : null}
+
         {response ? (
           <View style={styles.answerCard}>
             <View style={styles.answerHeader}>
@@ -266,7 +322,7 @@ export function AiGuruScreen() {
                     title: `Verse ${v.number}`,
                   })
                 }>
-                <SanskritText text={v.sanskrit} size={18} />
+                <SanskritText text={v.sanskrit} size={18} selectable={false} />
                 <Text style={styles.verseTr} numberOfLines={3}>
                   {v.translation}
                 </Text>
@@ -430,6 +486,36 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     marginBottom: spacing.sm,
     gap: 10,
+  },
+  astroToggle: {
+    marginBottom: spacing.sm,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: borderRadius.md,
+    backgroundColor: colors.tabActive,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
+    alignSelf: 'flex-start',
+  },
+  astroToggleText: {fontSize: 12, fontWeight: '700', color: colors.primaryDark},
+  astroCard: {
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
+    marginBottom: spacing.md,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
+    gap: 8,
+  },
+  astroInput: {
+    backgroundColor: colors.surfaceMuted,
+    borderRadius: borderRadius.sm,
+    paddingHorizontal: 12,
+    paddingVertical: 9,
+    fontSize: 13,
+    color: colors.text,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
   },
   topicIcon: {fontSize: 22},
   topicTitle: {fontSize: 14, fontWeight: '700', color: colors.text, flex: 1},

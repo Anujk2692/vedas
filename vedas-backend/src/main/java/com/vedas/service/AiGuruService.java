@@ -21,17 +21,32 @@ public class AiGuruService {
 
     private final VedasService vedasService;
     private final SanatanKnowledgeService sanatanKnowledgeService;
+    private final PanchangService panchangService;
+    private final VedicAstroNumerologyService astroNumerologyService;
     private final LlmGuruClient llmGuruClient;
 
     public AiGuruService(VedasService vedasService,
                          SanatanKnowledgeService sanatanKnowledgeService,
+                         PanchangService panchangService,
+                         VedicAstroNumerologyService astroNumerologyService,
                          LlmGuruClient llmGuruClient) {
         this.vedasService = vedasService;
         this.sanatanKnowledgeService = sanatanKnowledgeService;
+        this.panchangService = panchangService;
+        this.astroNumerologyService = astroNumerologyService;
         this.llmGuruClient = llmGuruClient;
     }
 
     public AskResponseDto ask(String question, String lang) {
+        return ask(question, lang, null, null, null, null);
+    }
+
+    public AskResponseDto ask(String question,
+                              String lang,
+                              String personName,
+                              String birthDate,
+                              String birthTime,
+                              String birthPlace) {
         if (question == null || question.trim().length() < 2) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Question must be at least 2 characters");
         }
@@ -44,13 +59,22 @@ public class AiGuruService {
                 .limit(3)
                 .collect(Collectors.toList());
 
+        PanchangDto panchang = null;
+        try {
+            panchang = panchangService.getToday(language);
+        } catch (Exception ignored) {
+        }
+        String astroInsight = astroNumerologyService.buildHolisticInsight(
+                q, language, personName, birthDate, birthTime, birthPlace, panchang);
+
         AskResponseDto response = new AskResponseDto();
         response.setRelatedScriptures(limit(search.getVedas(), 5));
         response.setRelatedChapters(limit(search.getChapters(), 5));
         response.setRelatedVerses(limit(search.getVerses(), 8));
         response.setRelatedTopics(topics);
-        String scriptureContext = buildScriptureContext(search, topics);
-        String answer = buildAnswer(q, language, search, topics);
+        String scriptureContext = buildScriptureContext(search, topics)
+                + (astroInsight.isBlank() ? "" : "\n\n" + astroInsight);
+        String answer = buildAnswer(q, language, search, topics, astroInsight);
         if (llmGuruClient.isAvailable()) {
             String llmAnswer = llmGuruClient.askKrishna(q, language, scriptureContext);
             if (llmAnswer != null && !llmAnswer.isBlank()) {
@@ -133,9 +157,13 @@ public class AiGuruService {
         return haystack.toLowerCase(Locale.ROOT).contains(needle.toLowerCase(Locale.ROOT));
     }
 
-    private String buildAnswer(String question, String lang, SearchResultDto search, List<TopicDto> topics) {
+    private String buildAnswer(String question, String lang, SearchResultDto search, List<TopicDto> topics, String astroInsight) {
         boolean hindi = "hi".equalsIgnoreCase(lang);
         StringBuilder sb = new StringBuilder();
+
+        if (astroInsight != null && !astroInsight.isBlank()) {
+            sb.append(astroInsight).append("\n\n");
+        }
 
         if (!topics.isEmpty()) {
             TopicDto t = topics.get(0);
@@ -168,9 +196,11 @@ public class AiGuruService {
                     : "No direct match found. Try searching 'karma', 'dharma', 'Gita', or browse Study Paths in the Gyan tab.";
         }
 
-        sb.append(hindi
-                ? "💡 नीचे और संबंधित श्लोक और ग्रंथ देखें। पूर्ण अध्ययन के लिए संबंधित अध्याय पढ़ें।"
-                : "💡 See related verses and scriptures below. Read the linked chapter for deeper study.");
+        if (!search.getVerses().isEmpty() || !search.getChapters().isEmpty() || !search.getVedas().isEmpty()) {
+            sb.append(hindi
+                    ? "💡 नीचे और संबंधित श्लोक और ग्रंथ देखें। पूर्ण अध्ययन के लिए संबंधित अध्याय पढ़ें।"
+                    : "💡 See related verses and scriptures below. Read the linked chapter for deeper study.");
+        }
 
         return sb.toString().trim();
     }

@@ -13,12 +13,26 @@ import { AskResponse } from '../../core/models';
   template: `
     <div class="container narrow">
       <h1>🙏 AI Guru</h1>
-      <p>Ask by voice or text — get written answers and listen aloud (like Krishna guidance apps).</p>
+      <p>Ask any question — AI Guru combines Vedic Astrology (Jyotish), Numerology, Panchang, Vastu, and Scriptures.</p>
 
-      <label class="auto-speak">
-        <input type="checkbox" [(ngModel)]="autoSpeak" />
-        Auto-play answer audio
-      </label>
+      <div class="astro-toggle-row">
+        <button type="button" class="btn btn-outline astro-toggle" (click)="showAstro = !showAstro">
+          {{ showAstro ? '▾ Hide Birth & Name Details' : '🔮 Add Birth Date / Name for Jyotish & Numerology' }}
+        </button>
+        <label class="auto-speak">
+          <input type="checkbox" [(ngModel)]="autoSpeak" />
+          Auto-play answer audio
+        </label>
+      </div>
+
+      @if (showAstro) {
+        <div class="card astro-panel">
+          <input [(ngModel)]="personName" placeholder="Name (optional, e.g. Anuj)" />
+          <input [(ngModel)]="birthDate" placeholder="Birth Date (DD/MM/YYYY or YYYY-MM-DD)" />
+          <input [(ngModel)]="birthTime" placeholder="Birth Time (optional, e.g. 06:30)" />
+          <input [(ngModel)]="birthPlace" placeholder="Birth Place (optional, e.g. Delhi)" />
+        </div>
+      }
 
       @if (listening) {
         <div class="listening card">🎤 Listening… speak your question</div>
@@ -103,6 +117,10 @@ import { AskResponse } from '../../core/models';
     .listening { margin: 0.75rem 0; background: #fff3e6; color: #7a3200; font-weight: 600; }
     .search-bar { display: flex; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap; }
     .search-bar input { flex: 1; min-width: 180px; padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid rgba(196,92,0,0.2); }
+    .astro-toggle-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.85rem; }
+    .astro-toggle { font-size: 0.85rem; padding: 0.45rem 0.9rem; }
+    .astro-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.65rem; margin-bottom: 1rem; padding: 0.9rem; }
+    .astro-panel input { padding: 0.55rem 0.8rem; border-radius: 10px; border: 1px solid rgba(196,92,0,0.25); font: inherit; font-size: 0.9rem; }
     .mic, .listen { white-space: nowrap; }
     .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
     .chip { border: 1px solid rgba(196,92,0,0.2); background: #fff3e6; border-radius: 999px; padding: 0.4rem 0.85rem; cursor: pointer; font-size: 0.85rem; }
@@ -131,7 +149,17 @@ export class AiGuruComponent implements OnDestroy {
   autoSpeak = true;
   history: { question: string; answer: string; at: number }[] = [];
 
-  suggestions = ['कर्म योग क्या है?', 'What is dharma?', 'मोक्ष का मार्ग', 'Bhagavad Gita summary'];
+  suggestions = [
+    'मेरा मूलांक और भाग्यांक क्या कहते हैं?',
+    'करियर और धन के लिए ज्योतिष व गीता सलाह',
+    'What does numerology & astrology say for my career?',
+    'कर्म योग क्या है?',
+  ];
+  showAstro = false;
+  personName = '';
+  birthDate = '';
+  birthTime = '';
+  birthPlace = '';
 
   constructor() {
     try {
@@ -156,7 +184,14 @@ export class AiGuruComponent implements OnDestroy {
     this.error = null;
     this.voiceError = null;
     this.speech.stopSpeaking();
-    this.api.askGuru(q, this.langService.lang()).subscribe({
+    this.api
+      .askGuru(q, this.langService.lang(), {
+        personName: this.personName.trim() || undefined,
+        birthDate: this.birthDate.trim() || undefined,
+        birthTime: this.birthTime.trim() || undefined,
+        birthPlace: this.birthPlace.trim() || undefined,
+      })
+      .subscribe({
       next: r => {
         this.response = r;
         this.loading = false;
