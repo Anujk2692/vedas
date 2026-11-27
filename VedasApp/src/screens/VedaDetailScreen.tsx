@@ -1,7 +1,7 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import type {RouteProp} from '@react-navigation/native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   Pressable,
@@ -33,6 +33,8 @@ export function VedaDetailScreen() {
   const {language} = useLanguage();
   const {playTrack, playQueue} = useAudioPlayer();
   const {addRecentItem} = useUserPreferences();
+  const addRecentRef = useRef(addRecentItem);
+  addRecentRef.current = addRecentItem;
   const [veda, setVeda] = useState<Veda | null>(null);
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [media, setMedia] = useState<MediaItem[]>([]);
@@ -50,7 +52,7 @@ export function VedaDetailScreen() {
       setVeda(vedaData);
       vedaLoaded = true;
       setLoadingVeda(false);
-      await addRecentItem({
+      await addRecentRef.current({
         id: vedaData.id || route.params.vedaId,
         kind: 'scripture',
         title: vedaData.title || route.params.title,
@@ -75,7 +77,7 @@ export function VedaDetailScreen() {
       setLoadingVeda(false);
       setLoadingChapters(false);
     }
-  }, [route.params.vedaId, route.params.title, language, addRecentItem]);
+  }, [route.params.vedaId, route.params.title, language]);
 
   useEffect(() => {
     loadData();

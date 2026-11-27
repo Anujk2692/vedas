@@ -161,7 +161,9 @@ export async function speakTranslatedText(text: string, appLanguage: string): Pr
       reject(new Error('Speech playback failed'));
     };
     Tts.addEventListener('tts-finish', finish);
-    Tts.addEventListener('tts-error', fail);
+    if (Platform.OS === 'android') {
+      Tts.addEventListener('tts-error', fail);
+    }
 
     try {
       Tts.speak(trimmed);
