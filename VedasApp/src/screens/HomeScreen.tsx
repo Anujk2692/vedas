@@ -131,24 +131,16 @@ export function HomeScreen() {
               languageLabel={currentLang?.nativeName ?? language}
               onLanguagePress={() => setShowLanguagePicker(true)}
             />
-            <LifeClarityCard onAskGuru={() => navigation.navigate('AiGuru')} />
-            <MantraOfDayCard />
-            <GitaOfDayCard />
-            <PanchangCard />
-            <SadhanaStreakCard />
-            <ContinueLearningCard />
-            <ContinueReadingCard />
-            <RecentlyViewedCard />
+            <SectionHeader
+              title={language === 'hi' || language === 'sa' ? 'त्वरित सेवाएं' : 'Quick Access'}
+              subtitle={
+                language === 'hi' || language === 'sa'
+                  ? 'आरती, चालीसा, भजन, AI गुरु और नामकरण'
+                  : 'Aarti, Chalisa, Bhajan, AI Guru & more'
+              }
+            />
             <View style={styles.quickRow}>
               <QuickActionChip icon="🙏" label={language === 'hi' || language === 'sa' ? 'AI गुरु' : 'AI Guru'} accent onPress={() => navigation.navigate('AiGuru')} />
-              <QuickActionChip icon="👶" label={language === 'hi' || language === 'sa' ? 'नामकरण' : 'Child Names'} onPress={() => navigation.navigate('ChildNames')} />
-              <QuickActionChip icon="📚" label={language === 'hi' || language === 'sa' ? 'ज्ञान' : 'Gyan'} onPress={() => navigation.navigate('Gyan')} />
-              <QuickActionChip icon="🧠" label={language === 'hi' || language === 'sa' ? 'क्विज़' : 'Quiz'} onPress={() => navigation.navigate('QuizList')} />
-              <QuickActionChip
-                icon="🛕"
-                label={language === 'hi' || language === 'sa' ? 'संस्कृति' : 'Culture'}
-                onPress={() => navigation.navigate('CultureHub')}
-              />
               <QuickActionChip icon="🪔" label={language === 'hi' || language === 'sa' ? 'आरती' : 'Aarti'} onPress={() => navigation.navigate('Aarti')} />
               <QuickActionChip
                 icon="📿"
@@ -170,9 +162,40 @@ export function HomeScreen() {
                   })
                 }
               />
+              <QuickActionChip icon="👶" label={language === 'hi' || language === 'sa' ? 'नामकरण' : 'Child Names'} onPress={() => navigation.navigate('ChildNames')} />
+              <QuickActionChip icon="📚" label={language === 'hi' || language === 'sa' ? 'ज्ञान' : 'Gyan'} onPress={() => navigation.navigate('Gyan')} />
+              <QuickActionChip icon="🧠" label={language === 'hi' || language === 'sa' ? 'क्विज़' : 'Quiz'} onPress={() => navigation.navigate('QuizList')} />
+              <QuickActionChip
+                icon="🛕"
+                label={language === 'hi' || language === 'sa' ? 'संस्कृति' : 'Culture'}
+                onPress={() => navigation.navigate('CultureHub')}
+              />
               <QuickActionChip icon="🔍" label={language === 'hi' || language === 'sa' ? 'खोजें' : 'Search'} onPress={() => navigation.navigate('Search')} />
-              <QuickActionChip icon="🎵" label={language === 'hi' || language === 'sa' ? 'सुनें' : 'Listen'} onPress={() => navigation.navigate('Audio')} />
             </View>
+            <LifeClarityCard onAskGuru={() => navigation.navigate('AiGuru')} />
+            <SectionHeader
+              title={language === 'hi' || language === 'sa' ? 'आज का आध्यात्मिक चिंतन' : "Today's Spiritual Anchor"}
+              subtitle={
+                language === 'hi' || language === 'sa'
+                  ? 'दैनिक मंत्र, गीता श्लोक और पंचांग'
+                  : 'Daily mantra, Gita verse & Panchang'
+              }
+            />
+            <MantraOfDayCard />
+            <GitaOfDayCard />
+            <PanchangCard />
+            <SectionHeader
+              title={language === 'hi' || language === 'sa' ? 'आपकी साधना' : 'Your Sadhana'}
+              subtitle={
+                language === 'hi' || language === 'sa'
+                  ? 'नियमित अभ्यास और हालिया पठन'
+                  : 'Streak, learning path & recent reading'
+              }
+            />
+            <SadhanaStreakCard />
+            <ContinueLearningCard />
+            <ContinueReadingCard />
+            <RecentlyViewedCard />
             <InfoBanner
               icon="📥"
               text={

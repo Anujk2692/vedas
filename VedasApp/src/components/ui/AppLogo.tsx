@@ -13,18 +13,16 @@ interface Props {
 }
 
 export function AppLogo({size = 48, showRing = true, style, imageStyle}: Props) {
-  const ring = Math.round(size + size * 0.18);
   return (
     <View
       style={[
         styles.wrap,
         showRing && styles.ring,
-        showRing && {
-          width: ring,
-          height: ring,
-          borderRadius: ring / 2,
+        {
+          width: size,
+          height: size,
+          borderRadius: size / 2,
         },
-        !showRing && {width: size, height: size},
         style,
       ]}>
       <Image
@@ -49,12 +47,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexShrink: 0,
-    overflow: 'visible',
+    overflow: 'hidden',
   },
   ring: {
-    backgroundColor: 'rgba(255,255,255,0.12)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.22)',
+    borderWidth: 1.5,
+    borderColor: 'rgba(255,255,255,0.38)',
     ...shadows.sm,
   },
 });
