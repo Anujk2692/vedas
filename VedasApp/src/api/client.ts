@@ -22,6 +22,7 @@ import type {
   QuizSummary,
   Deity,
   DevotionalItem,
+  SubscriptionStatus,
   Temple,
   FestivalGuide,
   Veda,
@@ -161,7 +162,14 @@ export const api = {
   askGuru: (
     question: string,
     lang: string,
-    astro?: {personName?: string; birthDate?: string; birthTime?: string; birthPlace?: string},
+    astro?: {
+      personName?: string;
+      birthDate?: string;
+      birthTime?: string;
+      birthPlace?: string;
+      gender?: string;
+      category?: string;
+    },
   ) => postRequest<AskResponse>('/sanatan/ask', {question, lang, ...astro}, 90000),
   suggestChildNames: (payload: ChildNameRequest) =>
     postRequest<ChildNameResponse>('/child-names/suggest', payload),
@@ -169,6 +177,19 @@ export const api = {
   getChalisa: (slug: string, lang: string) => request<DevotionalItem>(`/chalisas/${slug}`, lang),
   getBhajans: (lang: string) => request<DevotionalItem[]>('/bhajans', lang),
   getBhajan: (slug: string, lang: string) => request<DevotionalItem>(`/bhajans/${slug}`, lang),
+  getSubscriptionStatus: (accountKey: string) =>
+    request<SubscriptionStatus>(`/subscription/status?accountKey=${encodeURIComponent(accountKey)}`, 'en', {
+      skipCache: true,
+    }),
+  activateSubscription: (payload: {
+    accountKey: string;
+    planCode: string;
+    provider?: string;
+    transactionId?: string;
+    sandbox?: boolean;
+  }) => postRequest<SubscriptionStatus>('/subscription/activate', payload),
+  cancelSubscription: (accountKey: string) =>
+    postRequest<SubscriptionStatus>('/subscription/cancel', {accountKey}),
   syncBookmarks: (deviceId: string, bookmarks: BookmarkSyncItem[]) =>
     postRequest<BookmarkSyncItem[]>('/user/bookmarks/sync', {deviceId, bookmarks}),
 };

@@ -51,11 +51,13 @@ export function AiGuruScreen() {
   const [response, setResponse] = useState<AskResponse | null>(null);
   const [speaking, setSpeaking] = useState(false);
   const [autoSpeak, setAutoSpeak] = useState(true);
-  const [showAstro, setShowAstro] = useState(false);
+  const [showAstro, setShowAstro] = useState(true);
   const [personName, setPersonName] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [birthTime, setBirthTime] = useState('');
   const [birthPlace, setBirthPlace] = useState('');
+  const [gender, setGender] = useState('');
+  const [category, setCategory] = useState('General');
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const {
     listening,
@@ -145,6 +147,8 @@ export function AiGuruScreen() {
           birthDate: birthDate.trim() || undefined,
           birthTime: birthTime.trim() || undefined,
           birthPlace: birthPlace.trim() || undefined,
+          gender: gender || undefined,
+          category: category || undefined,
         });
         setResponse(result);
         setQuestion(trimmed);
@@ -165,7 +169,7 @@ export function AiGuruScreen() {
         setLoading(false);
       }
     },
-    [autoSpeak, birthDate, birthPlace, birthTime, clearVoiceError, language, personName, saveHistory, stopListening],
+    [autoSpeak, birthDate, birthPlace, birthTime, category, clearVoiceError, gender, language, personName, saveHistory, stopListening],
   );
 
   const onMicPress = async () => {
@@ -264,7 +268,7 @@ export function AiGuruScreen() {
               style={styles.astroInput}
               value={personName}
               onChangeText={setPersonName}
-              placeholder="Name / नाम (optional)"
+              placeholder="Full Name / पूरा नाम"
               placeholderTextColor={colors.textMuted}
             />
             <TextInput
@@ -278,16 +282,36 @@ export function AiGuruScreen() {
               style={styles.astroInput}
               value={birthTime}
               onChangeText={setBirthTime}
-              placeholder="Birth Time (optional, e.g. 06:30)"
+              placeholder="Birth Time (HH:MM, e.g. 06:30)"
               placeholderTextColor={colors.textMuted}
             />
             <TextInput
               style={styles.astroInput}
               value={birthPlace}
               onChangeText={setBirthPlace}
-              placeholder="Birth Place (optional)"
+              placeholder="Birth Place / City"
               placeholderTextColor={colors.textMuted}
             />
+            <View style={styles.suggestions}>
+              {['Male', 'Female'].map(g => (
+                <Pressable
+                  key={g}
+                  style={[styles.chip, gender === g && {backgroundColor: colors.primary}]}
+                  onPress={() => setGender(prev => (prev === g ? '' : g))}>
+                  <Text style={[styles.chipText, gender === g && {color: colors.white}]}>{g}</Text>
+                </Pressable>
+              ))}
+            </View>
+            <View style={styles.suggestions}>
+              {['General', 'Career', 'Wealth', 'Marriage', 'Health', 'Vastu'].map(cat => (
+                <Pressable
+                  key={cat}
+                  style={[styles.chip, category === cat && {backgroundColor: colors.primary}]}
+                  onPress={() => setCategory(cat)}>
+                  <Text style={[styles.chipText, category === cat && {color: colors.white}]}>{cat}</Text>
+                </Pressable>
+              ))}
+            </View>
           </View>
         ) : null}
 

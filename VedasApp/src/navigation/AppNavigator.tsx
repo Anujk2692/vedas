@@ -27,6 +27,7 @@ import {FestivalDetailScreen} from '../screens/FestivalDetailScreen';
 import {GyanScreen} from '../screens/GyanScreen';
 import {HomeScreen} from '../screens/HomeScreen';
 import {MeditationTimerScreen} from '../screens/MeditationTimerScreen';
+import {SubscriptionScreen} from '../screens/SubscriptionScreen';
 import {PdfViewerScreen} from '../screens/PdfViewerScreen';
 import {QuizListScreen} from '../screens/QuizListScreen';
 import {QuizPlayScreen} from '../screens/QuizPlayScreen';
@@ -241,6 +242,15 @@ export function AppNavigator() {
             options={{
               header: () => (
                 <StackScreenHeader title="Meditation Timer" subtitle="ध्यान · Daily practice" />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="Subscription"
+            component={SubscriptionScreen}
+            options={{
+              header: () => (
+                <StackScreenHeader title="Sanatan Plus" subtitle="One Subscription · All Devices" />
               ),
             }}
           />

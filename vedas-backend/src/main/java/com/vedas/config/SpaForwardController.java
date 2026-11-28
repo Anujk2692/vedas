@@ -27,6 +27,7 @@ public class SpaForwardController {
             "/bhajans/**",
             "/ai-guru",
             "/meditation",
+            "/subscription",
             "/quiz",
             "/quiz/**",
             "/culture",

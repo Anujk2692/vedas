@@ -83,7 +83,9 @@ public class SanatanKnowledgeController {
                 request.getPersonName(),
                 request.getBirthDate(),
                 request.getBirthTime(),
-                request.getBirthPlace()
+                request.getBirthPlace(),
+                request.getGender(),
+                request.getCategory()
         );
     }
 

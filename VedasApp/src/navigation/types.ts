@@ -18,6 +18,7 @@ export type RootStackParamList = {
   ChildNames: undefined;
   Devotional: {mode: 'chalisas' | 'bhajans'; title: string};
   MeditationTimer: undefined;
+  Subscription: undefined;
   QuizList: undefined;
   QuizPlay: {quizId: string; title: string};
   CultureHub: undefined;

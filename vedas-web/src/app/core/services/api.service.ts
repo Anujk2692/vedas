@@ -16,6 +16,7 @@ import {
   SanatanHub,
   SearchResult,
   StudyPath,
+  SubscriptionStatus,
   Topic,
   Veda,
   Verse,
@@ -128,7 +129,14 @@ export class ApiService {
   askGuru(
     question: string,
     lang: string,
-    astro?: { personName?: string; birthDate?: string; birthTime?: string; birthPlace?: string },
+    astro?: {
+      personName?: string;
+      birthDate?: string;
+      birthTime?: string;
+      birthPlace?: string;
+      gender?: string;
+      category?: string;
+    },
   ): Observable<AskResponse> {
     return this.http.post<AskResponse>(`${this.base}/sanatan/ask`, { question, lang, ...astro });
   }
@@ -151,6 +159,24 @@ export class ApiService {
 
   getBhajan(slug: string, lang: string): Observable<DevotionalItem> {
     return this.http.get<DevotionalItem>(this.withLang(lang, `/bhajans/${slug}`));
+  }
+
+  getSubscriptionStatus(accountKey: string): Observable<SubscriptionStatus> {
+    return this.http.get<SubscriptionStatus>(`${this.base}/subscription/status`, { params: { accountKey } });
+  }
+
+  activateSubscription(payload: {
+    accountKey: string;
+    planCode: string;
+    provider?: string;
+    transactionId?: string;
+    sandbox?: boolean;
+  }): Observable<SubscriptionStatus> {
+    return this.http.post<SubscriptionStatus>(`${this.base}/subscription/activate`, payload);
+  }
+
+  cancelSubscription(accountKey: string): Observable<SubscriptionStatus> {
+    return this.http.post<SubscriptionStatus>(`${this.base}/subscription/cancel`, { accountKey });
   }
 
   health(): Observable<string> {

@@ -292,3 +292,25 @@ export interface DevotionalItem {
   lineCount: number;
   lines?: DevotionalLine[];
 }
+
+export interface SubscriptionPlan {
+  code: 'MONTHLY' | 'YEARLY' | 'LIFETIME';
+  titleEn: string;
+  titleHi: string;
+  priceDisplay: string;
+  billingNoteEn: string;
+  billingNoteHi: string;
+  durationDays: number;
+}
+
+export interface SubscriptionStatus {
+  accountKey: string;
+  active: boolean;
+  planCode: string;
+  status: string;
+  provider: string;
+  sandboxMode: boolean;
+  devTestingEnabled: boolean;
+  expiresAt: string | null;
+  plans: SubscriptionPlan[];
+}

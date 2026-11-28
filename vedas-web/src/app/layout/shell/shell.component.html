@@ -21,6 +21,7 @@
       <a routerLink="/quiz" routerLinkActive="active">{{ langService.ui().nav.quiz }}</a>
       <a routerLink="/culture" routerLinkActive="active">{{ langService.ui().nav.culture }}</a>
       <a routerLink="/meditation" routerLinkActive="active">{{ langService.ui().nav.meditate }}</a>
+      <a routerLink="/subscription" routerLinkActive="active">👑 Plus</a>
     </nav>
     <div class="lang-switch notranslate" translate="no">
       <button type="button" [class.on]="themeService.mode() === 'light'" (click)="themeService.setMode('light')" title="Light theme">☀️</button>

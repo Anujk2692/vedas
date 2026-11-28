@@ -23,6 +23,12 @@ public class AskRequestDto {
     @Size(max = 80)
     private String birthPlace;
 
+    @Size(max = 20)
+    private String gender;
+
+    @Size(max = 40)
+    private String category;
+
     public String getQuestion() { return question; }
     public void setQuestion(String question) { this.question = question; }
     public String getLang() { return lang; }
@@ -35,4 +41,8 @@ public class AskRequestDto {
     public void setBirthTime(String birthTime) { this.birthTime = birthTime; }
     public String getBirthPlace() { return birthPlace; }
     public void setBirthPlace(String birthPlace) { this.birthPlace = birthPlace; }
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
 }

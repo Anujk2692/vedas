@@ -197,6 +197,12 @@ export function SettingsScreen() {
       <SettingsSection title="Sanatan Tools">
         <Pressable
           style={({pressed}) => [styles.card, pressed && styles.pressed]}
+          onPress={() => navigation.navigate('Subscription')}>
+          <Text style={styles.label}>👑 Sanatan Plus Subscription</Text>
+          <Text style={styles.hint}>One plan for Web, iOS & Android · Dev Test & Production</Text>
+        </Pressable>
+        <Pressable
+          style={({pressed}) => [styles.card, pressed && styles.pressed]}
           onPress={() => navigation.navigate('MeditationTimer')}>
           <Text style={styles.label}>🧘 Meditation Timer</Text>
           <Text style={styles.hint}>5–30 min dhyaan — like leading Gita apps</Text>

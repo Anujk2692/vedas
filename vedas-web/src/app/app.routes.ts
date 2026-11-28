@@ -17,6 +17,7 @@ import { CultureComponent } from './pages/culture/culture.component';
 import { ClarityComponent } from './pages/clarity/clarity.component';
 import { ChildNamesComponent } from './pages/child-names/child-names.component';
 import { DevotionalComponent } from './pages/devotional/devotional.component';
+import { SubscriptionComponent } from './pages/subscription/subscription.component';
 
 export const routes: Routes = [
   {
@@ -41,6 +42,7 @@ export const routes: Routes = [
       { path: 'bhajans/:slug', component: DevotionalComponent, data: { mode: 'bhajans' } },
       { path: 'ai-guru', component: AiGuruComponent },
       { path: 'meditation', component: MeditationComponent },
+      { path: 'subscription', component: SubscriptionComponent },
       { path: 'quiz', component: QuizComponent },
       { path: 'quiz/:id', component: QuizComponent },
       { path: 'culture', component: CultureComponent },

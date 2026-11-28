@@ -38,7 +38,7 @@ public class AiGuruService {
     }
 
     public AskResponseDto ask(String question, String lang) {
-        return ask(question, lang, null, null, null, null);
+        return ask(question, lang, null, null, null, null, null, null);
     }
 
     public AskResponseDto ask(String question,
@@ -46,7 +46,9 @@ public class AiGuruService {
                               String personName,
                               String birthDate,
                               String birthTime,
-                              String birthPlace) {
+                              String birthPlace,
+                              String gender,
+                              String category) {
         if (question == null || question.trim().length() < 2) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Question must be at least 2 characters");
         }
@@ -65,7 +67,7 @@ public class AiGuruService {
         } catch (Exception ignored) {
         }
         String astroInsight = astroNumerologyService.buildHolisticInsight(
-                q, language, personName, birthDate, birthTime, birthPlace, panchang);
+                q, language, personName, birthDate, birthTime, birthPlace, gender, category, panchang);
 
         AskResponseDto response = new AskResponseDto();
         response.setRelatedScriptures(limit(search.getVedas(), 5));

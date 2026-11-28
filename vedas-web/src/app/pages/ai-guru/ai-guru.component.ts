@@ -27,10 +27,23 @@ import { AskResponse } from '../../core/models';
 
       @if (showAstro) {
         <div class="card astro-panel">
-          <input [(ngModel)]="personName" placeholder="Name (optional, e.g. Anuj)" />
-          <input [(ngModel)]="birthDate" placeholder="Birth Date (DD/MM/YYYY or YYYY-MM-DD)" />
-          <input [(ngModel)]="birthTime" placeholder="Birth Time (optional, e.g. 06:30)" />
-          <input [(ngModel)]="birthPlace" placeholder="Birth Place (optional, e.g. Delhi)" />
+          <input [(ngModel)]="personName" placeholder="Full Name / पूरा नाम" />
+          <input [(ngModel)]="birthDate" placeholder="Birth Date (DD/MM/YYYY)" />
+          <input [(ngModel)]="birthTime" placeholder="Birth Time (HH:MM, e.g. 06:30)" />
+          <input [(ngModel)]="birthPlace" placeholder="Birth Place / City" />
+          <select [(ngModel)]="gender">
+            <option value="">Gender (Optional)</option>
+            <option value="Male">Male / पुरुष</option>
+            <option value="Female">Female / महिला</option>
+          </select>
+          <select [(ngModel)]="category">
+            <option value="General">Focus: General Guidance</option>
+            <option value="Career">Career & Job / करियर</option>
+            <option value="Wealth">Business & Wealth / धन</option>
+            <option value="Marriage">Marriage & Love / विवाह</option>
+            <option value="Health">Health & Peace / स्वास्थ्य</option>
+            <option value="Vastu">Home & Vastu / वास्तु</option>
+          </select>
         </div>
       }
 
@@ -120,7 +133,7 @@ import { AskResponse } from '../../core/models';
     .astro-toggle-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.85rem; }
     .astro-toggle { font-size: 0.85rem; padding: 0.45rem 0.9rem; }
     .astro-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.65rem; margin-bottom: 1rem; padding: 0.9rem; }
-    .astro-panel input { padding: 0.55rem 0.8rem; border-radius: 10px; border: 1px solid rgba(196,92,0,0.25); font: inherit; font-size: 0.9rem; }
+    .astro-panel input, .astro-panel select { padding: 0.55rem 0.8rem; border-radius: 10px; border: 1px solid rgba(196,92,0,0.25); font: inherit; font-size: 0.9rem; background: #fff; }
     .mic, .listen { white-space: nowrap; }
     .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
     .chip { border: 1px solid rgba(196,92,0,0.2); background: #fff3e6; border-radius: 999px; padding: 0.4rem 0.85rem; cursor: pointer; font-size: 0.85rem; }
@@ -155,11 +168,13 @@ export class AiGuruComponent implements OnDestroy {
     'What does numerology & astrology say for my career?',
     'कर्म योग क्या है?',
   ];
-  showAstro = false;
+  showAstro = true;
   personName = '';
   birthDate = '';
   birthTime = '';
   birthPlace = '';
+  gender = '';
+  category = 'General';
 
   constructor() {
     try {
@@ -190,6 +205,8 @@ export class AiGuruComponent implements OnDestroy {
         birthDate: this.birthDate.trim() || undefined,
         birthTime: this.birthTime.trim() || undefined,
         birthPlace: this.birthPlace.trim() || undefined,
+        gender: this.gender || undefined,
+        category: this.category || undefined,
       })
       .subscribe({
       next: r => {
