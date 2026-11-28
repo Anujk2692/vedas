@@ -40,28 +40,28 @@ export function PanchangMuhuratScreen() {
       {data ? (
         <>
           <View style={[styles.card, {backgroundColor: themeColors.surface, borderColor: themeColors.borderLight}]}>
-            <Text style={styles.title}>{data.weekday} · {data.date}</Text>
-            <Text style={styles.meta}>Tithi: {data.paksha} {data.tithi}</Text>
-            <Text style={styles.meta}>Nakshatra: {data.nakshatra} · Yoga: {data.yoga} · Karana: {data.karana}</Text>
-            <Text style={styles.meta}>Sunrise: {data.sunrise} · Sunset: {data.sunset}</Text>
+            <Text style={[styles.title, {color: themeColors.text}]}>{data.weekday} · {data.date}</Text>
+            <Text style={[styles.meta, {color: themeColors.textSecondary}]}>Tithi: {data.paksha} {data.tithi}</Text>
+            <Text style={[styles.meta, {color: themeColors.textSecondary}]}>Nakshatra: {data.nakshatra} · Yoga: {data.yoga} · Karana: {data.karana}</Text>
+            <Text style={[styles.meta, {color: themeColors.textSecondary}]}>Sunrise: {data.sunrise} · Sunset: {data.sunset}</Text>
             <Text style={[styles.meta, {color: '#166534', fontWeight: '700'}]}>Abhijit Muhurat: {data.abhijitMuhurat}</Text>
             <Text style={[styles.meta, {color: '#b42318', fontWeight: '700'}]}>Rahu Kaal: {data.rahuKaal}</Text>
           </View>
 
-          <Text style={styles.heading}>Day Choghadiya</Text>
+          <Text style={[styles.heading, {color: themeColors.primaryDark}]}>Day Choghadiya</Text>
           {data.dayChoghadiya.map(c => (
             <View key={c.period} style={[styles.card, {backgroundColor: themeColors.surface, borderColor: themeColors.borderLight}]}>
-              <Text style={styles.title}>{c.name} ({c.quality})</Text>
-              <Text style={styles.meta}>{c.timeRange}</Text>
+              <Text style={[styles.title, {color: themeColors.text}]}>{c.name} ({c.quality})</Text>
+              <Text style={[styles.meta, {color: themeColors.textSecondary}]}>{c.timeRange}</Text>
             </View>
           ))}
 
-          <Text style={styles.heading}>Shubh Muhurat Finder</Text>
+          <Text style={[styles.heading, {color: themeColors.primaryDark}]}>Shubh Muhurat Finder</Text>
           {data.shubhMuhurats.map(m => (
             <View key={m.activity} style={[styles.card, {backgroundColor: themeColors.surface, borderColor: themeColors.borderLight}]}>
-              <Text style={styles.title}>{m.activity}</Text>
-              <Text style={styles.meta}>{m.window} · {m.quality}</Text>
-              <Text style={styles.meta}>{m.notes}</Text>
+              <Text style={[styles.title, {color: themeColors.text}]}>{m.activity}</Text>
+              <Text style={[styles.meta, {color: themeColors.textSecondary}]}>{m.window} · {m.quality}</Text>
+              <Text style={[styles.meta, {color: themeColors.textSecondary}]}>{m.notes}</Text>
             </View>
           ))}
         </>

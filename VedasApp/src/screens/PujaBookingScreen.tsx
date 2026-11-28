@@ -3,11 +3,12 @@ import {Pressable, ScrollView, StyleSheet, Text, TextInput, View} from 'react-na
 import {api} from '../api/client';
 import type {PujaBooking, PujaCatalogItem, TempleAudioItem} from '../api/types';
 import {useAudioPlayer} from '../context/AudioPlayerContext';
-import {useSubscription} from '../context/SubscriptionContext';
+import {useRequireSubscription, useSubscription} from '../context/SubscriptionContext';
 import {useUserPreferences} from '../context/UserPreferencesContext';
 import {borderRadius, colors, shadows, spacing} from '../theme/colors';
 
 export function PujaBookingScreen() {
+  useRequireSubscription('Temple Puja & Audio');
   const {themeColors} = useUserPreferences();
   const {accountKey} = useSubscription();
   const {playTrack} = useAudioPlayer();
@@ -46,11 +47,11 @@ export function PujaBookingScreen() {
 
   return (
     <ScrollView style={[styles.root, {backgroundColor: themeColors.background}]} contentContainerStyle={styles.content}>
-      <Text style={styles.heading}>🔔 Temple Audio Collection</Text>
+      <Text style={[styles.heading, {color: themeColors.primaryDark}]}>🔔 Temple Audio Collection</Text>
       {audios.map(a => (
         <View key={a.id} style={[styles.card, {backgroundColor: themeColors.surface, borderColor: themeColors.borderLight}]}>
-          <Text style={styles.title}>{a.titleEn}</Text>
-          <Text style={styles.meta}>{a.templeName} · {a.durationLabel}</Text>
+          <Text style={[styles.title, {color: themeColors.text}]}>{a.titleEn}</Text>
+          <Text style={[styles.meta, {color: themeColors.textSecondary}]}>{a.templeName} · {a.durationLabel}</Text>
           <Pressable
             style={styles.outlineBtn}
             onPress={() =>

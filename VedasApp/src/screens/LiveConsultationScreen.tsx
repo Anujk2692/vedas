@@ -2,11 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {Linking, Pressable, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import {api} from '../api/client';
 import type {AstrologerProfile, ConsultationMessage, ConsultationSessionView} from '../api/types';
-import {useSubscription} from '../context/SubscriptionContext';
+import {useRequireSubscription, useSubscription} from '../context/SubscriptionContext';
 import {useUserPreferences} from '../context/UserPreferencesContext';
 import {borderRadius, colors, shadows, spacing} from '../theme/colors';
 
 export function LiveConsultationScreen() {
+  useRequireSubscription('Live Astrologer Consultation');
   const {themeColors} = useUserPreferences();
   const {accountKey} = useSubscription();
 
@@ -44,9 +45,9 @@ export function LiveConsultationScreen() {
 
       {astrologers.map(a => (
         <View key={a.id} style={[styles.card, {backgroundColor: themeColors.surface, borderColor: themeColors.borderLight}]}>
-          <Text style={styles.title}>{a.name} · ● LIVE</Text>
-          <Text style={styles.meta}>{a.specialtyEn}</Text>
-          <Text style={styles.meta}>{a.languages} · ⭐ {a.rating} · {a.feeDisplay}</Text>
+          <Text style={[styles.title, {color: themeColors.text}]}>{a.name} · ● LIVE</Text>
+          <Text style={[styles.meta, {color: themeColors.textSecondary}]}>{a.specialtyEn}</Text>
+          <Text style={[styles.meta, {color: themeColors.textSecondary}]}>{a.languages} · ⭐ {a.rating} · {a.feeDisplay}</Text>
           <View style={styles.btnRow}>
             {a.modes.map(m => (
               <Pressable key={m} style={styles.modeBtn} onPress={() => startSession(a, m)}>

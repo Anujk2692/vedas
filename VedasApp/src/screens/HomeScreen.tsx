@@ -143,6 +143,11 @@ export function HomeScreen() {
             />
             <View style={styles.quickRow}>
               <QuickActionChip icon="🙏" label={language === 'hi' || language === 'sa' ? 'AI गुरु' : 'AI Guru'} accent onPress={() => navigation.navigate('AiGuru')} />
+              <QuickActionChip icon="🔭" label={language === 'hi' || language === 'sa' ? 'कुंडली' : 'Kundli'} onPress={() => navigation.navigate('Kundli')} />
+              <QuickActionChip icon="🗓️" label={language === 'hi' || language === 'sa' ? 'मुहूर्त' : 'Muhurat'} onPress={() => navigation.navigate('PanchangMuhurat')} />
+              <QuickActionChip icon="🛕" label={language === 'hi' || language === 'sa' ? 'पूजा' : 'Puja'} onPress={() => navigation.navigate('PujaBooking')} />
+              <QuickActionChip icon="🎙️" label={language === 'hi' || language === 'sa' ? 'परामर्श' : 'Consult'} onPress={() => navigation.navigate('LiveConsultation')} />
+              <QuickActionChip icon="👑" label={language === 'hi' || language === 'sa' ? 'प्लस' : 'Plus'} onPress={() => navigation.navigate('Subscription')} />
               <QuickActionChip icon="🪔" label={language === 'hi' || language === 'sa' ? 'आरती' : 'Aarti'} onPress={() => navigation.navigate('Aarti')} />
               <QuickActionChip
                 icon="📿"

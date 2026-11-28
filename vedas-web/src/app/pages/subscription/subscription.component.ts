@@ -91,13 +91,6 @@ import { SubscriptionPlan, SubscriptionStatus } from '../../core/models';
           }
         </div>
 
-        @if (status.devTestingEnabled) {
-          <div class="dev-banner">
-            <strong>🧪 {{ isHi ? 'डेवलपर टेस्टिंग मोड चालू है' : 'Developer Testing Mode Enabled' }}</strong>
-            <span>{{ isHi ? 'आप बिना भुगतान तुरंत किसी भी प्लान को टेस्ट कर सकते हैं।' : 'Test any plan instantly without real payment; disable via VEDAS_SUBSCRIPTION_DEV_TESTING_ENABLED=false in production.' }}</span>
-          </div>
-        }
-
         <div class="plans-grid">
           @for (p of status.plans; track p.code) {
             <article class="card plan-card" [class.featured]="p.code === 'YEARLY'">
@@ -106,12 +99,7 @@ import { SubscriptionPlan, SubscriptionStatus } from '../../core/models';
               <p class="price">{{ p.priceDisplay }}</p>
               <p class="note">{{ isHi ? p.billingNoteHi : p.billingNoteEn }}</p>
               <div class="plan-actions">
-                @if (status.devTestingEnabled) {
-                  <button type="button" class="btn btn-primary" (click)="activate(p, true)" [disabled]="loading">
-                    {{ isHi ? '🧪 टेस्ट सक्रिय करें' : '🧪 Activate (Dev Test)' }}
-                  </button>
-                }
-                <button type="button" class="btn btn-outline" (click)="payWithRazorpay(p)" [disabled]="loading">
+                <button type="button" class="btn btn-primary" (click)="payWithRazorpay(p)" [disabled]="loading">
                   {{ isHi ? '💳 Razorpay से भुगतान करें (UPI / Card)' : '💳 Pay via Razorpay (UPI / Card)' }}
                 </button>
               </div>

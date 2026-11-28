@@ -260,19 +260,6 @@ export function SubscriptionScreen() {
             ) : null}
           </View>
 
-          {status.devTestingEnabled ? (
-            <View style={styles.devBanner}>
-              <Text style={styles.devTitle}>
-                {isHi ? '🧪 डेवलपर टेस्टिंग मोड चालू है' : '🧪 Developer Testing Mode Enabled'}
-              </Text>
-              <Text style={styles.devSub}>
-                {isHi
-                  ? 'बिना भुगतान तुरंत कोई भी प्लान टेस्ट करें।'
-                  : 'Test any plan instantly without payment. Set VEDAS_SUBSCRIPTION_DEV_TESTING_ENABLED=false for production.'}
-              </Text>
-            </View>
-          ) : null}
-
           {status.plans.map(plan => (
             <View
               key={plan.code}
@@ -293,21 +280,11 @@ export function SubscriptionScreen() {
                 {isHi ? plan.billingNoteHi : plan.billingNoteEn}
               </Text>
 
-              {status.devTestingEnabled ? (
-                <Pressable
-                  style={styles.primaryBtn}
-                  onPress={() => activate(plan, true)}
-                  disabled={loading}>
-                  <Text style={styles.primaryBtnText}>
-                    {isHi ? '🧪 टेस्ट सक्रिय करें (Dev)' : '🧪 Activate (Dev Test)'}
-                  </Text>
-                </Pressable>
-              ) : null}
               <Pressable
-                style={[styles.outlineBtn, {borderColor: themeColors.primary}]}
+                style={styles.primaryBtn}
                 onPress={() => activate(plan, false)}
                 disabled={loading}>
-                <Text style={[styles.outlineBtnText, {color: themeColors.primaryDark}]}>
+                <Text style={styles.primaryBtnText}>
                   {Platform.OS === 'ios'
                     ? isHi
                       ? '🍎 App Store से सब्सक्राइब करें'

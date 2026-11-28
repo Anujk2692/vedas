@@ -74,9 +74,9 @@ import { AstrologerProfile, ConsultationMessage, ConsultationSessionView } from 
     .btn-row { display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap; }
     .muted { color: #6e4e37; font-size: 0.86rem; }
     .session-room { border: 2px solid #c45c00; }
-    .chat-box { max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem; margin: 0.85rem 0; padding: 0.5rem; background: #fffaf5; border-radius: 10px; }
-    .msg { padding: 0.6rem 0.8rem; border-radius: 10px; background: #f3ece4; align-self: flex-start; max-width: 85%; }
-    .msg.user { background: #fde6cc; align-self: flex-end; }
+    .chat-box { max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem; margin: 0.85rem 0; padding: 0.65rem; background: rgba(196, 92, 0, 0.05); border-radius: 10px; }
+    .msg { padding: 0.6rem 0.8rem; border-radius: 10px; background: rgba(196, 92, 0, 0.12); align-self: flex-start; max-width: 85%; }
+    .msg.user { background: rgba(196, 92, 0, 0.24); align-self: flex-end; }
     .send-row { display: flex; gap: 0.5rem; }
     .send-row input { flex: 1; }
   `,
