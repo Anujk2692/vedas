@@ -13,7 +13,8 @@ public final class SubscriptionDtos {
             String priceDisplay,
             String billingNoteEn,
             String billingNoteHi,
-            int durationDays
+            int durationDays,
+            int amountPaise
     ) {}
 
     public record StatusResponse(
@@ -24,8 +25,19 @@ public final class SubscriptionDtos {
             String provider,
             boolean sandboxMode,
             boolean devTestingEnabled,
+            boolean razorpayConfigured,
             String expiresAt,
             List<PlanInfo> plans
+    ) {}
+
+    public record RazorpayOrderResponse(
+            String keyId,
+            String orderId,
+            int amountPaise,
+            String currency,
+            String planCode,
+            String planName,
+            String accountKey
     ) {}
 
     public static class ActivateRequest {
@@ -88,6 +100,54 @@ public final class SubscriptionDtos {
         public void setTransactionId(String transactionId) { this.transactionId = transactionId; }
         public boolean isSandbox() { return sandbox; }
         public void setSandbox(boolean sandbox) { this.sandbox = sandbox; }
+    }
+
+    public static class RazorpayCreateOrderRequest {
+        @NotBlank(message = "accountKey is required")
+        @Size(max = 160)
+        private String accountKey;
+
+        @NotBlank(message = "planCode is required")
+        @Size(max = 32)
+        private String planCode;
+
+        public String getAccountKey() { return accountKey; }
+        public void setAccountKey(String accountKey) { this.accountKey = accountKey; }
+        public String getPlanCode() { return planCode; }
+        public void setPlanCode(String planCode) { this.planCode = planCode; }
+    }
+
+    public static class RazorpayVerifyRequest {
+        @NotBlank(message = "accountKey is required")
+        @Size(max = 160)
+        private String accountKey;
+
+        @NotBlank(message = "planCode is required")
+        @Size(max = 32)
+        private String planCode;
+
+        @NotBlank(message = "razorpayOrderId is required")
+        @Size(max = 120)
+        private String razorpayOrderId;
+
+        @NotBlank(message = "razorpayPaymentId is required")
+        @Size(max = 120)
+        private String razorpayPaymentId;
+
+        @NotBlank(message = "razorpaySignature is required")
+        @Size(max = 200)
+        private String razorpaySignature;
+
+        public String getAccountKey() { return accountKey; }
+        public void setAccountKey(String accountKey) { this.accountKey = accountKey; }
+        public String getPlanCode() { return planCode; }
+        public void setPlanCode(String planCode) { this.planCode = planCode; }
+        public String getRazorpayOrderId() { return razorpayOrderId; }
+        public void setRazorpayOrderId(String razorpayOrderId) { this.razorpayOrderId = razorpayOrderId; }
+        public String getRazorpayPaymentId() { return razorpayPaymentId; }
+        public void setRazorpayPaymentId(String razorpayPaymentId) { this.razorpayPaymentId = razorpayPaymentId; }
+        public String getRazorpaySignature() { return razorpaySignature; }
+        public void setRazorpaySignature(String razorpaySignature) { this.razorpaySignature = razorpaySignature; }
     }
 
     private SubscriptionDtos() {}

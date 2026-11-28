@@ -34,3 +34,10 @@ vedas:
     enabled: ${VEDAS_AI_ENABLED:false}
     openai-api-key: ${VEDAS_OPENAI_API_KEY:}
     model: ${VEDAS_AI_MODEL:gpt-4o-mini}
+  subscription:
+    dev-testing-enabled: ${VEDAS_SUBSCRIPTION_DEV_TESTING_ENABLED:true}
+    webhook-secret: ${VEDAS_SUBSCRIPTION_WEBHOOK_SECRET:}
+    razorpay:
+      key-id: ${RAZORPAY_KEY_ID:}
+      key-secret: ${RAZORPAY_KEY_SECRET:}
+      webhook-secret: ${RAZORPAY_WEBHOOK_SECRET:}

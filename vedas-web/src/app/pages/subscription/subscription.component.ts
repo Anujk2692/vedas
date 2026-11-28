@@ -76,8 +76,8 @@ const ACCOUNT_KEY_STORAGE = 'sanatan_sub_account_key';
                     {{ isHi ? '🧪 टेस्ट सक्रिय करें' : '🧪 Activate (Dev Test)' }}
                   </button>
                 }
-                <button type="button" class="btn btn-outline" (click)="activate(p, false)" [disabled]="loading">
-                  {{ isHi ? '💳 प्रोडक्शन चेकआउट' : '💳 Production Checkout' }}
+                <button type="button" class="btn btn-outline" (click)="payWithRazorpay(p)" [disabled]="loading">
+                  {{ isHi ? '💳 Razorpay से भुगतान करें (UPI / Card)' : '💳 Pay via Razorpay (UPI / Card)' }}
                 </button>
               </div>
             </article>
@@ -179,6 +179,96 @@ export class SubscriptionComponent implements OnInit {
           this.error = err?.error?.message || 'Activation failed.';
         },
       });
+  }
+
+  payWithRazorpay(plan: SubscriptionPlan): void {
+    const key = this.accountKey.trim();
+    if (!key) return;
+    if (this.status && this.status.razorpayConfigured === false) {
+      this.error = this.isHi
+        ? 'Razorpay अभी सर्वर पर कॉन्फ़िगर नहीं है (RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET सेट करें), या ऊपर Dev Test बटन से टेस्ट करें।'
+        : 'Razorpay is not configured on the server yet (set RAZORPAY_KEY_ID & RAZORPAY_KEY_SECRET), or use Dev Test above.';
+      return;
+    }
+
+    this.loading = true;
+    this.error = '';
+    this.api.createRazorpayOrder(key, plan.code).subscribe({
+      next: async order => {
+        try {
+          const RazorpayCtor = await this.loadRazorpayCheckout();
+          const isEmail = key.includes('@');
+          const rzp = new RazorpayCtor({
+            key: order.keyId,
+            amount: order.amountPaise,
+            currency: order.currency,
+            name: 'Sanatan Gyan',
+            description: order.planName,
+            order_id: order.orderId,
+            prefill: isEmail ? { email: key } : { contact: key },
+            theme: { color: '#c45c00' },
+            handler: (resp: {
+              razorpay_order_id: string;
+              razorpay_payment_id: string;
+              razorpay_signature: string;
+            }) => {
+              this.api
+                .verifyRazorpayPayment({
+                  accountKey: key,
+                  planCode: plan.code,
+                  razorpayOrderId: resp.razorpay_order_id,
+                  razorpayPaymentId: resp.razorpay_payment_id,
+                  razorpaySignature: resp.razorpay_signature,
+                })
+                .subscribe({
+                  next: s => {
+                    this.status = s;
+                    this.loading = false;
+                  },
+                  error: err => {
+                    this.loading = false;
+                    this.error = err?.error?.message || 'Payment verification failed.';
+                  },
+                });
+            },
+            modal: {
+              ondismiss: () => {
+                this.loading = false;
+              },
+            },
+          });
+          rzp.open();
+        } catch (err) {
+          this.loading = false;
+          this.error = err instanceof Error ? err.message : 'Unable to open Razorpay Checkout.';
+        }
+      },
+      error: err => {
+        this.loading = false;
+        this.error = err?.error?.message || 'Could not create Razorpay order.';
+      },
+    });
+  }
+
+  private loadRazorpayCheckout(): Promise<any> {
+    const win = window as any;
+    if (win.Razorpay) {
+      return Promise.resolve(win.Razorpay);
+    }
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.async = true;
+      script.onload = () => {
+        if (win.Razorpay) {
+          resolve(win.Razorpay);
+        } else {
+          reject(new Error('Razorpay SDK failed to initialize.'));
+        }
+      };
+      script.onerror = () => reject(new Error('Failed to load Razorpay Checkout script.'));
+      document.body.appendChild(script);
+    });
   }
 
   cancel(): void {

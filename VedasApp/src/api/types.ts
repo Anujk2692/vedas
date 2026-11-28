@@ -414,6 +414,7 @@ export interface SubscriptionPlan {
   billingNoteEn: string;
   billingNoteHi: string;
   durationDays: number;
+  amountPaise?: number;
 }
 
 export interface SubscriptionStatus {
@@ -424,6 +425,7 @@ export interface SubscriptionStatus {
   provider: string;
   sandboxMode: boolean;
   devTestingEnabled: boolean;
+  razorpayConfigured?: boolean;
   expiresAt: string | null;
   plans: SubscriptionPlan[];
 }

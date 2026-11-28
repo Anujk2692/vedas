@@ -13,6 +13,7 @@ import {
   DevotionalItem,
   Language,
   Panchang,
+  RazorpayOrderResponse,
   SanatanHub,
   SearchResult,
   StudyPath,
@@ -177,6 +178,23 @@ export class ApiService {
 
   cancelSubscription(accountKey: string): Observable<SubscriptionStatus> {
     return this.http.post<SubscriptionStatus>(`${this.base}/subscription/cancel`, { accountKey });
+  }
+
+  createRazorpayOrder(accountKey: string, planCode: string): Observable<RazorpayOrderResponse> {
+    return this.http.post<RazorpayOrderResponse>(`${this.base}/subscription/razorpay/create-order`, {
+      accountKey,
+      planCode,
+    });
+  }
+
+  verifyRazorpayPayment(payload: {
+    accountKey: string;
+    planCode: string;
+    razorpayOrderId: string;
+    razorpayPaymentId: string;
+    razorpaySignature: string;
+  }): Observable<SubscriptionStatus> {
+    return this.http.post<SubscriptionStatus>(`${this.base}/subscription/razorpay/verify`, payload);
   }
 
   health(): Observable<string> {

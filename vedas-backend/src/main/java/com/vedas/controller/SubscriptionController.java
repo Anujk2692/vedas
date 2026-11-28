@@ -36,4 +36,21 @@ public class SubscriptionController {
             @Valid @RequestBody WebhookRequest request) {
         return subscriptionService.handleWebhook(secret, request);
     }
+
+    @PostMapping("/razorpay/create-order")
+    public RazorpayOrderResponse createRazorpayOrder(@Valid @RequestBody RazorpayCreateOrderRequest request) {
+        return subscriptionService.createRazorpayOrder(request);
+    }
+
+    @PostMapping("/razorpay/verify")
+    public StatusResponse verifyRazorpayPayment(@Valid @RequestBody RazorpayVerifyRequest request) {
+        return subscriptionService.verifyRazorpayPayment(request);
+    }
+
+    @PostMapping("/razorpay/webhook")
+    public StatusResponse razorpayWebhook(
+            @RequestHeader(value = "X-Razorpay-Signature", required = false) String signature,
+            @RequestBody String rawBody) {
+        return subscriptionService.handleRazorpayWebhook(signature, rawBody);
+    }
 }
