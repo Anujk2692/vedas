@@ -237,6 +237,12 @@ export class SubscriptionComponent implements OnInit {
               },
             },
           });
+          if (typeof rzp.on === 'function') {
+            rzp.on('payment.failed', (resp: { error?: { description?: string } }) => {
+              this.loading = false;
+              this.error = resp?.error?.description || 'Razorpay payment failed.';
+            });
+          }
           rzp.open();
         } catch (err) {
           this.loading = false;

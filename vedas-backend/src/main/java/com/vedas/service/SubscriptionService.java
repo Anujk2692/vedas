@@ -177,6 +177,9 @@ public class SubscriptionService {
         }
         String key = normalizeKey(req.getAccountKey());
         PlanInfo plan = requirePlan(req.getPlanCode());
+        if (plan.amountPaise() < 100) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Minimum Razorpay order amount is 100 paise");
+        }
         String orderId = razorpayOrderCreator.createOrder(plan, key, razorpayKeyId, razorpayKeySecret);
         return new RazorpayOrderResponse(
                 razorpayKeyId,
@@ -196,7 +199,7 @@ public class SubscriptionService {
         String payload = req.getRazorpayOrderId().trim() + "|" + req.getRazorpayPaymentId().trim();
         String expectedSig = hmacSha256Hex(payload, razorpayKeySecret);
         if (!constantTimeEquals(expectedSig, req.getRazorpaySignature().trim())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid Razorpay payment signature");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Razorpay payment signature");
         }
         ActivateRequest act = new ActivateRequest();
         act.setAccountKey(req.getAccountKey());
@@ -280,19 +283,22 @@ public class SubscriptionService {
                     .POST(HttpRequest.BodyPublishers.ofString(json, StandardCharsets.UTF_8))
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+            if (response.statusCode() == 401) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Razorpay authentication failed (check RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET)");
+            }
             if (response.statusCode() < 200 || response.statusCode() >= 300) {
-                throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "Razorpay order creation failed (" + response.statusCode() + ")");
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Razorpay order creation failed (" + response.statusCode() + ")");
             }
             JsonNode node = objectMapper.readTree(response.body());
             String orderId = node.path("id").asText("");
             if (orderId.isBlank()) {
-                throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "Razorpay did not return an order id");
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Razorpay did not return an order id");
             }
             return orderId;
         } catch (ResponseStatusException ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "Failed to contact Razorpay Orders API", ex);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to contact Razorpay Orders API", ex);
         }
     }
 
