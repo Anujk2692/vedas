@@ -6,18 +6,28 @@ import {
   AartiDetail,
   AartiSummary,
   AskResponse,
+  AstrologerProfile,
   Chapter,
   ChildNameRequest,
   ChildNameResponse,
+  ConsultationMessage,
+  ConsultationSessionView,
   DailyShlok,
+  DetailedPanchangResponse,
   DevotionalItem,
+  KundliRequest,
+  KundliResponse,
   Language,
+  MilanResponse,
   Panchang,
+  PujaBooking,
+  PujaCatalogItem,
   RazorpayOrderResponse,
   SanatanHub,
   SearchResult,
   StudyPath,
   SubscriptionStatus,
+  TempleAudioItem,
   Topic,
   Veda,
   Verse,
@@ -195,6 +205,80 @@ export class ApiService {
     razorpaySignature: string;
   }): Observable<SubscriptionStatus> {
     return this.http.post<SubscriptionStatus>(`${this.base}/subscription/razorpay/verify`, payload);
+  }
+
+  computeKundli(payload: KundliRequest): Observable<KundliResponse> {
+    return this.http.post<KundliResponse>(`${this.base}/jyotish/kundli`, payload);
+  }
+
+  computeMilan(boy: KundliRequest, girl: KundliRequest): Observable<MilanResponse> {
+    return this.http.post<MilanResponse>(`${this.base}/jyotish/milan`, { boy, girl });
+  }
+
+  getDetailedPanchang(date?: string): Observable<DetailedPanchangResponse> {
+    const params = date ? new HttpParams().set('date', date) : new HttpParams();
+    return this.http.get<DetailedPanchangResponse>(`${this.base}/jyotish/panchang`, { params });
+  }
+
+  getSevaCatalog(): Observable<{ pujas: PujaCatalogItem[]; templeAudios: TempleAudioItem[] }> {
+    return this.http.get<{ pujas: PujaCatalogItem[]; templeAudios: TempleAudioItem[] }>(`${this.base}/seva/catalog`);
+  }
+
+  bookPuja(payload: {
+    accountKey: string;
+    pujaCode: string;
+    devoteeName: string;
+    gotra?: string;
+    bookingDate?: string;
+    sankalpNotes?: string;
+  }): Observable<PujaBooking> {
+    return this.http.post<PujaBooking>(`${this.base}/seva/pujas/book`, payload);
+  }
+
+  myPujas(accountKey: string): Observable<PujaBooking[]> {
+    return this.http.get<PujaBooking[]>(`${this.base}/seva/pujas/my`, { params: { accountKey } });
+  }
+
+  getAstrologers(): Observable<AstrologerProfile[]> {
+    return this.http.get<AstrologerProfile[]>(`${this.base}/seva/astrologers`);
+  }
+
+  bookConsultation(payload: {
+    accountKey: string;
+    astrologerId: string;
+    mode: string;
+    topic?: string;
+  }): Observable<ConsultationSessionView> {
+    return this.http.post<ConsultationSessionView>(`${this.base}/seva/consultations/book`, payload);
+  }
+
+  myConsultations(accountKey: string): Observable<ConsultationSessionView[]> {
+    return this.http.get<ConsultationSessionView[]>(`${this.base}/seva/consultations/my`, { params: { accountKey } });
+  }
+
+  getConsultationMessages(sessionId: number): Observable<ConsultationMessage[]> {
+    return this.http.get<ConsultationMessage[]>(`${this.base}/seva/consultations/${sessionId}/messages`);
+  }
+
+  sendConsultationMessage(sessionId: number, senderName: string, message: string): Observable<ConsultationMessage[]> {
+    return this.http.post<ConsultationMessage[]>(`${this.base}/seva/consultations/${sessionId}/messages`, {
+      senderName,
+      message,
+    });
+  }
+
+  requestOtp(accountKey: string, displayName?: string): Observable<{ accountKey: string; message: string; devOtpPreview?: string }> {
+    return this.http.post<{ accountKey: string; message: string; devOtpPreview?: string }>(`${this.base}/auth/request-otp`, {
+      accountKey,
+      displayName,
+    });
+  }
+
+  verifyOtp(accountKey: string, otp: string): Observable<{ accountKey: string; displayName: string; sessionToken: string; verified: boolean }> {
+    return this.http.post<{ accountKey: string; displayName: string; sessionToken: string; verified: boolean }>(`${this.base}/auth/verify-otp`, {
+      accountKey,
+      otp,
+    });
   }
 
   health(): Observable<string> {

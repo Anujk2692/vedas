@@ -18,6 +18,11 @@ import { ClarityComponent } from './pages/clarity/clarity.component';
 import { ChildNamesComponent } from './pages/child-names/child-names.component';
 import { DevotionalComponent } from './pages/devotional/devotional.component';
 import { SubscriptionComponent } from './pages/subscription/subscription.component';
+import { KundliComponent } from './pages/kundli/kundli.component';
+import { PanchangMuhuratComponent } from './pages/panchang-muhurat/panchang-muhurat.component';
+import { PujaBookingComponent } from './pages/puja-booking/puja-booking.component';
+import { LiveConsultationComponent } from './pages/live-consultation/live-consultation.component';
+import { subscriptionGuard } from './core/guards/subscription.guard';
 
 export const routes: Routes = [
   {
@@ -32,17 +37,21 @@ export const routes: Routes = [
       { path: 'gyan/path/:slug', component: StudyPathComponent },
       { path: 'gyan/topic/:slug', component: TopicComponent },
       { path: 'clarity', component: ClarityComponent },
-      { path: 'child-names', component: ChildNamesComponent },
+      { path: 'child-names', component: ChildNamesComponent, canActivate: [subscriptionGuard] },
       { path: 'search', component: SearchComponent },
-      { path: 'aartis', component: AartisComponent },
-      { path: 'aartis/:slug', component: AartiDetailComponent },
-      { path: 'chalisas', component: DevotionalComponent, data: { mode: 'chalisas' } },
-      { path: 'chalisas/:slug', component: DevotionalComponent, data: { mode: 'chalisas' } },
-      { path: 'bhajans', component: DevotionalComponent, data: { mode: 'bhajans' } },
-      { path: 'bhajans/:slug', component: DevotionalComponent, data: { mode: 'bhajans' } },
-      { path: 'ai-guru', component: AiGuruComponent },
-      { path: 'meditation', component: MeditationComponent },
+      { path: 'aartis', component: AartisComponent, canActivate: [subscriptionGuard] },
+      { path: 'aartis/:slug', component: AartiDetailComponent, canActivate: [subscriptionGuard] },
+      { path: 'chalisas', component: DevotionalComponent, data: { mode: 'chalisas' }, canActivate: [subscriptionGuard] },
+      { path: 'chalisas/:slug', component: DevotionalComponent, data: { mode: 'chalisas' }, canActivate: [subscriptionGuard] },
+      { path: 'bhajans', component: DevotionalComponent, data: { mode: 'bhajans' }, canActivate: [subscriptionGuard] },
+      { path: 'bhajans/:slug', component: DevotionalComponent, data: { mode: 'bhajans' }, canActivate: [subscriptionGuard] },
+      { path: 'ai-guru', component: AiGuruComponent, canActivate: [subscriptionGuard] },
+      { path: 'meditation', component: MeditationComponent, canActivate: [subscriptionGuard] },
       { path: 'subscription', component: SubscriptionComponent },
+      { path: 'kundli', component: KundliComponent, canActivate: [subscriptionGuard] },
+      { path: 'panchang-muhurat', component: PanchangMuhuratComponent },
+      { path: 'puja-booking', component: PujaBookingComponent },
+      { path: 'live-consultation', component: LiveConsultationComponent },
       { path: 'quiz', component: QuizComponent },
       { path: 'quiz/:id', component: QuizComponent },
       { path: 'culture', component: CultureComponent },

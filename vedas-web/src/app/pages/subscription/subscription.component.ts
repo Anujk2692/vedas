@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../core/services/api.service';
 import { LanguageService } from '../../core/services/language.service';
+import { SubscriptionService } from '../../core/services/subscription.service';
 import { SubscriptionPlan, SubscriptionStatus } from '../../core/models';
-
-const ACCOUNT_KEY_STORAGE = 'sanatan_sub_account_key';
 
 @Component({
   selector: 'app-subscription',
@@ -28,8 +28,38 @@ const ACCOUNT_KEY_STORAGE = 'sanatan_sub_account_key';
           <button type="button" class="btn btn-outline" (click)="loadStatus()" [disabled]="loading">
             {{ isHi ? 'जांचें / Restore' : 'Check / Restore' }}
           </button>
+          <button type="button" class="btn btn-outline" (click)="sendOtp()" [disabled]="loading">
+            {{ isHi ? '🔐 OTP भेजें' : '🔐 Send OTP' }}
+          </button>
         </div>
+        @if (otpSent) {
+          <div class="row" style="margin-top: 0.6rem;">
+            <input [(ngModel)]="otpCode" placeholder="Enter 6-digit OTP" />
+            <button type="button" class="btn btn-primary" (click)="verifyOtpCode()" [disabled]="loading">
+              {{ isHi ? 'OTP सत्यापित करें' : 'Verify OTP' }}
+            </button>
+          </div>
+          @if (otpMessage) {
+            <p class="meta" style="margin-top: 0.35rem;">{{ otpMessage }}</p>
+          }
+        }
+        @if (otpVerified) {
+          <p class="meta" style="color: #166534; font-weight: 700; margin-top: 0.35rem;">✅ Account verified via OTP</p>
+        }
       </div>
+
+      @if (lockedRedirect && !status?.active) {
+        <div class="lock-banner">
+          <strong>🔒 {{ isHi ? 'प्रीमियम सुविधा लॉक है' : 'Subscription Required' }}</strong>
+          <span>
+            {{
+              isHi
+                ? 'AI गुरु (कुंडली/अंक ज्योतिष), 48 आरती, 47 चालीसा, 59 भजन, 24 योग आसन, नामकरण और ऑफ़लाइन कैश अनलॉक करने के लिए सनातन प्लस लें।'
+                : 'Subscribe to Sanatan Plus to unlock Unlimited AI Guru, 48 Aartis, 47 Chalisas, 59 Bhajans, 24 Yoga Asanas + Videos, Child Name Studio & Offline Cache.'
+            }}
+          </span>
+        </div>
+      }
 
       @if (error) {
         <p class="error">{{ error }}</p>
@@ -48,6 +78,11 @@ const ACCOUNT_KEY_STORAGE = 'sanatan_sub_account_key';
           <h3>{{ status.planCode }} · {{ status.provider }}</h3>
           @if (status.expiresAt) {
             <p class="meta">{{ isHi ? 'वैधता:' : 'Valid until:' }} {{ status.expiresAt.slice(0, 10) }}</p>
+          }
+          @if (status.active && redirectUrl) {
+            <button type="button" class="btn btn-primary" style="margin-right: 0.5rem;" (click)="continueToRedirect()">
+              {{ isHi ? 'अनलॉक सुविधा खोलें →' : 'Continue to Unlocked Feature →' }}
+            </button>
           }
           @if (status.active) {
             <button type="button" class="btn btn-outline" (click)="cancel()" [disabled]="loading">
@@ -101,6 +136,7 @@ const ACCOUNT_KEY_STORAGE = 'sanatan_sub_account_key';
     .dev-pill { font-size: 0.78rem; font-weight: 700; padding: 0.2rem 0.65rem; border-radius: 999px; background: #fef3c7; color: #92400e; }
     .meta { color: #5c4033; font-size: 0.9rem; margin: 0.25rem 0 0.75rem; }
     .dev-banner { background: #fffbeb; border: 1px solid #f59e0b; border-radius: 12px; padding: 0.85rem 1rem; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.25rem; color: #78350f; font-size: 0.9rem; }
+    .lock-banner { background: #fff1f2; border: 1px solid #fda4af; border-radius: 12px; padding: 0.85rem 1rem; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.25rem; color: #9f1239; font-size: 0.9rem; }
     .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; }
     .plan-card { display: flex; flex-direction: column; gap: 0.5rem; }
     .plan-card.featured { border: 2px solid #c45c00; }
@@ -114,36 +150,71 @@ const ACCOUNT_KEY_STORAGE = 'sanatan_sub_account_key';
 export class SubscriptionComponent implements OnInit {
   private readonly api = inject(ApiService);
   private readonly lang = inject(LanguageService);
+  private readonly subService = inject(SubscriptionService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   accountKey = '';
   status: SubscriptionStatus | null = null;
   loading = false;
   error = '';
+  lockedRedirect = false;
+  redirectUrl = '';
+  otpSent = false;
+  otpCode = '';
+  otpMessage = '';
+  otpVerified = false;
 
   get isHi(): boolean {
     return this.lang.lang() === 'hi' || this.lang.lang() === 'sa';
   }
 
   ngOnInit(): void {
-    try {
-      this.accountKey = localStorage.getItem(ACCOUNT_KEY_STORAGE) || 'demo@sanatangyan.app';
-    } catch {
-      this.accountKey = 'demo@sanatangyan.app';
-    }
+    this.accountKey = this.subService.getAccountKey();
+    this.route.queryParamMap.subscribe(params => {
+      this.lockedRedirect = params.get('locked') === '1';
+      this.redirectUrl = params.get('redirect') || '';
+    });
     this.loadStatus();
+  }
+
+  continueToRedirect(): void {
+    if (this.redirectUrl) {
+      this.router.navigateByUrl(this.redirectUrl);
+    }
+  }
+
+  sendOtp(): void {
+    const key = this.accountKey.trim();
+    if (!key) return;
+    this.api.requestOtp(key).subscribe({
+      next: res => {
+        this.otpSent = true;
+        this.otpMessage = res.devOtpPreview ? `${res.message} (Test OTP: ${res.devOtpPreview})` : res.message;
+      },
+      error: () => { this.error = 'Failed to send OTP.'; },
+    });
+  }
+
+  verifyOtpCode(): void {
+    const key = this.accountKey.trim();
+    if (!key || !this.otpCode.trim()) return;
+    this.api.verifyOtp(key, this.otpCode.trim()).subscribe({
+      next: res => {
+        this.otpVerified = res.verified;
+        this.otpSent = false;
+        this.loadStatus();
+      },
+      error: err => { this.error = err?.error?.message || 'Invalid OTP.'; },
+    });
   }
 
   loadStatus(): void {
     const key = this.accountKey.trim();
     if (!key) return;
-    try {
-      localStorage.setItem(ACCOUNT_KEY_STORAGE, key);
-    } catch {
-      // ignore
-    }
     this.loading = true;
     this.error = '';
-    this.api.getSubscriptionStatus(key).subscribe({
+    this.subService.refreshStatus(key).subscribe({
       next: s => {
         this.status = s;
         this.loading = false;
@@ -172,6 +243,7 @@ export class SubscriptionComponent implements OnInit {
       .subscribe({
         next: s => {
           this.status = s;
+          this.subService.setStatus(s);
           this.loading = false;
         },
         error: err => {
@@ -223,6 +295,7 @@ export class SubscriptionComponent implements OnInit {
                 .subscribe({
                   next: s => {
                     this.status = s;
+                    this.subService.setStatus(s);
                     this.loading = false;
                   },
                   error: err => {
@@ -284,6 +357,7 @@ export class SubscriptionComponent implements OnInit {
     this.api.cancelSubscription(key).subscribe({
       next: s => {
         this.status = s;
+        this.subService.setStatus(s);
         this.loading = false;
       },
       error: () => {

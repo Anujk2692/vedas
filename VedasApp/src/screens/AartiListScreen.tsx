@@ -15,6 +15,7 @@ import {ScreenLoader} from '../components/ui/ScreenLoader';
 import {SectionHeader} from '../components/ui/SectionHeader';
 import {useCachedFetch} from '../hooks/useCachedFetch';
 import {useLanguage} from '../context/LanguageContext';
+import {useRequireSubscription} from '../context/SubscriptionContext';
 import type {RootStackParamList, TabParamList} from '../navigation/types';
 import {colors, spacing} from '../theme/colors';
 import {flatListPerfProps} from '../utils/listPerf';
@@ -30,6 +31,7 @@ const FILTER_LABELS: Record<Filter, string> = {
 };
 
 export function AartiListScreen() {
+  useRequireSubscription('48 Aartis with Audio', {isTab: true});
   const navigation = useNavigation<
     CompositeNavigationProp<
       BottomTabNavigationProp<TabParamList, 'Aarti'>,

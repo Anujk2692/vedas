@@ -1,5 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {useCallback, useEffect, useState} from 'react';
+import {useRoute} from '@react-navigation/native';
+import type {RouteProp} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Platform,
@@ -11,49 +12,73 @@ import {
   View,
 } from 'react-native';
 import {api} from '../api/client';
-import type {SubscriptionPlan, SubscriptionStatus} from '../api/types';
+import type {SubscriptionPlan} from '../api/types';
 import {useLanguage} from '../context/LanguageContext';
+import {useSubscription} from '../context/SubscriptionContext';
 import {useUserPreferences} from '../context/UserPreferencesContext';
+import type {RootStackParamList} from '../navigation/types';
 import {borderRadius, colors, shadows, spacing} from '../theme/colors';
 
-const ACCOUNT_STORAGE_KEY = '@sanatan_sub_account_key';
-
 export function SubscriptionScreen() {
+  const route = useRoute<RouteProp<RootStackParamList, 'Subscription'>>();
+  const lockedFeature = route.params?.lockedFeature;
   const {language} = useLanguage();
   const {themeColors} = useUserPreferences();
+  const {accountKey, setAccountKey, status, setStatus, refreshStatus} = useSubscription();
   const isHi = language === 'hi' || language === 'sa';
 
-  const [accountKey, setAccountKey] = useState('demo@sanatangyan.app');
-  const [status, setStatus] = useState<SubscriptionStatus | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpCode, setOtpCode] = useState('');
+  const [otpMsg, setOtpMsg] = useState<string | null>(null);
+  const [otpVerified, setOtpVerified] = useState(false);
 
-  const loadStatus = useCallback(async (keyOverride?: string) => {
+  const sendOtp = async () => {
+    const key = accountKey.trim();
+    if (!key) {
+      return;
+    }
+    try {
+      const res = await api.requestOtp(key);
+      setOtpSent(true);
+      setOtpMsg(res.devOtpPreview ? `${res.message} (Test OTP: ${res.devOtpPreview})` : res.message);
+    } catch {
+      setError('Failed to send OTP');
+    }
+  };
+
+  const verifyOtpCode = async () => {
+    const key = accountKey.trim();
+    if (!key || !otpCode.trim()) {
+      return;
+    }
+    try {
+      const res = await api.verifyOtp(key, otpCode.trim());
+      setOtpVerified(res.verified);
+      setOtpSent(false);
+      await loadStatus(key);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Invalid OTP');
+    }
+  };
+
+  const loadStatus = async (keyOverride?: string) => {
     const key = (keyOverride ?? accountKey).trim();
     if (!key) {
       return;
     }
-    await AsyncStorage.setItem(ACCOUNT_STORAGE_KEY, key).catch(() => undefined);
     setLoading(true);
     setError(null);
-    try {
-      const res = await api.getSubscriptionStatus(key);
-      setStatus(res);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Unable to check subscription');
-    } finally {
-      setLoading(false);
+    const res = await refreshStatus(key);
+    if (!res) {
+      setError('Unable to check subscription');
     }
-  }, [accountKey]);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    AsyncStorage.getItem(ACCOUNT_STORAGE_KEY)
-      .then(saved => {
-        const key = saved?.trim() || 'demo@sanatangyan.app';
-        setAccountKey(key);
-        loadStatus(key);
-      })
-      .catch(() => loadStatus('demo@sanatangyan.app'));
+    refreshStatus(accountKey).catch(() => undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -114,6 +139,19 @@ export function SubscriptionScreen() {
           : 'One unified subscription unlocks AI Guru Jyotish/Numerology, all 48 Aartis, 47 Chalisas, 59 Bhajans & 24 Yoga Asanas across Web, iOS & Android.'}
       </Text>
 
+      {lockedFeature && !status?.active ? (
+        <View style={styles.lockBanner}>
+          <Text style={styles.lockTitle}>
+            {isHi ? `🔒 ${lockedFeature} लॉक है` : `🔒 ${lockedFeature} is Locked`}
+          </Text>
+          <Text style={styles.lockSub}>
+            {isHi
+              ? 'AI गुरु, 48 आरती, 47 चालीसा, 59 भजन, 24 योग आसन, नामकरण और ऑफ़लाइन कैश अनलॉक करने के लिए सनातन प्लस लें।'
+              : 'Subscribe to Sanatan Plus to unlock Unlimited AI Guru, 48 Aartis, 47 Chalisas, 59 Bhajans, 24 Yoga Asanas + Videos, Child Name Studio & Offline Cache.'}
+          </Text>
+        </View>
+      ) : null}
+
       <View
         style={[
           styles.card,
@@ -145,6 +183,37 @@ export function SubscriptionScreen() {
             {isHi ? '🔄 स्थिति जांचें / Restore Purchase' : '🔄 Check Status / Restore Purchase'}
           </Text>
         </Pressable>
+        <Pressable
+          style={[styles.outlineBtn, {borderColor: themeColors.primary}]}
+          onPress={sendOtp}
+          disabled={loading}>
+          <Text style={[styles.outlineBtnText, {color: themeColors.primaryDark}]}>
+            {isHi ? '🔐 OTP से खाता सत्यापित करें' : '🔐 Verify Account via OTP'}
+          </Text>
+        </Pressable>
+        {otpSent ? (
+          <>
+            <TextInput
+              style={[
+                styles.input,
+                {backgroundColor: themeColors.surfaceMuted, color: themeColors.text, borderColor: themeColors.borderLight},
+              ]}
+              value={otpCode}
+              onChangeText={setOtpCode}
+              placeholder="Enter 6-digit OTP"
+              keyboardType="number-pad"
+            />
+            {otpMsg ? <Text style={styles.meta}>{otpMsg}</Text> : null}
+            <Pressable style={styles.primaryBtn} onPress={verifyOtpCode}>
+              <Text style={styles.primaryBtnText}>Verify OTP</Text>
+            </Pressable>
+          </>
+        ) : null}
+        {otpVerified ? (
+          <Text style={[styles.meta, {color: '#166534', fontWeight: '700'}]}>
+            ✅ Account verified via OTP
+          </Text>
+        ) : null}
       </View>
 
       {loading ? <ActivityIndicator color={colors.primary} style={{marginVertical: 8}} /> : null}
@@ -310,6 +379,16 @@ const styles = StyleSheet.create({
   },
   devTitle: {fontSize: 13, fontWeight: '800', color: '#78350f'},
   devSub: {fontSize: 12, color: '#92400e', lineHeight: 17},
+  lockBanner: {
+    backgroundColor: '#fff1f2',
+    borderWidth: 1,
+    borderColor: '#fda4af',
+    borderRadius: 12,
+    padding: 12,
+    gap: 4,
+  },
+  lockTitle: {fontSize: 13, fontWeight: '800', color: '#9f1239'},
+  lockSub: {fontSize: 12, color: '#881337', lineHeight: 17},
   planCode: {fontSize: 11, fontWeight: '800'},
   planTitle: {fontSize: 16, fontWeight: '800'},
   price: {fontSize: 22, fontWeight: '800'},

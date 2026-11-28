@@ -21,6 +21,7 @@ import {SanskritText} from '../components/SanskritText';
 import {InfoBanner} from '../components/ui/InfoBanner';
 import {useVoiceInput} from '../hooks/useVoiceInput';
 import {useLanguage} from '../context/LanguageContext';
+import {useRequireSubscription} from '../context/SubscriptionContext';
 import type {RootStackParamList} from '../navigation/types';
 import {borderRadius, colors, shadows, spacing} from '../theme/colors';
 import {speakAnswerText, stopSpeech} from '../utils/speech';
@@ -43,6 +44,7 @@ type HistoryItem = {
 };
 
 export function AiGuruScreen() {
+  useRequireSubscription('AI Guru (Kundli + Numerology)');
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {language} = useLanguage();
   const [question, setQuestion] = useState('');

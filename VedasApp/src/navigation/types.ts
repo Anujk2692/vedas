@@ -18,7 +18,11 @@ export type RootStackParamList = {
   ChildNames: undefined;
   Devotional: {mode: 'chalisas' | 'bhajans'; title: string};
   MeditationTimer: undefined;
-  Subscription: undefined;
+  Subscription: {lockedFeature?: string} | undefined;
+  Kundli: undefined;
+  PanchangMuhurat: undefined;
+  PujaBooking: undefined;
+  LiveConsultation: undefined;
   QuizList: undefined;
   QuizPlay: {quizId: string; title: string};
   CultureHub: undefined;

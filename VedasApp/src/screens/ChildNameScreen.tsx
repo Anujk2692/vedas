@@ -13,6 +13,7 @@ import {
 import {api} from '../api/client';
 import type {ChildNameResponse, ChildNameSuggestion} from '../api/types';
 import {useLanguage} from '../context/LanguageContext';
+import {useRequireSubscription} from '../context/SubscriptionContext';
 import {borderRadius, colors, shadows, spacing, typography} from '../theme/colors';
 
 const SHORTLIST_KEY = '@vedas_child_name_shortlist_v1';
@@ -27,6 +28,7 @@ const LANGUAGES = [
 ];
 
 export function ChildNameScreen() {
+  useRequireSubscription('Child Name Studio');
   const {language: appLang} = useLanguage();
   const isHi = appLang === 'hi' || appLang === 'sa';
   const [fatherName, setFatherName] = useState('');

@@ -192,4 +192,61 @@ export const api = {
     postRequest<SubscriptionStatus>('/subscription/cancel', {accountKey}),
   syncBookmarks: (deviceId: string, bookmarks: BookmarkSyncItem[]) =>
     postRequest<BookmarkSyncItem[]>('/user/bookmarks/sync', {deviceId, bookmarks}),
+  computeKundli: (payload: import('./types').KundliRequest) =>
+    postRequest<import('./types').KundliResponse>('/jyotish/kundli', payload),
+  computeMilan: (boy: import('./types').KundliRequest, girl: import('./types').KundliRequest) =>
+    postRequest<import('./types').MilanResponse>('/jyotish/milan', {boy, girl}),
+  getDetailedPanchang: (date?: string) =>
+    request<import('./types').DetailedPanchangResponse>(
+      date ? `/jyotish/panchang?date=${encodeURIComponent(date)}` : '/jyotish/panchang',
+      'en',
+      {skipCache: true},
+    ),
+  getSevaCatalog: () =>
+    request<{pujas: import('./types').PujaCatalogItem[]; templeAudios: import('./types').TempleAudioItem[]}>(
+      '/seva/catalog',
+      'en',
+    ),
+  bookPuja: (payload: {
+    accountKey: string;
+    pujaCode: string;
+    devoteeName: string;
+    gotra?: string;
+    bookingDate?: string;
+    sankalpNotes?: string;
+  }) => postRequest<import('./types').PujaBooking>('/seva/pujas/book', payload),
+  myPujas: (accountKey: string) =>
+    request<import('./types').PujaBooking[]>(
+      `/seva/pujas/my?accountKey=${encodeURIComponent(accountKey)}`,
+      'en',
+      {skipCache: true},
+    ),
+  getAstrologers: () =>
+    request<import('./types').AstrologerProfile[]>('/seva/astrologers', 'en'),
+  bookConsultation: (payload: {
+    accountKey: string;
+    astrologerId: string;
+    mode: string;
+    topic?: string;
+  }) => postRequest<import('./types').ConsultationSessionView>('/seva/consultations/book', payload),
+  getConsultationMessages: (sessionId: number) =>
+    request<import('./types').ConsultationMessage[]>(
+      `/seva/consultations/${sessionId}/messages`,
+      'en',
+      {skipCache: true},
+    ),
+  sendConsultationMessage: (sessionId: number, senderName: string, message: string) =>
+    postRequest<import('./types').ConsultationMessage[]>(
+      `/seva/consultations/${sessionId}/messages`,
+      {senderName, message},
+    ),
+  requestOtp: (accountKey: string) =>
+    postRequest<{accountKey: string; message: string; devOtpPreview?: string}>('/auth/request-otp', {
+      accountKey,
+    }),
+  verifyOtp: (accountKey: string, otp: string) =>
+    postRequest<{accountKey: string; displayName: string; sessionToken: string; verified: boolean}>(
+      '/auth/verify-otp',
+      {accountKey, otp},
+    ),
 };

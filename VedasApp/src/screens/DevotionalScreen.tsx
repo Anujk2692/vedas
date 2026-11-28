@@ -13,6 +13,7 @@ import {
 import {api} from '../api/client';
 import type {DevotionalItem, DevotionalLine} from '../api/types';
 import {useLanguage} from '../context/LanguageContext';
+import {useRequireSubscription} from '../context/SubscriptionContext';
 import type {RootStackParamList} from '../navigation/types';
 import {borderRadius, colors, shadows, spacing, typography} from '../theme/colors';
 import {onSpeechFinish, speakDevotionalText, stopSpeech} from '../utils/speech';
@@ -20,6 +21,7 @@ import {onSpeechFinish, speakDevotionalText, stopSpeech} from '../utils/speech';
 export function DevotionalScreen() {
   const route = useRoute<RouteProp<RootStackParamList, 'Devotional'>>();
   const mode = route.params?.mode ?? 'chalisas';
+  useRequireSubscription(mode === 'chalisas' ? '47 Chalisas with Audio' : '59 Bhajans with Audio');
   const {language} = useLanguage();
   const isHi = language === 'hi' || language === 'sa';
 

@@ -20,6 +20,7 @@ import {ScreenLoader} from '../components/ui/ScreenLoader';
 import {useAudioPlayer} from '../context/AudioPlayerContext';
 import {useCachedFetch} from '../hooks/useCachedFetch';
 import {useLanguage} from '../context/LanguageContext';
+import {useRequireSubscription} from '../context/SubscriptionContext';
 import {useUserPreferences} from '../context/UserPreferencesContext';
 import type {RootStackParamList} from '../navigation/types';
 import {borderRadius, colors, shadows, spacing, typography} from '../theme/colors';
@@ -79,6 +80,7 @@ function AartiLineCard({
 }
 
 export function AartiDetailScreen() {
+  useRequireSubscription('Aarti Audio & PDF');
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'AartiDetail'>>();
   const {language} = useLanguage();

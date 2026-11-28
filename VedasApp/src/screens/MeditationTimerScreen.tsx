@@ -13,6 +13,7 @@ import {
 import WebView from 'react-native-webview';
 import {YogaPoseGraphic} from '../components/YogaPoseGraphic';
 import {useLanguage} from '../context/LanguageContext';
+import {useRequireSubscription} from '../context/SubscriptionContext';
 import {useUserPreferences} from '../context/UserPreferencesContext';
 import {YOGA_ASANAS, type YogaAsana} from '../data/yogaAsanas';
 import {borderRadius, colors, shadows, spacing} from '../theme/colors';
@@ -30,6 +31,7 @@ const CATEGORIES = [
 ];
 
 export function MeditationTimerScreen() {
+  useRequireSubscription('24 Yoga Asanas + Videos');
   const {recordSadhanaPractice, themeColors} = useUserPreferences();
   const {language} = useLanguage();
   const isHi = language === 'hi' || language === 'sa';

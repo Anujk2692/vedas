@@ -28,6 +28,10 @@ import {GyanScreen} from '../screens/GyanScreen';
 import {HomeScreen} from '../screens/HomeScreen';
 import {MeditationTimerScreen} from '../screens/MeditationTimerScreen';
 import {SubscriptionScreen} from '../screens/SubscriptionScreen';
+import {KundliScreen} from '../screens/KundliScreen';
+import {PanchangMuhuratScreen} from '../screens/PanchangMuhuratScreen';
+import {PujaBookingScreen} from '../screens/PujaBookingScreen';
+import {LiveConsultationScreen} from '../screens/LiveConsultationScreen';
 import {PdfViewerScreen} from '../screens/PdfViewerScreen';
 import {QuizListScreen} from '../screens/QuizListScreen';
 import {QuizPlayScreen} from '../screens/QuizPlayScreen';
@@ -251,6 +255,42 @@ export function AppNavigator() {
             options={{
               header: () => (
                 <StackScreenHeader title="Sanatan Plus" subtitle="One Subscription · All Devices" />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="Kundli"
+            component={KundliScreen}
+            options={{
+              header: () => (
+                <StackScreenHeader title="Kundli & Milan" subtitle="D1 · D9 · KP · Dasha · 36-Guna" />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="PanchangMuhurat"
+            component={PanchangMuhuratScreen}
+            options={{
+              header: () => (
+                <StackScreenHeader title="Panchang & Muhurat" subtitle="Choghadiya · Rahu Kaal · Abhijit" />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="PujaBooking"
+            component={PujaBookingScreen}
+            options={{
+              header: () => (
+                <StackScreenHeader title="Puja & Temple Audio" subtitle="Chadhava · Sankalp · Temple Bells" />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="LiveConsultation"
+            component={LiveConsultationScreen}
+            options={{
+              header: () => (
+                <StackScreenHeader title="Live Consultation" subtitle="Chat · Audio · Video Call" />
               ),
             }}
           />

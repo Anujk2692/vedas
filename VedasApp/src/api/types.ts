@@ -429,3 +429,169 @@ export interface SubscriptionStatus {
   expiresAt: string | null;
   plans: SubscriptionPlan[];
 }
+
+export interface KundliRequest {
+  name?: string;
+  birthDate: string;
+  birthTime: string;
+  latitude?: number;
+  longitude?: number;
+  timezoneOffset?: number;
+}
+
+export interface PlanetPosition {
+  planet: string;
+  sign: string;
+  signHi: string;
+  degreeInSign: number;
+  degreeFormatted: string;
+  house: number;
+  nakshatra: string;
+  pada: number;
+  signLord: string;
+  starLord: string;
+  subLord: string;
+  navamsaSign: string;
+  retrograde: boolean;
+}
+
+export interface DashaPeriod {
+  planet: string;
+  startDate: string;
+  endDate: string;
+  years: number;
+  current: boolean;
+}
+
+export interface LalKitabInsight {
+  planet: string;
+  house: number;
+  status: string;
+  remedyEn: string;
+  remedyHi: string;
+}
+
+export interface KundliResponse {
+  name: string;
+  birthDate: string;
+  birthTime: string;
+  ayanamsa: number;
+  ayanamsaFormatted: string;
+  lagnaSign: string;
+  lagnaSignHi: string;
+  lagnaDegree: number;
+  lagnaNakshatra: string;
+  moonSign: string;
+  sunSign: string;
+  nakshatra: string;
+  pada: number;
+  manglik: boolean;
+  manglikReason: string;
+  planets: PlanetPosition[];
+  mahadashas: DashaPeriod[];
+  lalKitab: LalKitabInsight[];
+}
+
+export interface MilanResponse {
+  totalScore: number;
+  maxScore: number;
+  verdict: string;
+  boyRashi: string;
+  boyNakshatra: string;
+  boyManglik: boolean;
+  girlRashi: string;
+  girlNakshatra: string;
+  girlManglik: boolean;
+  kootas: {name: string; obtained: number; max: number; detail: string}[];
+}
+
+export interface DetailedPanchangResponse {
+  date: string;
+  weekday: string;
+  tithi: string;
+  paksha: string;
+  nakshatra: string;
+  yoga: string;
+  karana: string;
+  sunSign: string;
+  moonSign: string;
+  sunrise: string;
+  sunset: string;
+  abhijitMuhurat: string;
+  rahuKaal: string;
+  yamaganda: string;
+  gulikaKaal: string;
+  dayChoghadiya: {period: string; name: string; quality: string; timeRange: string}[];
+  shubhMuhurats: {activity: string; window: string; quality: string; notes: string}[];
+}
+
+export interface PujaCatalogItem {
+  code: string;
+  titleEn: string;
+  titleHi: string;
+  templeName: string;
+  deity: string;
+  benefitsEn: string;
+  benefitsHi: string;
+  amountPaise: number;
+  priceDisplay: string;
+}
+
+export interface TempleAudioItem {
+  id: string;
+  titleEn: string;
+  titleHi: string;
+  templeName: string;
+  category: string;
+  streamUrl: string;
+  durationLabel: string;
+}
+
+export interface PujaBooking {
+  id: number;
+  accountKey: string;
+  pujaCode: string;
+  pujaTitle: string;
+  templeName: string;
+  devoteeName: string;
+  gotra: string;
+  bookingDate: string;
+  status: string;
+}
+
+export interface AstrologerProfile {
+  id: string;
+  name: string;
+  specialtyEn: string;
+  specialtyHi: string;
+  languages: string;
+  experienceYears: number;
+  rating: number;
+  feePerSessionPaise: number;
+  feeDisplay: string;
+  online: boolean;
+  modes: string[];
+}
+
+export interface ConsultationSessionView {
+  id: number;
+  accountKey: string;
+  astrologerId: string;
+  astrologerName: string;
+  mode: string;
+  topic: string;
+  roomCode: string;
+  joinUrl: string;
+  status: string;
+  amountPaise: number;
+  createdAt: string;
+}
+
+export interface ConsultationMessage {
+  id: number;
+  sessionId: number;
+  senderRole: 'USER' | 'ASTROLOGER';
+  senderName: string;
+  message: string;
+  createdAt: string;
+}

@@ -24,6 +24,7 @@ import {LanguagePicker} from '../components/LanguagePicker';
 import {SanskritText} from '../components/SanskritText';
 import {AppLogo} from '../components/ui/AppLogo';
 import {useLanguage} from '../context/LanguageContext';
+import {useSubscription} from '../context/SubscriptionContext';
 import {
   useUserPreferences,
   type PlaybackRate,
@@ -67,6 +68,7 @@ export function SettingsScreen() {
     >
   >();
   const {language, languages} = useLanguage();
+  const {isSubscribed} = useSubscription();
   const {
     favorites,
     removeFavorite,
@@ -110,6 +112,10 @@ export function SettingsScreen() {
   };
 
   const clearCache = async () => {
+    if (!isSubscribed) {
+      navigation.navigate('Subscription', {lockedFeature: 'Offline Cache'});
+      return;
+    }
     await clearAllApiCache();
     setCacheCleared(true);
     setTimeout(() => setCacheCleared(false), 2000);
@@ -200,6 +206,30 @@ export function SettingsScreen() {
           onPress={() => navigation.navigate('Subscription')}>
           <Text style={styles.label}>👑 Sanatan Plus Subscription</Text>
           <Text style={styles.hint}>One plan for Web, iOS & Android · Dev Test & Production</Text>
+        </Pressable>
+        <Pressable
+          style={({pressed}) => [styles.card, pressed && styles.pressed]}
+          onPress={() => navigation.navigate('Kundli')}>
+          <Text style={styles.label}>🔭 Astronomical Kundli & 36-Guna Milan</Text>
+          <Text style={styles.hint}>D1 · D9 Navamsa · KP Sub-Lord · Vimshottari Dasha · Lal Kitab</Text>
+        </Pressable>
+        <Pressable
+          style={({pressed}) => [styles.card, pressed && styles.pressed]}
+          onPress={() => navigation.navigate('PanchangMuhurat')}>
+          <Text style={styles.label}>🗓️ Detailed Panchang & Muhurat</Text>
+          <Text style={styles.hint}>Tithi · Nakshatra · Choghadiya · Rahu Kaal · Abhijit</Text>
+        </Pressable>
+        <Pressable
+          style={({pressed}) => [styles.card, pressed && styles.pressed]}
+          onPress={() => navigation.navigate('PujaBooking')}>
+          <Text style={styles.label}>🛕 Temple Puja, Chadhava & Temple Audio</Text>
+          <Text style={styles.hint}>Kashi · Mahakal · Ayodhya · Siddhivinayak · Temple Bells</Text>
+        </Pressable>
+        <Pressable
+          style={({pressed}) => [styles.card, pressed && styles.pressed]}
+          onPress={() => navigation.navigate('LiveConsultation')}>
+          <Text style={styles.label}>🎙️ Live Astrologer Consultation</Text>
+          <Text style={styles.hint}>1-on-1 Live Chat, Audio & Video Call with Acharyas</Text>
         </Pressable>
         <Pressable
           style={({pressed}) => [styles.card, pressed && styles.pressed]}
@@ -364,14 +394,19 @@ export function SettingsScreen() {
             </Text>
           ) : null}
           <Text style={styles.hint}>
-            Cached scriptures, aartis, and hub data work offline after first load. Clear cache to
-            refresh from the server.
+            {isSubscribed
+              ? 'Offline Cache unlocked: scriptures, aartis, and hub data work offline after first load. Clear cache to refresh from the server.'
+              : '🔒 Offline Cache requires Sanatan Plus. Tap below to unlock.'}
           </Text>
           <Pressable
             style={({pressed}) => [styles.secondaryBtn, pressed && styles.pressed]}
             onPress={clearCache}>
             <Text style={styles.secondaryBtnText}>
-              {cacheCleared ? 'Cache Cleared ✓' : 'Clear App Cache'}
+              {!isSubscribed
+                ? '🔒 Unlock Offline Cache'
+                : cacheCleared
+                  ? 'Cache Cleared ✓'
+                  : 'Clear App Cache'}
             </Text>
           </Pressable>
         </View>
